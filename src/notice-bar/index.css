@@ -1,0 +1,53 @@
+.i-noticebar {
+  display: flex;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 14px;
+  color: #f76a24;
+  background-color: #fefcec;
+  overflow: hidden;
+}
+.i-noticebar-icon {
+  display: flex;
+  margin-left: 30rpx;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.i-noticebar-icon + view {
+  margin-left: 10rpx;
+}
+.i-noticebar-operation {
+  display: flex;
+  margin-right: 16rpx;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.i-noticebar-content-wrap {
+  position: relative;
+  flex: 1;
+  margin: 0 30rpx;
+  z-index: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 100%;
+}
+.i-noticebar-content-wrap.is-loop {
+  overflow: hidden;
+}
+.i-noticebar-content-wrap .i-noticebar-content {
+  position: absolute;
+  transition-duration: 20s;
+}
+.i-noticebar-content-wrap .i-noticebar-content-loop {
+  animation: notice 6s linear infinite;
+}
+@keyframes notice {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

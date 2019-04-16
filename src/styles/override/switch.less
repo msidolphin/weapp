@@ -1,0 +1,248 @@
+@red: #e54d42;
+@orange: #f37b1d;
+@yellow: #fbbd08;
+@olive: #8dc63f;
+@green: #39b54a;
+@cyan: #1cbbb4;
+@blue: #0081ff;
+@purple: #6739b6;
+@mauve: #9c26b0;
+@pink: #e03997;
+@brown: #a5673f;
+@grey: #8799a3;
+@gray: #aaa;
+@black: #333;
+@white: #fff;
+@gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
+@gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
+@gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
+@gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
+@gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
+@gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
+
+  /* ==================
+           开关
+   ==================== */
+  
+  switch {
+    position: relative;
+  }
+
+  switch::after, switch::before {
+    position: absolute;
+    color: #fff !important;
+    top: 0%;
+    left: 0rpx;
+    font-size: 26rpx;
+    line-height: 26px;
+    width: 26px;
+    text-align: center;
+    pointer-events: none;
+    transform: scale(0, 0);
+    transition: all 0.3s ease-in-out 0s;
+    z-index: 9;
+  }
+
+  switch::before {
+    right: 0;
+    transform: scale(1, 1);
+    left: auto;
+  }
+  
+  switch[checked]::after, switch.checked::after {
+    transform: scale(1, 1);
+  }
+  
+  switch[checked]::before, switch.checked::before {
+    transform: scale(0, 0);
+  }
+  
+  switch[checked]::before {
+    transform: scale(0, 0);
+  }
+  
+  switch .wx-switch-input {
+    border: none;
+    padding: 0 24px;
+    width: 48px;
+    height: 26px;
+    margin: 0;
+    border-radius: 100rpx;
+  }
+  
+  switch .wx-switch-input:not([class*="bg-"]) {
+    background: @grey !important;
+  }
+  
+  switch .wx-switch-input::after {
+    margin: auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 100rpx;
+    left: 0rpx;
+    top: 0rpx;
+    bottom: 0rpx;
+    position: absolute;
+    transform: scale(0.9, 0.9);
+    transition: all 0.1s ease-in-out 0s;
+  }
+  
+  switch .wx-switch-input.wx-switch-input-checked::after {
+    margin: auto;
+    left: 22px;
+    box-shadow: none;
+    transform: scale(0.9, 0.9);
+  }
+  
+  checkbox.round .wx-checkbox-input {
+    border-radius: 100rpx;
+  }
+  
+  switch.radius .wx-switch-input::after, switch.radius .wx-switch-input,
+  switch.radius .wx-switch-input::before {
+    border-radius: 10rpx;
+  }
+  
+  switch .wx-switch-input::before {
+    display: none;
+  }
+  
+  /* 可以由此自定义颜色 */
+  switch.red[checked] .wx-switch-input {
+    border-color: @red !important;
+  }
+  
+  switch.orange[checked] .wx-switch-input {
+    border-color: @orange !important;
+  }
+  
+  switch.yellow[checked] .wx-switch-input{
+    border-color: @yellow !important;
+  }
+  
+  switch.olive[checked] .wx-switch-input{
+    border-color: @olive !important;
+  }
+  
+  switch.green[checked] .wx-switch-input{
+    border-color: @green !important;
+  }
+  
+  switch.cyan[checked] .wx-switch-input{
+    border-color: @cyan !important;
+  }
+  
+  switch.blue[checked] .wx-switch-input {
+    border-color: @blue !important;
+  }
+  
+  switch.purple[checked] .wx-switch-input {
+    border-color: @purple !important;
+  }
+  
+  switch.mauve[checked] .wx-switch-input {
+    border-color: @mauve !important;
+  }
+  
+  switch.pink[checked] .wx-switch-input {
+    border-color: @pink !important;
+  }
+  
+  switch.brown[checked] .wx-switch-input {
+    border-color: @brown !important;
+  }
+  
+  switch.grey[checked] .wx-switch-input{
+    border-color: @grey !important;
+  }
+  
+  switch.gray[checked] .wx-switch-input {
+    border-color: @grey !important;
+  }
+  
+  switch.black[checked] .wx-switch-input {
+    border-color: @black !important;
+  }
+  
+  switch.white[checked] .wx-switch-input {
+    border-color: #fff !important;
+  }
+  
+  switch.red[checked] .wx-switch-input.wx-switch-input-checked {
+    background-color: @red !important;
+    color: #fff !important;
+  }
+  
+  switch.orange[checked] .wx-switch-input {
+    background-color: @orange !important;
+    color: #fff !important;
+  }
+  
+  switch.yellow[checked] .wx-switch-input{
+    background-color: @yellow !important;
+    color: @black !important;
+  }
+  
+  switch.olive[checked] .wx-switch-input {
+    background-color: @olive !important;
+    color: #fff !important;
+  }
+  
+  switch.green[checked] .wx-switch-input, switch[checked] .wx-switch-input{
+    background-color: @green !important;
+    color: #fff !important;
+  }
+  
+  switch.cyan[checked] .wx-switch-input{
+    background-color: @cyan !important;
+    color: #fff !important;
+  }
+  
+  switch.blue[checked] .wx-switch-input {
+    background-color: @blue !important;
+    color: #fff !important;
+  }
+  
+  switch.purple[checked] .wx-switch-input{
+    background-color: @purple !important;
+    color: #fff !important;
+  }
+  
+  switch.mauve[checked] .wx-switch-input{
+    background-color: @mauve !important;
+    color: #fff !important;
+  }
+  
+  switch.pink[checked] .wx-switch-input {
+    background-color: @pink !important;
+    color: #fff !important;
+  }
+  
+  switch.brown[checked] .wx-switch-input {
+    background-color: @brown !important;
+    color: #fff !important;
+  }
+  
+  switch.grey[checked] .wx-switch-input {
+    background-color: @grey !important;
+    color: #fff !important;
+  }
+  
+  switch.gray[checked] .wx-switch-input {
+    background-color: #f0f0f0 !important;
+    color: #666 !important;
+  }
+  
+  switch.black[checked] .wx-switch-input {
+    background-color: @black !important;
+    color: #fff !important;
+  }
+  
+  switch.white[checked] .wx-switch-input {
+    background-color: #fff !important;
+    color: #666 !important;
+  }
+  
+switch[disabled] {
+    opacity: .3;
+}

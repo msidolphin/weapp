@@ -1,0 +1,13 @@
+<import src="/lib/towxml/entry.wxml"/>
+<view class="example-wrap" style="padding: 0 4px;">
+  <i-card class="example" margin="{{false}}" title="{{title}}">
+    <view slot="content"><slot/></view>
+    <view slot="footer">
+      <!-- <slot name="code"/> -->
+      <view style="text-align:right;" catchtap='trigger'>{{show ? 'hide' : 'show'}} code</view>
+      <view wx:if="{{show}}">
+        <template is="entry" data="{{...data}}"/>
+      </view>
+    </view>
+  </i-card>
+</view>

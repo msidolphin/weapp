@@ -1,0 +1,20 @@
+<i-panel title="通告栏">
+    <i-notice-bar content="服务器将在今日0点－2点进行系统升级，升级期间将暂停服务，敬请谅解。"></i-notice-bar>
+</i-panel>
+<i-panel title="自定义颜色 通告栏">
+    <i-notice-bar backgroundcolor="#99cc66" content="服务器将在今日0点－2点进行系统升级，升级期间将暂停服务，敬请谅解。" color="#ffff66"></i-notice-bar>
+</i-panel>
+<i-panel title="icon 通告栏">
+    <i-notice-bar icon="systemprompt" content="服务器将在今日0点－2点进行系统升级，升级期间将暂停服务，敬请谅解。"></i-notice-bar>
+</i-panel>
+<i-panel title="关闭 通告栏">
+    <i-notice-bar icon="systemprompt" content="服务器将在今日0点－2点进行系统升级，升级期间将暂停服务，敬请谅解。" closable></i-notice-bar>
+</i-panel>
+<i-panel title="滚动 通告栏">
+    <i-notice-bar content="服务器将在今日0点－2点进行系统升级，升级期间将暂停服务，敬请谅解。" icon="systemprompt" loop>
+    </i-notice-bar>
+</i-panel>
+<i-panel title="关闭 滚动 通告栏">
+    <i-notice-bar content="服务器将在今日0点－2点进行系统升级，升级期间将暂停服务，敬请谅解。" icon="systemprompt" closable loop>
+    </i-notice-bar>
+</i-panel>

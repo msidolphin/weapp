@@ -1,0 +1,13 @@
+<example title="普通宫格" code="{{grid1}}">
+  <i-grid data="{{data}}" column="{{4}}"/>
+</example>
+<example title="走马灯" code="{{grid1}}">
+  <i-grid data="{{data}}" column="{{3}}" maxRow="{{maxRow}}" swiper/>
+</example>
+<example title="边框" code="{{grid1}}">
+  <i-grid data="{{data}}" column="{{4}}" bordered/>
+  <view style="margin-bottom:10px;"/>
+  <i-grid data="{{data2}}" column="{{4}}" maxRow="{{2}}" swiper bordered/>
+</example>
+
+

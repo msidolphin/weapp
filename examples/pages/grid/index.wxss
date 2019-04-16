@@ -1,0 +1,7 @@
+@import '/lib/towxml/style/main.wxss';
+@import '/lib/towxml/style/theme/light.wxss';
+
+page {
+    background: #fff;
+    padding-bottom: 30px;
+}

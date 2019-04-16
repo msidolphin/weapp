@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "i-card": "/dist/card/index"
+  }
+}

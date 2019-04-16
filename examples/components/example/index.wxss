@@ -1,0 +1,23 @@
+/* components/example/index.wxss */
+@import '/lib/towxml/style/main.wxss';
+@import '/lib/towxml/style/theme/light.wxss';
+
+.example {
+  margin-bottom: 10px;
+  /* overflow: hidden; */
+  width: 100%;
+  display: inline-block;
+}
+
+.h2w__main {
+  margin: 0 4px 40rpx 4px;
+  padding-top: 40rpx;
+}
+
+.i-card {
+  margin: 0!important;
+}
+.i-card .i-card-footer {
+  padding: 6px 0px!important;
+}
+    
