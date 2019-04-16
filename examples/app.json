@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/tabs/index",
     "pages/index/index",
     "pages/notice-bar/index",
     "pages/grid/index",
@@ -28,7 +29,6 @@
     "pages/spin/index",
     "pages/steps/index",
     "pages/tab-bar/index",
-    "pages/tabs/index",
     "pages/tag/index",
     "pages/toast/index",
     "pages/swipeout/index",

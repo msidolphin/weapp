@@ -26,12 +26,12 @@
 
 <i-tabs current="{{ current_scroll }}" scroll bindchange="handleChangeScroll">
     <i-tab key="tab1" title="选项1"></i-tab>
-    <i-tab key="tab2" title="选项2"></i-tab>
-    <i-tab key="tab3" title="选项3"></i-tab>
-    <i-tab key="tab4" title="选项4"></i-tab>
+    <i-tab key="tab2" title="选项22"></i-tab>
+    <i-tab key="tab3" title="选项33"></i-tab>
+    <i-tab key="tab4" title="选项4" count="3" dot></i-tab>
     <i-tab key="tab5" title="选项5"></i-tab>
     <i-tab key="tab6" title="选项6"></i-tab>
-    <i-tab key="tab7" title="选项7"></i-tab>
-    <i-tab key="tab8" title="选项8"></i-tab>
-    <i-tab key="tab9" title="选项9"></i-tab>
+    <i-tab key="tab7" title="选项7" count="3" dot></i-tab>
+    <i-tab key="tab8" title="选项8" count="3" dot></i-tab>
+    <i-tab key="tab9" title="选项9999"></i-tab>
 </i-tabs>

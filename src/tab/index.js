@@ -29,7 +29,8 @@ Component({
     data: {
         current: false,
         currentColor: '',
-        scroll: false
+        scroll: false,
+        width: 0
     },
 
     methods: {
@@ -45,6 +46,19 @@ Component({
         handleClickItem () {
             const parent = this.getRelationNodes('../tabs/index')[0];
             parent.emitEvent(this.data.key);
+        },
+        getWidth ()  {
+            return new Promise(resolve => {
+                const query = this.createSelectorQuery()
+                query.select('.i-tabs-tab').boundingClientRect()
+                query.exec(res => {
+                    this.setData({
+                        width: res && res[0] ? res[0].width + 20 : 0
+                    }, () => {
+                        resolve(res && res[0] ? res[0].width + 20 : 0)
+                    })
+                })
+            })
         }
     }
 });

@@ -7,13 +7,13 @@ Component({
         '../grid-item/index': {
             type: 'child',
             linked () {
-                this.setGridItemWidth();
+                // this.setGridItemWidth();
             },
             linkChanged () {
-                this.setGridItemWidth();
+                // this.setGridItemWidth();
             },
             unlinked () {
-                this.setGridItemWidth();
+                // this.setGridItemWidth();
             }
         }
     },
@@ -138,7 +138,6 @@ Component({
 
     attached () {
         this._initData()
-        // this.setGridItemWidth();
     },
 
     ready () {

@@ -1,7 +1,7 @@
 Page({
     data: {
         current: 'tab1',
-        current_scroll: 'tab1'
+        current_scroll: 'tab7'
     },
 
     handleChange ({ detail }) {
