@@ -1,5 +1,6 @@
 @import "../styles/_base.less";
 @import "../styles/_mixins.less";
+@import '../cell/index.less';
 
 .i-collapse-item {
     padding: 2px 8px;
@@ -30,3 +31,23 @@
     }
 }
 
+.i-cell {
+    display: block;
+    &-wrap {
+        display: flex;
+        flex: 1;
+    }
+    &-collapse {
+        // margin-top: 12px;
+        overflow: hidden;
+        transition: .3s height;
+        &-content {
+            padding-top: 12px;
+        }
+    }
+    &.is-collapse {
+       .i-cell-collapse {
+           margin-top: 0;
+       }
+    }
+}

@@ -66,5 +66,42 @@
         }
     }
 
-
+    // 箭头不同方向
+    &-access {
+        &.animated {
+            .i-cell-ft {
+                &::after {
+                    transition: .3s all;
+                }
+            }
+        }
+        &.up {
+            .i-cell-ft {
+                &::after {
+                    transform: translateY(-50%) matrix(0.71, -0.71, 0.71, 0.71, 0, 0);
+                }
+            }
+        }
+        &.right {
+            .i-cell-ft {
+                &::after {
+                    transform: translateY(-50%) matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+                }
+            }
+        }
+        &.down {
+            .i-cell-ft {
+                &::after {
+                    transform: translateY(-50%) matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
+                }
+            }
+        }
+        &.left {
+            .i-cell-ft {
+                &::after {
+                    transform: translateY(-50%) matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
+                }
+            }
+        }
+    }
 }

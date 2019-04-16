@@ -1,9 +1,19 @@
-<view id="{{name}}" class="i-class i-collapse-item ">
-    <view class="i-collapse-item-title-wrap" bindtap="trigger">
-        <i-icon size="16" type="enter" i-class="{{ showContent ? 'i-collapse-item-arrow-show' : 'i-collapse-item-arrow' }}"/>
-        <text class="i-collapse-item-title i-class-title">{{title}}</text>
+<view bindtap="trigger"
+    class="i-class i-cell {{ isLastCell ? 'i-cell-last' : '' }} {{'i-cell-access'}} animated {{isCollapse ? 'is-collapse' : 'down'}}">
+    <view class="i-cell-wrap">
+        <view class="i-cell-icon">
+            <slot name="icon"></slot>
+        </view>
+        <view class="i-cell-bd">
+            <view wx:if="{{ title }}" class="i-cell-text">{{ title }}</view>
+            <view wx:if="{{ label }}" class="i-cell-desc">{{ label }}</view>
+        </view>
+        <view class="i-cell-ft">
+            <block wx:if="{{extra}}">{{ extra }}</block>
+            <block wx:else>
+                <slot name="footer"></slot>
+            </block>
+        </view>
     </view>
-    <view class="i-collapse-item-content {{showContent}}  i-class-content">
-        <slot name="content"></slot>
-    </view>
+    <view class="i-cell-collapse" style="height: {{height}}px"><view class="i-cell-collapse-content"><slot/></view></view>
 </view>
