@@ -60,21 +60,22 @@ Component({
 
     methods: {
         handleTap () {
-            if (this.data.disabled) return false;
+            if (this.data.disabled || this.data.loading) return false
 
-            this.triggerEvent('click');
+            this.triggerEvent('click')
+            // wx.vibrateShort()
         },
         bindgetuserinfo({ detail = {} } = {}) {
-            this.triggerEvent('getuserinfo', detail);
+            this.triggerEvent('getuserinfo', detail)
         },
         bindcontact({ detail = {} } = {}) {
-            this.triggerEvent('contact', detail);
+            this.triggerEvent('contact', detail)
         },
         bindgetphonenumber({ detail = {} } = {}) {
-            this.triggerEvent('getphonenumber', detail);
+            this.triggerEvent('getphonenumber', detail)
         },
         binderror({ detail = {} } = {}) {
-            this.triggerEvent('error', detail);
+            this.triggerEvent('error', detail)
         }
     }
 });

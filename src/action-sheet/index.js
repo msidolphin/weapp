@@ -30,18 +30,18 @@ Component({
 
     methods: {
         handleClickMask () {
-            if (!this.data.maskClosable) return;
-            this.handleClickCancel();
+            if (!this.data.maskClosable) return
+            this.handleClickCancel()
         },
 
         handleClickItem ({ currentTarget = {} }) {
-            const dataset = currentTarget.dataset || {};
-            const { index } = dataset;
-            this.triggerEvent('click', { index });
+            const dataset = currentTarget.dataset || {}
+            const { index } = dataset
+            this.triggerEvent('click', { index })
         },
 
         handleClickCancel () {
-            this.triggerEvent('cancel');
+            this.triggerEvent('cancel')
         }
     }
 });
