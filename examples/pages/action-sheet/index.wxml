@@ -1,6 +1,7 @@
 <view style="margin-top: 100px">
     <i-button type="ghost" bind:click="handleOpen1">一般用法</i-button>
     <i-button type="ghost" bind:click="handleOpen2">带有提示、异步</i-button>
+    <i-button type="ghost" bind:click="handleOpen3">原生风格</i-button>
 </view>
 <i-action-sheet visible="{{ visible1 }}" actions="{{ actions1 }}" show-cancel bind:cancel="handleCancel1" bind:click="handleClickItem1" />
 <i-action-sheet visible="{{ visible2 }}" actions="{{ actions2 }}" show-cancel bind:cancel="handleCancel2" bind:click="handleClickItem2" mask-closable="{{ false }}">
@@ -9,5 +10,6 @@
         <text>删除后无法恢复哦</text>
     </view>
 </i-action-sheet>
+<i-action-sheet visible="{{ visible3 }}" theme="wx" actions="{{ actions1 }}" show-cancel bind:cancel="handleCancel3" bind:click="handleClickItem3" />
 
 <i-message id="message" />

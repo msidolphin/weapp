@@ -3,6 +3,8 @@ const { $Message } = require('../../dist/base/index');
 Page({
     data: {
         visible1: false,
+        visible2: false,
+        visible3: false,
         actions1: [
             {
                 name: '选项1',
@@ -44,16 +46,28 @@ Page({
     },
 
     handleOpen2 () {
-        this.setData({
-            visible2: true
-        });
+      this.setData({
+          visible2: true
+      })
     },
 
     handleCancel2 () {
-        this.setData({
-            visible2: false
-        });
+      this.setData({
+          visible2: false
+      })
     },
+
+    handleOpen3 () {
+        this.setData({
+            visible3: true
+        })
+    },
+  
+    handleCancel3 () {
+        this.setData({
+            visible3: false
+        })
+    },  
 
     handleClickItem1 ({ detail }) {
         const index = detail.index + 1;

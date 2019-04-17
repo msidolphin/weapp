@@ -25,12 +25,20 @@ Component({
         actions: {
             type: Array,
             value: []
+        },
+        theme: {
+            type: String,
+            value: 'ios'
         }
+    },
+
+    data: {
+        hasHeader: false // 判断是否存在header
     },
 
     methods: {
         handleClickMask () {
-            if (!this.data.maskClosable) return
+            // if (!this.data.maskClosable) return
             this.handleClickCancel()
         },
 
@@ -43,5 +51,18 @@ Component({
         handleClickCancel () {
             this.triggerEvent('cancel')
         }
+    },
+
+    ready () {
+        this.createSelectorQuery().select('.i-as-header')
+        .boundingClientRect()
+        .exec(res => {
+            if (res && res[0]) {
+                this.setData({
+                    hasHeader: res[0].height > 0
+                })
+            }
+        })
     }
-});
+
+})
