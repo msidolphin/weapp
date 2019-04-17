@@ -62,7 +62,7 @@
     }
 
     &-body{
-        max-height: 100px;
+        // max-height: 100px;
         margin-bottom: 15px;
         font-size: @size-font-base;
         color: @subsidiary-color;
@@ -82,6 +82,19 @@
 
     &-actions{
         margin: 0 1px;
+        &.default {
+            display: flex;
+            view {
+                flex: 1;
+            }
+        }
+        .i-modal-action {
+            border-top: 1px solid @border-color-split;
+            border-right: 1px solid @border-color-split;
+            &:last-child {
+                border-right: 0;
+            }
+        }
     }
     &-action{
         &-vertical{
@@ -96,7 +109,11 @@
     &-grid{
         border-radius: 0 0 7px 7px;
         border-left: none;
+        &-item {
+            border-right: 1px solid @border-color-split;
+        }
         &-item, &-item-last{
+            border-top: 1px solid @border-color-split;
             padding: 0;
             border-bottom: none;
         }

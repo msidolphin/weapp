@@ -17,7 +17,10 @@
 </i-popup>
 
 <i-popup direction="right" visible="{{showRight}}" bind:close="closeRight">
-    <view class="popup-demo right">右侧</view>
+    <view class="popup-demo right">
+      <view>右侧</view>
+      <view class="popup-demo-content" wx:for="{{50}}" wx:key="{{index}}">文本</view>
+    </view>
 </i-popup>
 
 <i-popup direction="bottom" visible="{{showBottom}}" bind:close="closeBottom">

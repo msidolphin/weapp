@@ -40,15 +40,15 @@ Component({
 
     methods: {
         handleClickItem ({ currentTarget = {} }) {
-            const dataset = currentTarget.dataset || {};
-            const { index } = dataset;
-            this.triggerEvent('click', { index });
+            const dataset = currentTarget.dataset || {}
+            const { index } = dataset
+            this.triggerEvent('click', { index })
         },
         handleClickOk () {
-            this.triggerEvent('ok');
+            this.triggerEvent('ok')
         },
         handleClickCancel () {
-            this.triggerEvent('cancel');
+            this.triggerEvent('cancel')
         }
     }
 });

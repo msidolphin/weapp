@@ -69,6 +69,24 @@ Page({
         });
     },
 
+    handleClose3 () {
+      this.setData({
+        visible3: false
+      })
+    },
+
+    handleClose4() {
+      this.setData({
+        visible4: false
+      })
+    },
+
+    handleClose5() {
+      this.setData({
+        visible5: false
+      })
+    },
+
     handleOpen3 () {
         this.setData({
             visible3: true

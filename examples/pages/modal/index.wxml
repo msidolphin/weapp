@@ -12,25 +12,20 @@
     <view>一些文本</view>
     <view>一些文本</view>
     <view>一些文本</view>
-    <view>一些文本</view>
-    <view>一些文本</view>
-    <view>一些文本</view>
-    <view>一些文本</view>
 </i-modal>
 
 <i-modal visible="{{ visible2 }}" bind:ok="handleClose2" bind:cancel="handleClose2">
     <view>这是一个无标题的对话框</view>
 </i-modal>
 
-<i-modal title="支付" visible="{{ visible3 }}" actions="{{ actions3 }}" bind:click="handleClick3">
+<i-modal title="支付" visible="{{ visible3 }}" actions="{{ actions3 }}" bind:click="handleClick3" bind:cancel="handleClose3">
     <view>请选择支付方式</view>
 </i-modal>
 
-<i-modal title="纵向排列的按钮" visible="{{ visible4 }}" actions="{{ actions4 }}" action-mode="{{ vertical }}" bind:click="handleClick4">
-
+<i-modal title="纵向排列的按钮" visible="{{ visible4 }}" actions="{{ actions4 }}" action-mode="{{ vertical }}" bind:click="handleClick4" bind:cancel="handleClose4">
 </i-modal>
 
-<i-modal title="删除确认" visible="{{ visible5 }}" actions="{{ actions5 }}" bind:click="handleClick5">
+<i-modal title="删除确认" visible="{{ visible5 }}" actions="{{ actions5 }}" bind:click="handleClick5" bind:cancel="handleClose5">
     <view>删除后无法恢复哦</view>
 </i-modal>
 

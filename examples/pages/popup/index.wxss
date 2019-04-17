@@ -1,9 +1,15 @@
 /* pages/mask/index.wxss */
 .popup-demo {
-    background: #fff;
-    padding: 10px 30px;
-    text-align: center;
+  background: #fff;
+  padding: 10px 30px;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.popup-demo.right, .popup-demo.left {
-    height: 100%;
+.popup-demo, .popup-demo.left {
+  height: 100%;
+}
+.popup-demo.right {
+  width: 320rpx;
 }

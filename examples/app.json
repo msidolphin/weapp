@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/modal/index",
     "pages/popup/index",
     "pages/collapse/index",
     "pages/tabs/index",
@@ -23,7 +24,6 @@
     "pages/input/index",
     "pages/input-number/index",
     "pages/message/index",
-    "pages/modal/index",
     "pages/page/index",
     "pages/progress/index",
     "pages/radio/index",
