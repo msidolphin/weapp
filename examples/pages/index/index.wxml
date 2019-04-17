@@ -62,6 +62,9 @@
         <i-cell title="InputNumber 数字输入框" is-link url="/pages/input-number/index"></i-cell>
     </i-cell-group>
 </i-panel>
-<view style="margin-top: 16px">
-    <!-- <ad unit-id="adunit-afe5e164cf94a7aa"></ad> -->
-</view>
+<i-panel title="模态容器">
+    <i-cell-group>
+        <i-cell title="Popup 弹出层" is-link url="/pages/popup/index"></i-cell>
+    </i-cell-group>
+</i-panel>
+<view style="padding-top: 16px"></view>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "i-mask": "../../dist/mask/index",
+    "i-button": "../../dist/button/index",
+    "i-popup": "../../dist/popup/index"
+  }
+}

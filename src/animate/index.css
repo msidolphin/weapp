@@ -1,0 +1,39 @@
+.i-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+}
+.i-mask.is-show {
+  visibility: visible;
+}
+.i-mask.is-hide {
+  visibility: hidden;
+}
+.i-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-height: 100%;
+  overflow-y: auto;
+  background-color: #fff;
+  transform: translate3d(-50%, -50%, 0);
+  visibility: hidden;
+}
+.i-popup.is-show {
+  visibility: visible;
+}
+.i-animate {
+  display: block;
+}
+.i-animate.i-animate-fade {
+  opacity: 0;
+}
+.i-animate.i-animate-scale {
+  transform: scale(0);
+}
+.i-animate.i-animate-scale-reverse {
+  scale: 2;
+}

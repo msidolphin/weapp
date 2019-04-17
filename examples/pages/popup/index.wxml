@@ -1,0 +1,29 @@
+
+<i-button bind:click="open">居中</i-button>
+<i-button bind:click="openTop">顶部</i-button>
+<i-button bind:click="openRight">右侧</i-button>
+<i-button bind:click="openBottom">底部</i-button>
+<i-button bind:click="openLeft">左侧</i-button>
+
+<i-popup visible="{{show}}" bind:close="close">
+    <view class="popup-demo center">
+        <view>居中</view>
+        <i-button bind:click="close">关闭</i-button>
+    </view>
+</i-popup>
+
+<i-popup direction="top" visible="{{showTop}}" bind:close="closeTop">
+    <view class="popup-demo right">顶部</view>
+</i-popup>
+
+<i-popup direction="right" visible="{{showRight}}" bind:close="closeRight">
+    <view class="popup-demo right">右侧</view>
+</i-popup>
+
+<i-popup direction="bottom" visible="{{showBottom}}" bind:close="closeBottom">
+    <view class="popup-demo bottom">底部</view>
+</i-popup>
+
+<i-popup direction="left" visible="{{showLeft}}" bind:close="closeLeft">
+    <view class="popup-demo left">左侧</view>
+</i-popup>

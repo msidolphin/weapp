@@ -1,0 +1,73 @@
+.i-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  transition: 0.4s all ease-in-out;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+}
+.i-mask.is-show {
+  visibility: visible;
+  opacity: 1;
+}
+.i-mask.is-hide {
+  visibility: hidden;
+}
+.i-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-height: 100%;
+  overflow-y: auto;
+  background-color: transparent;
+  transform: translate3d(-50%, -50%, 0);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.4s all ease-in-out;
+}
+.i-popup.is-show {
+  visibility: visible;
+  opacity: 1;
+}
+.i-popup-top {
+  left: 0;
+  right: 0;
+  top: 0;
+  transform: translate3d(0, -100%, 0);
+}
+.i-popup-top.is-show {
+  transform: translate3d(0, 0, 0);
+}
+.i-popup-right {
+  left: initial;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.i-popup-right.is-show {
+  transform: translate3d(0, 0, 0);
+}
+.i-popup-bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: initial;
+  transform: translate3d(0, 100%, 0);
+}
+.i-popup-bottom.is-show {
+  transform: translate3d(0, 0, 0);
+}
+.i-popup-left {
+  left: 0;
+  right: initial;
+  top: 0;
+  bottom: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.i-popup-left.is-show {
+  transform: translate3d(0, 0, 0);
+}
