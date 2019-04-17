@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/index/index",
     "pages/collapse/index",
+    "pages/index/index",
     "pages/tabs/index",
     "pages/notice-bar/index",
     "pages/grid/index",

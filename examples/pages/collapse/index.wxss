@@ -1,3 +1,6 @@
+page {
+  padding-bottom: 30px;
+}
 
 .caption-wrap{
   margin-bottom: 30px;

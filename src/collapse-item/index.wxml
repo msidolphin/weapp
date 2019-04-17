@@ -1,6 +1,5 @@
-<view bindtap="trigger"
-    class="i-class i-cell {{ isLastCell ? 'i-cell-last' : '' }} {{'i-cell-access'}} animated {{isCollapse ? 'is-collapse' : 'down'}}">
-    <view class="i-cell-wrap">
+<view class="i-class i-cell {{ isLastCell ? 'i-cell-last' : '' }} {{'i-cell-access'}} animated {{isCollapse ? 'is-collapse' : 'down'}}">
+    <view class="i-cell-wrap" bindtap="trigger">
         <view class="i-cell-icon">
             <slot name="icon"></slot>
         </view>
