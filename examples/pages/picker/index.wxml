@@ -1,0 +1,8 @@
+<i-panel title="一般用法"></i-panel>
+<view>{{text1}}</view>
+<i-picker visible="{{visible1}}" value="{{value1}}"  range="{{data}}" bind:change="onChange1" bind:close="onClose1"></i-picker>
+<i-button bind:click='onTap1' type="primary">一般用法</i-button>
+<i-panel title="地区选择器"></i-panel>
+<i-button bind:click='onTap2'>地区选择器</i-button>
+<view>{{text2}}</view>
+<i-picker title="选择地区" visible="{{visible2}}" value="{{value2}}" mode="region" range="{{data}}" bind:change="onChange2" bind:close="onClose2"></i-picker>
