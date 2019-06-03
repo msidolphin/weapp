@@ -18,5 +18,11 @@ Component({
             type: String,
             value: ''
         }
-    }
+    },
+
+    methods: {
+        onTap () {
+            this.triggerEvent('tap')
+        }
+    },
 });

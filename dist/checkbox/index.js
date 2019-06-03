@@ -26,7 +26,7 @@ Component({
         },
         position: {
             type: String,
-            value: 'left', //left right
+            value: 'right', //left right
             observer: 'setPosition'
         }
     },

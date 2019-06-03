@@ -1,0 +1,11 @@
+<view id="bottom-drawer" class="bottom-drawer" data-y="{{y}}" style="{{styles}}">
+    <view class="bottom-drawer-header" data-y="{{y}}" catchtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd">
+        <view class="bottom-drawer-header-line"></view>
+    </view>
+    <view class="bottom-drawer-body" catchtouchmove="doNothing">
+        <scroll-view class="scroll-view" style="{{scrollViewStyle}}" scroll-y bindscrolltolower="onScrollToBottom">
+            <slot/>
+        </scroll-view>
+    </view>
+</view>
+<view class="bottom-drawer-mask {{showMask ? 'is-show' : ''}}" style="{{maskStyle}}" catchtouchmove="doNothing" catchtap="onMaskTap"></view>
