@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/message/index",
     "pages/input/index",
     "pages/index/index",
     "pages/picker/index",
@@ -24,7 +25,6 @@
     "pages/checkbox/index",
     "pages/drawer/index",
     "pages/input-number/index",
-    "pages/message/index",
     "pages/page/index",
     "pages/progress/index",
     "pages/radio/index",
