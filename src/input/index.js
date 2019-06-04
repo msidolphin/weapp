@@ -59,6 +59,10 @@ Component({
         },
         required: {
             type: Boolean
+        },
+        value: {
+            type: String,
+            value: ''
         }
     },
 
