@@ -1,6 +1,13 @@
 Component({
     externalClasses: ['i-class'],
 
+    properties: {
+        bordered: {
+            type: Boolean,
+            value: true
+        }
+    },
+
     relations: {
         '../cell/index': {
             type: 'child',

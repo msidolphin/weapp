@@ -1,0 +1,13 @@
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-cell-group {
+    &.has-bordered {
+        position: relative;
+        &::after {
+            .hairline();
+            border-top-width: 1px;
+            border-bottom-width: 1px;
+        }
+    }
+}

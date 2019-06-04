@@ -1,5 +1,9 @@
-<view class="i-class i-cell i-input {{ error ? 'i-input-error' : '' }} {{ mode === 'wrapped' ? 'i-input-wrapped' : '' }}">
-    <view wx:if="{{ title }}" class="i-cell-hd i-input-title">{{ title }}</view>
+<view class="i-class i-cell {{ isLastCell ? 'i-cell-last' : '' }} {{ isLink ? 'i-cell-access' : '' }} {{ error ? 'i-input-error' : '' }} {{ mode === 'wrapped' ? 'i-input-wrapped' : '' }} {{required ? 'i-input-required' : ''}}"
+    bindtap="handleTap">
+    <view wx:if="{{ title }}" class="i-cell-hd i-input-title"><text>{{ title }}</text></view>
+    <view wx:else class="i-cell-hd i-cell-icon">
+       <slot name="icon"></slot>
+    </view>
     <textarea
         wx:if="{{ type === 'textarea' }}"
         auto-height
@@ -28,4 +32,9 @@
         bindfocus="handleInputFocus"
         bindblur="handleInputBlur"
     />
+    <view class="i-cell-ft"> 
+        <i-icon i-class="i-cell-ft-icon" wx:if="{{clearable && value && focused && type !== 'textarea'}}" type="delete_fill" size="16" bind:tap="handleClearValue"></i-icon>
+        <i-icon i-class="i-cell-ft-icon" wx:if="{{iconType}}" type="{{iconType}}" size="16" bind:tap="handleIconTap"></i-icon>
+        <slot name="extra"></slot>
+    </view>
 </view>
