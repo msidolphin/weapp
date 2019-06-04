@@ -10,6 +10,13 @@ let timmer = null;
 Component({
     externalClasses: ['i-class'],
 
+    properties: {
+        top: {
+            type: [Number, String],
+            value: 0
+        }
+    },
+
     data: {
         ...default_data
     },

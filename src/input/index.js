@@ -117,7 +117,7 @@ Component({
 
         handleTap (event) {
             if (this.data.disabled) {
-                this.triggerEvent('tap', event)
+                this.triggerEvent('click', event)
             }
         }
     }
