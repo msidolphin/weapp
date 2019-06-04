@@ -11,5 +11,28 @@
     transform-origin: 0 0;
     pointer-events: none;
     box-sizing: border-box;
-    border: 0 solid @border-color-split;
+    border: 0 solid @border-color-split; 
+}
+
+.border-1px(@color) {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    box-sizing: border-box;
+    transform: scaleY(0.5);
+    border-bottom: 1px solid @color;
+}
+    
+.border-bottom-1px(@color; @left: 0) {
+    .border-1px(@color);
+    left: @left;
+    right: 0;
+    bottom: 0;
+}
+    
+.border-top-1px(@color; @left: 0) {
+    .border-1px(@color);
+    left: @left;
+    right: 0;
+    top: 0;
 }

@@ -3,6 +3,16 @@ Component({
 
     externalClasses: ['i-class'],
 
+    options: {
+        multipleSlots: true
+    },
+
+    relations: {
+        '../cell-group/index': {
+            type: 'parent'
+        }
+    },
+
     properties: {
         title: {
             type: String
@@ -24,6 +34,14 @@ Component({
             type: Boolean,
             value: false
         },
+        clearable: {
+            type: Boolean,
+            value: true
+        },
+        iconType: {
+            type: String,
+            value: ''
+        },
         mode: {
             type: String,
             value: 'normal'
@@ -38,24 +56,59 @@ Component({
         },
         maxlength: {
             type: Number
+        },
+        required: {
+            type: Boolean
         }
+    },
+
+    data: {
+        focused: false,
+        isLastCell: true
     },
 
     methods: {
         handleInputChange(event) {
-            const { detail = {} } = event;
-            const { value = '' } = detail;
-            this.setData({ value });
-
-            this.triggerEvent('change', event);
+            const { detail = {} } = event
+            const { value = '' } = detail
+            this.setData({ value }, () => {
+                this.triggerEvent('change', event)
+            })
         },
 
         handleInputFocus(event) {
-            this.triggerEvent('focus', event);
+            this.setData({
+                focused: true
+            })
+            this.triggerEvent('focus', event)
         },
 
         handleInputBlur(event) {
-            this.triggerEvent('blur', event);
+            this.setData({
+                focused: false
+            })
+            this.triggerEvent('blur', event)
+        },
+
+        handleClearValue (event) {
+            this.setData({ value: '' }, () => {
+                event.detail.value = ''
+                this.triggerEvent('change', event)
+            })
+        },
+
+        updateIsLastCell (isLastCell) {
+            this.setData({ isLastCell });
+        },
+
+        handleIconTap (event) {
+            this.triggerEvent('icon-tap', event)
+        },
+
+        handleTap (event) {
+            if (this.data.disabled) {
+                this.triggerEvent('tap', event)
+            }
         }
     }
 });

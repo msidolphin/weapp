@@ -3,6 +3,8 @@
   "usingComponents": {
     "i-input": "../../dist/input/index",
     "i-button": "../../dist/button/index",
-    "i-panel": "../../dist/panel/index"
+    "i-panel": "../../dist/panel/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-toast": "../../dist/toast/index"
   }
 }

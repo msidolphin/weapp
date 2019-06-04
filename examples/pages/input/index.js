@@ -1,3 +1,4 @@
+const { $Toast } = require('../../dist/base/index');
 Page({
     data: {
         value1: '',
@@ -7,5 +8,10 @@ Page({
         value5: '',
         value6: '',
         value7: ''
-    }
+    },
+  handleIconTap () {
+    $Toast({
+      content: '你点击了图标'
+    });
+  }
 });

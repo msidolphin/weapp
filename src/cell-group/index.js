@@ -13,12 +13,24 @@ Component({
             unlinked () {
                 this._updateIsLastCell();
             }
+        },
+        '../input/index': {
+            type: 'child',
+            linked () {
+                this._updateIsLastCell('../input/index');
+            },
+            linkChanged () {
+                this._updateIsLastCell('../input/index');
+            },
+            unlinked () {
+                this._updateIsLastCell('../input/index');
+            }
         }
     },
 
     methods: {
-        _updateIsLastCell() {
-            let cells = this.getRelationNodes('../cell/index');
+        _updateIsLastCell(c = '../cell/index') {
+            let cells = this.getRelationNodes(c);
             const len = cells.length;
 
             if (len > 0) {
