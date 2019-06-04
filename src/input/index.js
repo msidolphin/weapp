@@ -76,7 +76,10 @@ Component({
             const { detail = {} } = event
             const { value = '' } = detail
             this.setData({ value }, () => {
-                this.triggerEvent('change', event)
+                this.triggerEvent('change', {
+                    value,
+                    event
+                })
             })
         },
 
@@ -97,7 +100,10 @@ Component({
         handleClearValue (event) {
             this.setData({ value: '' }, () => {
                 event.detail.value = ''
-                this.triggerEvent('change', event)
+                this.triggerEvent('change', {
+                    value: '',
+                    event
+                })
             })
         },
 
