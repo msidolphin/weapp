@@ -1,13 +1,13 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/collapse/index",
     "pages/message/index",
     "pages/input/index",
-    "pages/index/index",
     "pages/picker/index",
     "pages/action-sheet/index",
     "pages/modal/index",
     "pages/popup/index",
-    "pages/collapse/index",
     "pages/tabs/index",
     "pages/notice-bar/index",
     "pages/grid/index",

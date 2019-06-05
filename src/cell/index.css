@@ -26,6 +26,9 @@
 }
 .i-cell-icon {
   margin-right: 5px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 .i-cell-icon:empty {
   display: none;
