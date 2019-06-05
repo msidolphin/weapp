@@ -2,6 +2,7 @@
 @import "../styles/_mixins.less";
 @import '../cell/index.less';
 
+
 .i-input-title {
     flex: 0 0 90px;
     width: 90px;
@@ -14,6 +15,21 @@
 .i-cell-ft-icon {
     display: flex;
     margin-right: 10rpx;
+    min-height: 24px;
+    align-items: center;
+    justify-content: center;
+}
+.i-input-input {
+    padding: 1px 0;
+    padding-right: 10rpx;
+    height: auto;
+    font-size: 14px;
+    &-textarea {
+        min-height:1.4rem;
+    }
+}
+.i-input-input-right {
+    text-align: right;
 }
 .i-input-required {
  .i-cell-hd{

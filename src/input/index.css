@@ -9,17 +9,14 @@
   overflow: visible;
 }
 .i-cell::after {
-  content: '';
+  content: ' ';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  transform: scale(0.5);
-  transform-origin: 0 0;
   pointer-events: none;
   box-sizing: border-box;
-  border: 0 solid #e9eaec;
+  transform: scaleY(0.5);
+  border-bottom: 1px solid #e9eaec;
+  left: 0;
+  bottom: 0;
   border-bottom-width: 1px;
   left: 15px;
   right: 0;
@@ -29,6 +26,9 @@
 }
 .i-cell-icon {
   margin-right: 5px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 .i-cell-icon:empty {
   display: none;
@@ -90,4 +90,32 @@
 .i-input-error .i-input-input,
 .i-input-error .i-input-placeholder {
   color: #ff6331;
+}
+.i-cell-ft-icon {
+  display: flex;
+  margin-right: 10rpx;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+.i-input-input {
+  padding: 1px 0;
+  padding-right: 10rpx;
+  height: auto;
+  font-size: 14px;
+}
+.i-input-input-textarea {
+  min-height: 1.4rem;
+}
+.i-input-input-right {
+  text-align: right;
+}
+.i-input-required .i-cell-hd::before {
+  position: absolute;
+  content: '*';
+  font-size: 14px;
+  color: #ff6331;
+}
+.i-input-required .i-cell-hd text {
+  margin-left: 10px;
 }

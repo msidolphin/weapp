@@ -9,3 +9,6 @@
   color: #333333;
   text-align: center;
 }
+page {
+  padding: 10px 0;
+}
