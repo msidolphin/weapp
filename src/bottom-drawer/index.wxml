@@ -1,4 +1,4 @@
-<view class="bottom-drawer" data-y="{{y}}" style="{{styles}};" animation="{{animation}}" bindanimationiteration="handleAnimationEnd">
+<view class="bottom-drawer" data-y="{{y}}" style="{{styles}};" animation="{{animation}}" bindtransitionend="handleAnimationEnd">
     <view class="bottom-drawer-header" data-y="{{y}}" catchtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd">
         <view class="bottom-drawer-header-line"></view>
     </view>
@@ -8,4 +8,4 @@
         </scroll-view>
     </view>
 </view>
-<view class="bottom-drawer-mask {{showMask ? 'is-show' : ''}}" style="{{maskStyle}}" catchtouchmove="doNothing" catchtap="onMaskTap"></view>
+<view class="bottom-drawer-mask {{showMask ? 'is-show' : ''}}" animation="{{backgroundAnimation}}" style="{{maskStyle}}" catchtouchmove="doNothing" catchtap="onMaskTap"></view>

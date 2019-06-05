@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/bottom-drawer/index",
     "pages/index/index",
+    "pages/bottom-drawer/index",
     "pages/input/index",
     "pages/collapse/index",
     "pages/message/index",

@@ -2,6 +2,9 @@ const minAlpha = 0
 const maxAlpha = 0.3
 
 Component({
+
+    properties: {},
+
     data: {
         height: 500, // 限制高度 单位像素 需要转化为rpx
         bottom: 100, // 距离底部100像素
@@ -15,7 +18,9 @@ Component({
         // mask
         opacity: '',
         maskStyle: 'background: rgba(0, 0, 0, 0)',
-        showMask: false
+        showMask: false,
+        backgroundAnimation: null,
+        animation: null
     },
     methods: {
         onTouchStart (e) {
@@ -25,8 +30,6 @@ Component({
             })
             this.setData({
                 animation: null
-            }, () => {
-                console.log(this.data.animation)
             })
         },
         onTouchMove (e) {
@@ -45,7 +48,7 @@ Component({
             this.setData({
                 styles: `transform: translateY(${endY}px)!important;transition: unset!important;`,
                 endY: endY,
-                maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
+                maskStyle: `background: rgba(0, 0, 0, ${opacity})!important;`,
                 showMask: endY !== -this.data.bottom
             })
         },
@@ -56,46 +59,30 @@ Component({
         },
         doNothing () {},
         onScrollToBottom () {
-            console.log('reached bottom')
+            this.triggerEvent('reached-bottom')
         },
-        show () {
-            // let startY = this.data.endY
+        show (duration = 200) {
+            if (this.data.y === -this.data.bottom || this.data.animated) return
             var animation = wx.createAnimation({
-                duration: 200,
+                duration,
                 timingFunction: 'linear',
                 delay: 0
             })
             animation.translate(0, -this.data.bottom).step()
             this.setData({
                 animation: animation.export(),
+                animated: true,
                 y: -this.data.bottom,
                 showMask: false
             })
-            // let once = this.data.bottom / 200
-            // let timer = setInterval(() => {
-            //     let endY = this.data.endY - once
-            //     if (endY <= -this.data.bottom) {
-            //         endY = -this.data.bottom
-            //         clearInterval(timer)
-            //         this.setData({
-            //             y: endY
-            //         })
-            //     }
-            //     let k = (maxAlpha - minAlpha) / this.data.maxY
-            //     let opacity = minAlpha + k * (Math.abs(endY) - 0)
-            //     this.setData({
-            //         styles: `transform: translateY(${endY}px)`,
-            //         endY: endY,
-            //         maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
-            //         showMask: false
-            //     })
-            // }, 1)
         },
         handleAnimationEnd () {
-            console.log('111')
-            
+            this.setData({
+                animated: false
+            })
         },
         hide () {
+            if (this.data.y === 0 || this.data.animated) return
             var animation = wx.createAnimation({
                 duration: 200,
                 timingFunction: 'linear',
@@ -105,51 +92,31 @@ Component({
             this.setData({
                 animation: animation.export(),
                 y: 0,
+                animated: true,
                 showMask: false
             })
-            // if (this.data.endY === 0) return
-            // let startY = this.data.endY
-            // let once = startY / 200
-            // let timer = setInterval(() => {
-            //     let endY = this.data.endY - once
-            //     if (endY >= 0) {
-            //         endY = 0
-            //         clearInterval(timer)
-            //         this.setData({
-            //             y: endY
-            //         })
-            //     }
-            //     let k = (maxAlpha - minAlpha) / this.data.maxY
-            //     let opacity = minAlpha + k * (Math.abs(endY) - 0)
-            //     this.setData({
-            //         styles: `transform: translateY(${endY}px)`,
-            //         endY: endY,
-            //         maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
-            //         showMask: false
-            //     })
-            // }, 1)
         },
         onMaskTap () {
-            // let startY = this.data.endY
-            // let once = startY / 300
-            // let timer = setInterval(() => {
-            //     let endY = this.data.endY - once
-            //     if (endY >= -this.data.bottom) {
-            //         endY = -this.data.bottom
-            //         clearInterval(timer)
-            //         this.setData({
-            //             y: endY
-            //         })
-            //     }
-            //     let k = (maxAlpha - minAlpha) / this.data.maxY
-            //     let opacity = minAlpha + k * (Math.abs(endY) - 0)
-            //     this.setData({
-            //         styles: `transform: translateY(${endY}px)`,
-            //         endY: endY,
-            //         maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
-            //         showMask: endY !== -this.data.bottom
-            //     })
-            // }, 1)
+            if (this.data.y === -this.data.bottom || this.data.animated) return
+            var animation = wx.createAnimation({
+                duration: 200,
+                timingFunction: 'linear',
+                delay: 0
+            })
+            var backgroundAnimation = wx.createAnimation({
+                duration: 200,
+                timingFunction: 'linear',
+                delay: 0
+            })
+            backgroundAnimation.backgroundColor('rgba(0, 0, 0, 0)').step()
+            animation.translate(0, -this.data.bottom).step()
+            this.setData({
+                animation: animation.export(),
+                backgroundAnimation: backgroundAnimation.export(),
+                animated: true,
+                y: -this.data.bottom,
+                showMask: false
+            })
         }
     },
     attached () {
