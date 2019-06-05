@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "Upload 图片上传",
+    "usingComponents": {
+        "i-upload": "../../dist/upload/index"
+    }
+}

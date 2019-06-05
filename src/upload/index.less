@@ -1,0 +1,52 @@
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-image-upload {
+    padding: 0 33rpx;
+    display: flex;
+    align-items: center;
+    flex-flow: wrap;
+    &-item {
+        width: 156rpx;
+        height: 156rpx;
+        margin-right: 20rpx;
+        margin-bottom: 20rpx;
+        border-radius: 6rpx;
+        position: relative;
+        overflow: visible;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        &::before {
+            .hairline();
+            border-width: 1px;
+        }
+        &:nth-child(4n) {
+            margin-right: 0;
+        }
+        image {
+            width:100%;
+            height:100%;
+        }
+        &__del {
+            color: #fff;
+            position:absolute;
+            right: -10rpx;
+            top: -10rpx;
+            width: 40rpx;
+            height: 40rpx;
+            line-height: 40rpx;
+            text-align: center;
+            border-radius: 50%;
+            background-color:rgba(0, 0, 0, 0.5);
+            view {
+                display: flex;
+                width: 40rpx;
+                height: 40rpx;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+}
