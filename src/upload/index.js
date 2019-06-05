@@ -10,7 +10,7 @@ Component({
         },
         sourceType: {
             type: Array,
-            value: ['album']
+            value: ['album', 'camera']
         }
     },
     data: {
