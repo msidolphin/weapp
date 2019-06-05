@@ -5,7 +5,7 @@ Component({
     data: {
         height: 500, // 限制高度 单位像素 需要转化为rpx
         bottom: 100, // 距离底部100像素
-        maxY: 330, // 最大top值 要计算得到
+        maxY: 0, // 最大top值 由计算得到
         speed: 1.25,
         startY: 0, // 移动开始点
         endY: -100, // 移动结束点
@@ -19,10 +19,14 @@ Component({
     },
     methods: {
         onTouchStart (e) {
-            console.log(e)
             let touches = e.touches[0]
             this.setData({
                 startY: touches.pageY
+            })
+            this.setData({
+                animation: null
+            }, () => {
+                console.log(this.data.animation)
             })
         },
         onTouchMove (e) {
@@ -39,7 +43,7 @@ Component({
             let opacity = minAlpha + k * (Math.abs(endY) - 0)
             if (endY === -100) opacity = 0
             this.setData({
-                styles: `transform: translateY(${endY}px)`,
+                styles: `transform: translateY(${endY}px)!important;transition: unset!important;`,
                 endY: endY,
                 maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
                 showMask: endY !== -this.data.bottom
@@ -53,6 +57,77 @@ Component({
         doNothing () {},
         onScrollToBottom () {
             console.log('reached bottom')
+        },
+        show () {
+            // let startY = this.data.endY
+            var animation = wx.createAnimation({
+                duration: 200,
+                timingFunction: 'linear',
+                delay: 0
+            })
+            animation.translate(0, -this.data.bottom).step()
+            this.setData({
+                animation: animation.export(),
+                y: -this.data.bottom,
+                showMask: false
+            })
+            // let once = this.data.bottom / 200
+            // let timer = setInterval(() => {
+            //     let endY = this.data.endY - once
+            //     if (endY <= -this.data.bottom) {
+            //         endY = -this.data.bottom
+            //         clearInterval(timer)
+            //         this.setData({
+            //             y: endY
+            //         })
+            //     }
+            //     let k = (maxAlpha - minAlpha) / this.data.maxY
+            //     let opacity = minAlpha + k * (Math.abs(endY) - 0)
+            //     this.setData({
+            //         styles: `transform: translateY(${endY}px)`,
+            //         endY: endY,
+            //         maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
+            //         showMask: false
+            //     })
+            // }, 1)
+        },
+        handleAnimationEnd () {
+            console.log('111')
+            
+        },
+        hide () {
+            var animation = wx.createAnimation({
+                duration: 200,
+                timingFunction: 'linear',
+                delay: 0
+            })
+            animation.translate(0, 0).step()
+            this.setData({
+                animation: animation.export(),
+                y: 0,
+                showMask: false
+            })
+            // if (this.data.endY === 0) return
+            // let startY = this.data.endY
+            // let once = startY / 200
+            // let timer = setInterval(() => {
+            //     let endY = this.data.endY - once
+            //     if (endY >= 0) {
+            //         endY = 0
+            //         clearInterval(timer)
+            //         this.setData({
+            //             y: endY
+            //         })
+            //     }
+            //     let k = (maxAlpha - minAlpha) / this.data.maxY
+            //     let opacity = minAlpha + k * (Math.abs(endY) - 0)
+            //     this.setData({
+            //         styles: `transform: translateY(${endY}px)`,
+            //         endY: endY,
+            //         maskStyle: `background: rgba(0, 0, 0, ${opacity})`,
+            //         showMask: false
+            //     })
+            // }, 1)
         },
         onMaskTap () {
             // let startY = this.data.endY

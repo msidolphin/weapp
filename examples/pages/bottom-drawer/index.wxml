@@ -1,5 +1,5 @@
 <view wx:for="{{100}}" wx:key="{{item}}">{{item}}</view>
-<i-bottom-drawer>
+<i-bottom-drawer id="drawer">
   <view style='padding:20px;'>
     <view wx:for="{{200}}" wx:key="{{item}}">列表项{{item + 1}}</view>
   </view>
