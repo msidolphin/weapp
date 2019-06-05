@@ -63,6 +63,10 @@ Component({
         value: {
             type: String,
             value: ''
+        },
+        iconColor: {
+            type: String,
+            value: '#80848f'
         }
     },
 
