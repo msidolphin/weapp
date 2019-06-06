@@ -1,0 +1,24 @@
+<view class="i-class i-image-upload span-{{span}}">
+    <view class="i-image-upload-item"
+        style="width:{{$span}}%;padding-bottom:{{$span}}%;"
+        wx:for="{{imgList}}" wx:key="{{index}}" data-url="{{imgList[index]}}">
+        <view class="inner" bindtap="viewImage" >
+            <image src='{{imgList[index]}}' mode='aspectFill'></image>
+            <view class="i-image-upload-item__del" catchtap="delImage" data-index="{{index}}">
+                <view><i-icon i-class="close-btn" type="close" size="12"></i-icon></view>
+            </view>
+        </view>
+    </view>
+    <view class="i-image-upload-item  i-image-upload__btn" style="width:{{$span}}%;padding-bottom:{{$span}}%;" wx:if="{{imgList.length < limit}}">
+        <view class="inner" bindtap="chooseImage">
+            <i-icon type="camera" size="32" color="#80848f"></i-icon>
+        </view>
+    </view>
+</view>
+
+
+<!-- <view class="i-grid i-class" bindtap="tapGrid">
+    <view bindtap="tapGridItem" class="i-grid-item i-class-grid {{index%rowNum !== rowNum-1 &&(showBorder||showColBorder) ? 'side-grid':''}} {{(index<gridItems.length-(gridItems.length%rowNum||rowNum)) &&(showBorder||showRowBorder)? 'center-grid':''}}" wx:for="{{gridItems}}" wx:key="{{item.key}}" style="min-width:{{100/rowNum}}%;" data-index="{{index}}">
+        <slot name="{{item.key}}"></slot>
+    </view>
+</view> -->

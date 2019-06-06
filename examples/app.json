@@ -1,7 +1,7 @@
 {
   "pages": [
+    "pages/image-picker/index",
     "pages/index/index",
-    "pages/upload/index",
     "pages/bottom-drawer/index",
     "pages/input/index",
     "pages/collapse/index",

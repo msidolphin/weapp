@@ -1,5 +1,14 @@
 Component({
+    externalClasses: ['i-class'],
+
     properties: {
+        span: {
+            type: [Number, String],
+            value: 4,
+            observer () {
+                this.setSpan()
+            }
+        },
         limit: {
             type: Number,
             value: 4
@@ -13,10 +22,18 @@ Component({
             value: ['album', 'camera']
         }
     },
+    
     data: {
-        imgList: []
+        imgList: [],
+        $span: '25'
     },
+
     methods: {
+        setSpan () {
+            this.setData({
+                $span: ((1 / Number(this.data.span)) * 100).toFixed(2)
+            })
+        },
         viewImage (e) {
             wx.previewImage({
                 urls: this.data.imgList,
@@ -55,6 +72,15 @@ Component({
         },
         emitChange () {
             this.triggerEvent('change', {value: this.data.imgList})
+        },
+        clear () {
+            this.setData({
+                imgList: []
+            })
         }
+    },
+    
+    attached () {
+        this.setSpan()
     }
 })

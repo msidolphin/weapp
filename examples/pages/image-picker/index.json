@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "ImagePicker 图片选择",
+    "usingComponents": {
+        "i-image-picker": "../../dist/image-picker/index"
+    }
+}

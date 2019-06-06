@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Button 按钮",
+  "navigationBarTitleText": "Bottom-Drawer 上拉抽屉",
   "usingComponents": {
     "i-bottom-drawer": "../../dist/bottom-drawer/index"
   }

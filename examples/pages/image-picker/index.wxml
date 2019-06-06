@@ -1,0 +1,3 @@
+<i-image-picker bind:change="onChange"/>
+
+<i-image-picker span="{{3}}"  bind:change="onChange"/>

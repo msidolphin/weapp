@@ -59,7 +59,7 @@
         <i-cell title="Switch 开关" is-link url="/pages/switch/index"></i-cell>
         <i-cell title="Rate 评分" is-link url="/pages/rate/index"></i-cell>
         <i-cell title="InputNumber 数字输入框" is-link url="/pages/input-number/index"></i-cell>
-        <i-cell title="Upload 图片上传" is-link url="/pages/upload/index"></i-cell>
+        <i-cell title="ImagePicker 图片选择" is-link url="/pages/image-picker/index"></i-cell>
     </i-cell-group>
 </i-panel>
 <i-panel title="模态容器">
