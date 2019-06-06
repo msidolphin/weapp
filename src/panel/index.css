@@ -6,6 +6,9 @@
   line-height: 1;
   color: #1c2438;
   padding: 20px 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .i-panel-title-hide-top {
   padding-top: 0;

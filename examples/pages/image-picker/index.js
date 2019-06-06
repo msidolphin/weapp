@@ -1,5 +1,16 @@
 Page({
+  data: {
+    value1: '',
+    imageList: []
+  },
   onChange (e) {
-    console.log(e.detail.value)
+    this.setData({
+      imageList: e.detail.value
+    })
+  },
+  onValue1Change (e) {
+    this.setData({
+      value1: e.detail.value
+    })
   }
 })

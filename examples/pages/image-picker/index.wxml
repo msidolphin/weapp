@@ -1,3 +1,16 @@
-<i-image-picker bind:change="onChange"/>
-
-<i-image-picker span="{{3}}"  bind:change="onChange"/>
+<i-panel title="问题和意见" label="{{value1.length}} / 200">
+  <view class="textarea">
+    <textarea value="{{value}}" auto-height placeholder="请填写问题和意见（不超过200字符）" maxlength='200' bindinput="onValue1Change"></textarea>
+  </view>
+</i-panel>
+<i-panel title="图片（选填，提供问题截图）" label="{{imageList.length}} / 9">
+  <view class="image-picker">
+    <i-image-picker bind:change="onChange" limit="{{9}}" backgroundColor="#EDEDED"/>
+  </view>
+</i-panel>
+<i-panel title="联系电话">
+  <view class='input'>
+    <input placeholder="请填写您的联系电话便于我们与您联系" maxlength='11'/>
+  </view>
+</i-panel>
+<i-button type="primary">提交</i-button>

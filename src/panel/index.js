@@ -6,6 +6,10 @@ Component({
             type: String,
             value: ''
         },
+        label: {
+            type: String,
+            value: ''
+        },
         // 标题顶部距离
         hideTop: {
             type: Boolean,

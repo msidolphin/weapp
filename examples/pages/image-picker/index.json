@@ -1,6 +1,8 @@
 {
     "navigationBarTitleText": "ImagePicker 图片选择",
     "usingComponents": {
-        "i-image-picker": "../../dist/image-picker/index"
+        "i-image-picker": "../../dist/image-picker/index",
+        "i-panel": "../../dist/panel/index",
+        "i-button": "../../dist/button/index"
     }
 }

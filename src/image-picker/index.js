@@ -20,6 +20,10 @@ Component({
         sourceType: {
             type: Array,
             value: ['album', 'camera']
+        },
+        backgroundColor: {
+            type: String,
+            value: '#fff'
         }
     },
     
@@ -42,7 +46,7 @@ Component({
         },
         chooseImage () {
             wx.chooseImage({
-                count: this.data.limit, // 默认 4
+                count: this.data.limit - this.data.imgList.length, // 默认 4
                 sizeType: this.data.sizeType, //可以指定是原图还是压缩图，默认二者都有
                 sourceType: this.data.sourceType, //从相册选择
                 success: (res) => {
