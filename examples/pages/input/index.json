@@ -5,6 +5,7 @@
     "i-button": "../../dist/button/index",
     "i-panel": "../../dist/panel/index",
     "i-cell-group": "../../dist/cell-group/index",
-    "i-toast": "../../dist/toast/index"
+    "i-toast": "../../dist/toast/index",
+    "i-picker": "../../dist/picker/index"
   }
 }

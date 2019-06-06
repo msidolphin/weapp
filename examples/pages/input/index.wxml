@@ -1,8 +1,16 @@
 <i-panel title="基础用法">
   <i-cell-group>
     <i-input required value="{{ value1 }}" title="收货人" placeholder="名字" bind:change="onChange"  />
-    <i-input value="{{ value2 }}" right type="number" title="联系电话" placeholder="请输入手机号" />
+    <i-input value="{{ value2 }}" type="number" title="联系电话" placeholder="请输入手机号" />
     <i-input value="{{ value3 }}" type="textarea" title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
+    <i-input title="性别" custom>
+      <radio-group bindchange="onGenderChange">
+        <label class="checkbox" wx:for="{{gender}}">
+          <radio value="{{item.name}}" color="#ffb700" checked="{{chekced === item.name}}"/>{{item.value}}
+        </label>
+      </radio-group>
+    </i-input>
+    <i-input value="{{text}}" bind:click="openPicker" show-arrow title="地区" disabled />
     <i-input value="{{ value4 }}" title="用户信息" disabled />
     <i-input disabled title="消息通知">
      <switch slot="extra"></switch>
@@ -31,3 +39,5 @@
 </i-panel>
 
 <i-toast id="toast" />
+
+<i-picker title="选择地区" visible="{{visible}}" value="{{region}}" mode="region" bind:change="onPickerChange" bind:close="onPickerClose"></i-picker>

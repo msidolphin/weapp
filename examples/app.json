@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/input/index",
     "pages/image-picker/index",
     "pages/bottom-drawer/index",
-    "pages/input/index",
     "pages/collapse/index",
     "pages/message/index",
     "pages/picker/index",

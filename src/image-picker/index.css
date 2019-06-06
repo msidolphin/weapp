@@ -26,7 +26,7 @@
   right: 20rpx;
   left: 0;
   bottom: 20rpx;
-  border-right: 6rpx;
+  border-radius: 6rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,6 +35,7 @@
 .i-image-upload-item image {
   width: 100%;
   height: 100%;
+  border-radius: 6rpx;
 }
 .i-image-upload-item__del {
   color: #fff;
