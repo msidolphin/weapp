@@ -67,6 +67,14 @@ Component({
         iconColor: {
             type: String,
             value: '#80848f'
+        },
+        showArrow: {
+            type: Boolean,
+            value: false
+        },
+        custom: {
+            type: Boolean,
+            value: false
         }
     },
 

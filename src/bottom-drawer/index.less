@@ -6,24 +6,26 @@
     transform: translateY(-30px);
     background: #fff;
     z-index: 2001;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    box-shadow:0px 4rpx 6rpx 2rpx rgba(0,0,0,0.2);
+    border-top-left-radius: 60rpx;
+    border-top-right-radius: 60rpx;
     &.animated {
         transition: .3s all;
     }
     &-header {
-        height: 30px;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        display: flex;
-        justify-content: center;
+        position: relative;
+        min-height: 72rpx;
+        border-top-left-radius: 60rpx;
+        border-top-right-radius: 60rpx;
         &-line {
-            position: relative;
-            top: 20rpx;
-            width: 100rpx;
-            background: #ccc;
-            height: 4px;
-            border-radius: 2px;
+            position: absolute;
+            top: 35rpx;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126rpx;
+            height: 12rpx;
+            background:rgba(247,247,247,1);
+            border-radius: 6rpx;
         }
     }
     &-body {

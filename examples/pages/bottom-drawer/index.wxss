@@ -3,3 +3,9 @@ page {
   color: #fff;
   background: rgba(0, 0, 0, 0.5);
 }
+
+.title {
+  font-size: 28rpx;
+  color: #333;
+  padding: 36rpx 42rpx 24rpx 42rpx;
+}

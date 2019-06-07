@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/bottom-drawer/index",
+    "pages/list/index",
     "pages/index/index",
     "pages/input/index",
     "pages/image-picker/index",
-    "pages/bottom-drawer/index",
     "pages/collapse/index",
     "pages/message/index",
     "pages/picker/index",
@@ -18,7 +19,6 @@
     "pages/color/index",
     "pages/button/index",
     "pages/card/index",
-    "pages/list/index",
     "pages/panel/index",
     "pages/layout/index",
     "pages/alert/index",

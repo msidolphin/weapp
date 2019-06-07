@@ -3,11 +3,25 @@ const maxAlpha = 0.3
 
 Component({
 
-    properties: {},
+    options: {
+        multipleSlots: true
+    },
 
+    properties: {
+        amend: { // 修正高度
+            type: Number,
+            value: 0
+        },
+        height: {
+            type: Number,
+            value: 500
+        },
+        bottom: {
+            type: Number,
+            value: 100
+        }
+    },
     data: {
-        height: 500, // 限制高度 单位像素 需要转化为rpx
-        bottom: 100, // 距离底部100像素
         maxY: 0, // 最大top值 由计算得到
         speed: 1.25,
         startY: 0, // 移动开始点
@@ -119,31 +133,22 @@ Component({
             })
         }
     },
-    attached () {
+    ready () {
         wx.getSystemInfo({
             success: (res) => {
-                let windowHeight = res.windowHeight
-                // 固定高
-                let height = this.data.height <= windowHeight ? this.data.height : windowHeight
-                this.setData({
-                    maxY:  height,
-                    scrollViewStyle: `height: ${height - 30}px;` // 减去头部的高度
+                const query = this.createSelectorQuery()
+                query.select('#header').boundingClientRect()
+                query.exec(qRes => {
+                    let windowHeight = res.windowHeight - this.data.amend
+                    let headerHeight = qRes.length ? qRes[0].height : 30
+                    // 固定高
+                    let height = this.data.height <= windowHeight ? this.data.height : windowHeight
+                    this.setData({
+                        maxY:  height,
+                        headerHeight: headerHeight,
+                        scrollViewStyle: `height: ${height - headerHeight}px;` // 减去头部的高度
+                    })
                 })
-                // 动态高
-                // setTimeout(() => {
-                //     const query = this.createSelectorQuery()
-                //     query.select('.bottom-drawer').boundingClientRect()
-                //     query.exec(res => {
-                //         if (res && res[0]) {
-                //             console.log(res[0].height)
-                //             let height = res[0].height < windowHeight ? res[0].height : windowHeight
-                //             this.setData({
-                //                 maxY:  height,
-                //                 scrollViewStyle: `height: ${height - 30}px;`,
-                //             })
-                //         }
-                //     })
-                // }, 0)
             }
         })
     }
