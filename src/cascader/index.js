@@ -12,7 +12,7 @@ let region = JSON.parse(JSON.stringify(area))
 const CN = '86'
 const REGION = 'region'
 
-// // 处理地区
+// 处理地区
 let province = region[CN]
 function mapToTree(areas) {
     if (!areas) return
@@ -143,7 +143,7 @@ Component({
             return [$options, ...result]
         },
         getMenus(activeValue = [], hasChildren) {
-            const { $options, chooseTitle } = this.data
+            const { chooseTitle } = this.data
             const activeOptions = this.getActiveOptions(activeValue)
 
             if (hasChildren) {
@@ -167,7 +167,6 @@ Component({
             return activeValue
         },
         updated(currentOptions, optionIndex, condition, callback) {
-            // debugger
             const value = this.getFieldName('value')
             const children = this.getFieldName('children')
             const hasChildren = currentOptions[children] && currentOptions[children].length > 0
@@ -233,7 +232,7 @@ Component({
             }
         },
         /**
-         * 点击菜单时的回调函数
+         * @description 点击菜单时的回调函数
          */
         onMenuClick(e) {
             const { menuIndex } = e.currentTarget.dataset
@@ -246,7 +245,7 @@ Component({
             })
         },
         /**
-         * 点击选项时的回调函数
+         * @description 点击选项时的回调函数
          */
         onItemSelect(e) {
             // debugger
@@ -258,20 +257,20 @@ Component({
             this.updated(item, optionIndex, !this.data.controlled)
         },
         /**
-         * 组件关闭时的回调函数
+         * @description 组件关闭时的回调函数
          */
         onPopupClose() {
             this.triggerEvent('close')
         },
         /**
-         * 点击确认
+         * @description 点击确认
          */
         onConfirm () {
             this.onChange(this.getCurrentOptions(), this.data.activeOptions, this.data.done)
             this.handleClickCancel()
         },
         /**
-         * 选择完成时的回调函数
+         * @description 选择完成时的回调函数
          */
         onChange(currentOptions = {}, activeOptions = [], done = false) {
             const options = activeOptions.filter((n) => n[this.getFieldName('value')] !== I_CASCADER)
@@ -303,7 +302,9 @@ Component({
             let touches = e.touches[0]
             this.setData({
                 startX: touches.pageX,
-                startY: touches.pageY
+                startY: touches.pageY,
+                moveX: 0,
+                moveY: 0
             })
         },
         onTouchMove (e) {
@@ -312,7 +313,7 @@ Component({
             let moveY = touches.pageY - this.data.startY
             this.setData({
                 moveX: this.data.moveX + moveX,
-                moveY
+                moveY: this.data.moveY + moveY
             })
         },
         onTouchEnd () {
@@ -328,7 +329,7 @@ Component({
                         value += 50
                         if (value >= 0) value = 0
                     } else {
-                        // '左滑动'
+                        // 左滑动
                         value -= 50
                         let min = (this.data.showOptions.length - 2) * -50
                         if (value <= -min) value = min

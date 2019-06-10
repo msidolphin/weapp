@@ -25,7 +25,7 @@
                                     bindtap="onItemSelect"
                                 >
                                     <text>{{ item[fieldNames['label']] }}</text>
-                                    <i-icon i-class="i-cascader__icon" wx:if="{{ activeValue[optionIndex] === item[fieldNames['value']] }}" type="right" size="16" color="#ffb700"/>
+                                    <i-icon i-class="i-cascader__icon" wx:if="{{ activeValue[optionIndex] === item[fieldNames['value']] }}" type="success_fill" size="18" color="#ffb700"/>
                                 </view>
                             </block>
                         </view>

@@ -1,4 +1,4 @@
-<view id="drawer" class="bottom-drawer" data-y="{{y}}" style="{{styles}};" animation="{{animation}}" bindtransitionend="handleAnimationEnd">
+<view id="drawer" class="i-class bottom-drawer" data-y="{{y}}" style="{{styles}};" animation="{{animation}}" bindtransitionend="handleAnimationEnd">
     <view class="bottom-drawer-header" id="header" data-y="{{y}}" catchtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd">
         <slot name="header"></slot>
         <view class="bottom-drawer-header-line"></view>

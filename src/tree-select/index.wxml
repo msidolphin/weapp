@@ -1,0 +1,45 @@
+<wxs module="wsx">
+    var isSelected = function (list, item, key = 'id') {
+        if (list.length !== undefined ) {
+            var index = -1
+            for (var i = 0; i < list.length; ++i) {
+                var e = list[i]
+                if (e[key] === item[key]) {
+                    index = i
+                    break
+                }
+            }
+            return index !== -1
+        } else {
+            return item[key] === list[key]
+        }
+    }
+    module.exports.isSelected = isSelected
+</wxs>
+
+<view class="i-tree-select">
+    <!-- 一级导航 -->
+    <view class="i-tree-select-nav">
+        <!-- 字段后期适配 -->
+        <view wx:for="{{options}}"
+            wx:key="item.id"
+            class="i-tree-select-nav-item {{activeNavIndex === index ? 'i-tree-select-nav-item--active' : ''}}"
+            data-index="{{index}}"
+            data-children="{{item.children}}"
+            bindtap="onNavItemTap">
+            <text class="i-tree-select-nav-item__label">{{item.label}}</text>
+        </view>
+    </view>
+    <!-- 二级 -->
+    <view class="i-tree-select-content">
+        <view wx:for="{{children}}"
+            wx:key="{{item.id}}"
+            class="i-tree-select-content-item {{wsx.isSelected(select, item) ? 'i-tree-select-content-item--active' : ''}}"
+            data-item="{{item}}"
+            data-selected="{{wsx.isSelected(select, item)}}"
+            bindtap="onItemSelected">
+            <text class="i-tree-select-content-item__label">{{item.label}}</text>
+            <i-icon i-class="i-tree-select-content-item__icon" type="success_fill" size="18" color="#ffb700"/>
+        </view>
+    </view>
+</view>

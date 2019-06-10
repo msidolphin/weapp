@@ -1,0 +1,80 @@
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-tree-select {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    height: 270px;
+    &-nav {
+        flex: 1;
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        background: @background-color-base;
+        &-item {
+            position: relative;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px 0 10px;
+            box-sizing: border-box;
+            background: transparent;
+            .ellipsis();
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 4px;
+                background: @primary-color;
+                height: 100%;
+                opacity: 0;
+                transform: scale(0);
+                transition: .3s all;
+            }
+            &::after {
+                .hairline();
+                border-bottom-width: 1px;
+            }
+            &--active {
+                &::before {
+                    opacity: 1;
+                    transform: scale(1)
+                }
+                color: @primary-color;
+                background: #fff;
+            }
+            &__label {}
+        }
+    }
+    &-content {
+        flex: 2;
+        background: #fff;
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        &-item {
+            position: relative;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            .ellipsis();
+            &::after {
+                .hairline();
+                border-bottom-width: 1px;
+            }
+            &__icon {
+                visibility: hidden;
+            }
+            &--active {
+                color: @primary-color;
+                .i-tree-select-content-item__icon {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
