@@ -80,7 +80,14 @@ Component({
         options: { // options 转化为 $options 全部处理
             type: Array,
             value: [],
-            observer: 'getCurrentOptions',
+            observer (val) {
+                this.setData({
+                    $options: val
+                })
+                wx.nextTick(() => {
+                    this.getCurrentOptions()
+                })
+            },
         },
         chooseTitle: {
             type: String,
@@ -109,7 +116,8 @@ Component({
         startX: 0,
         startY: 0,
         moveX: 0, // 一次滑动的距离
-        threshold: 30,
+        threshold: 20,
+        yThreshold: 100,
         animation: null,
         endX: 0,
         currentOptions: {},
@@ -303,13 +311,13 @@ Component({
             let moveX = touches.pageX - this.data.startX
             let moveY = touches.pageY - this.data.startY
             this.setData({
-                moveX,
+                moveX: this.data.moveX + moveX,
                 moveY
             })
         },
         onTouchEnd () {
             // 上下滑动不处理
-            if (Math.abs(this.data.moveY) > this.data.threshold) return
+            if (Math.abs(this.data.moveY) > this.data.yThreshold) return
             let moveX = this.data.moveX
             if (Math.abs(this.data.moveX) > this.data.threshold) {
                 let match = this.data.bodyStyle.match(new RegExp('translate' +'\\((-?[\\d\\.]+)%\\)'))
@@ -327,7 +335,9 @@ Component({
                     }
                     const bodyStyle = `transform: translate(${value}%)`
                     this.setData({
-                        bodyStyle
+                        bodyStyle,
+                        moveX: 0,
+                        moveY: 0
                     })
                 }
             }
