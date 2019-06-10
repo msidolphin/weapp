@@ -1,1 +1,5 @@
-<i-cascader title="所在地区" mode="region" />
+
+<i-cell-group>
+    <i-cell title="地区" bind:click="openRegion" is-link value="{{labels}}"></i-cell>
+</i-cell-group>
+<i-cascader visible="{{visible}}" default-value="{{value}}" title="所在地区" mode="region" bind:change="onChange" bind:close="onRegionClose"/>

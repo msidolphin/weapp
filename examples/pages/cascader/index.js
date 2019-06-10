@@ -5,7 +5,27 @@ Page({
    * 页面的初始数据
    */
   data: {
+    visible: true,
+    value: ['440000', '440400', '440404'],
+    labels: '广东省/珠海市/金湾区'
+  },
 
+  openRegion () {
+    this.setData({
+      visible: true
+    })
+  },
+
+  onRegionClose () {
+    this.setData({
+      visible: false
+    })
+  },
+
+  onChange (e) {
+    this.setData({
+      labels: e.detail.options.map(o => o.label).join('/')
+    })
   },
 
   /**

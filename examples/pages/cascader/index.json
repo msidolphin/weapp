@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "Cascader 级联选择器",
   "usingComponents": {
-    "i-cascader": "../../dist/cascader/index"
+    "i-cascader": "../../dist/cascader/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index"
   }
 }

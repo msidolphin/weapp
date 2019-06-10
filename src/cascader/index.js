@@ -52,6 +52,10 @@ function arrayTreeFilter(data, filterFn, options) {
 Component({
     externalClasses: ['i-class'],
     properties: {
+        visible: {
+            type: Boolean,
+            value: true
+        },
         defaultValue: {
             type: Array,
             value: [],
@@ -101,9 +105,20 @@ Component({
         activeValue: [],
         showOptions: [],
         fieldNames: {},
-        $options: []
+        $options: [],
+        startX: 0,
+        startY: 0,
+        moveX: 0, // 一次滑动的距离
+        threshold: 30,
+        animation: null,
+        endX: 0,
+        currentOptions: {},
+        done: false
     },
     methods: {
+        handleClickCancel () {
+            this.triggerEvent('close')
+        },
         doNothing () {},
         getActiveOptions(activeValue) {
             const { $options } = this.data
@@ -157,6 +172,7 @@ Component({
                 activeOptions,
                 activeIndex,
                 showOptions,
+                done: hasChildren
             }
 
             // 判断 hasChildren 计算需要更新的数据
@@ -165,11 +181,12 @@ Component({
                 params.showOptions = showOptions
             }
 
+            if (!hasChildren) params.done = true
+
             // 判断是否需要 setData 更新数据
             if (condition) {
                 this.setData(params)
             }
-
             // 回调函数
             if (typeof callback === 'function') {
                 callback.call(this, currentOptions, activeOptions, !hasChildren)
@@ -229,13 +246,21 @@ Component({
             // 判断是否禁用
             if (!item || item.disabled) return
             // updated
-            this.updated(item, optionIndex, !this.data.controlled, this.onChange)
+            // this.updated(item, optionIndex, !this.data.controlled, this.onChange)
+            this.updated(item, optionIndex, !this.data.controlled)
         },
         /**
          * 组件关闭时的回调函数
          */
         onPopupClose() {
             this.triggerEvent('close')
+        },
+        /**
+         * 点击确认
+         */
+        onConfirm () {
+            this.onChange(this.getCurrentOptions(), this.data.activeOptions, this.data.done)
+            this.handleClickCancel()
         },
         /**
          * 选择完成时的回调函数
@@ -259,12 +284,54 @@ Component({
 
             // 当选择完成时关闭组件
             if (params.done) {
-                this.onPopupClose()
+                // this.onPopupClose()
             }
         },
         getFieldName(name) {
             return this.data.fieldNames[name]
         },
+        // 横向滚动相关
+        onTouchStart (e) {
+            let touches = e.touches[0]
+            this.setData({
+                startX: touches.pageX,
+                startY: touches.pageY
+            })
+        },
+        onTouchMove (e) {
+            let touches = e.touches[0]
+            let moveX = touches.pageX - this.data.startX
+            let moveY = touches.pageY - this.data.startY
+            this.setData({
+                moveX,
+                moveY
+            })
+        },
+        onTouchEnd () {
+            // 上下滑动不处理
+            if (Math.abs(this.data.moveY) > this.data.threshold) return
+            let moveX = this.data.moveX
+            if (Math.abs(this.data.moveX) > this.data.threshold) {
+                let match = this.data.bodyStyle.match(new RegExp('translate' +'\\((-?[\\d\\.]+)%\\)'))
+                if (match && match.length > 0) {
+                    let value = Number(match[1])
+                    if (moveX > this.data.startX) {
+                        // 右滑动
+                        value += 50
+                        if (value >= 0) value = 0
+                    } else {
+                        // '左滑动'
+                        value -= 50
+                        let min = (this.data.showOptions.length - 2) * -50
+                        if (value <= -min) value = min
+                    }
+                    const bodyStyle = `transform: translate(${value}%)`
+                    this.setData({
+                        bodyStyle
+                    })
+                }
+            }
+        }
     },
     attached() {
         if (this.data.mode === REGION) {
@@ -274,7 +341,6 @@ Component({
         }
         const { defaultValue, value, controlled } = this.data
         const activeValue = controlled ? value : defaultValue
-        // console.log(activeValue)
         const fieldNames = Object.assign({}, defaultFieldNames, this.data.defaultFieldNames)
 
         this.setData({ activeValue, fieldNames }, () => this.getCurrentOptions(activeValue))
