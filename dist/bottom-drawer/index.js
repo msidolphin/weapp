@@ -2,11 +2,10 @@ const minAlpha = 0
 const maxAlpha = 0.3
 
 Component({
-
+    externalClasses: ['i-class'],
     options: {
         multipleSlots: true
     },
-
     properties: {
         amend: { // 修正高度
             type: Number,
@@ -30,7 +29,6 @@ Component({
         scrollViewStyle: '',
         styles: 'transform: translateY(-100px)',
         // mask
-        opacity: '',
         maskStyle: 'background: rgba(0, 0, 0, 0)',
         showMask: false,
         backgroundAnimation: null,
