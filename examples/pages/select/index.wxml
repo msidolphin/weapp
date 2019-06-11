@@ -1,0 +1,8 @@
+<i-cell-group>
+  <i-cell title="单选" bind:click="open" is-link value="{{labels}}"></i-cell>
+  <i-cell title="多选" bind:click="openMultiple"  is-link value="{{multipleLables}}"></i-cell>
+</i-cell-group>
+
+<i-select title="单选" visible="{{visible}}" default-value="{{value}}" bind:close="onClose" bind:change="onChange" options="{{options}}"></i-select>
+<i-select title="多选" visible="{{multipleVisible}}" multiple default-value="{{multipleValue}}" bind:close="onMultipleClose"
+ bind:change="onMultipleChange" options="{{options}}"></i-select>

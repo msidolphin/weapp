@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "Select 选择器",
+  "usingComponents": {
+    "i-select": "../../dist/select/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index"
+  }
+}

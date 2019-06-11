@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/select/index",
     "pages/tree-select/index",
     "pages/cascader/index",
     "pages/bottom-drawer/index",

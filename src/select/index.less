@@ -1,0 +1,79 @@
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-select {
+    font-size: 14px;
+    &-title {
+        position: relative;
+		display: flex;
+		height: 44px;
+        align-items: center;
+        background: #fff;
+		&__action {
+			width: 0;
+            flex: 0 0 120rpx;
+			padding: 0 10px;
+			height: 44px;
+			line-height: 44px;
+			text-align: center;
+			box-sizing: border-box;
+			font-size: 14px;
+			&.primary {
+				color: @primary-color;
+			}
+		}
+		&__title {
+			flex: 1;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			box-sizing: border-box;
+		}
+		&::after {
+			.hairline();
+			border-bottom-width: 1px;
+		}
+    }
+    &-options {
+        height: 270px;
+        background: #fff;
+        &-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 44px;
+            justify-content: space-between;
+            padding: 0 15px;
+            box-sizing: border-box;
+            .ellipsis();
+            &::after {
+                .hairline();
+                border-bottom-width: 1px;
+            }
+            &__label {
+                flex: 1;
+                .ellipsis();
+            }
+            &__icon {
+                flex: 0 0 32px;
+                width: 32px;
+                text-align: right;
+                visibility: hidden;
+            }
+            &--active {
+                color: @primary-color;
+                .i-select-options-item__icon {
+                    visibility: visible;
+                }
+            }
+            &--disabled {
+                color: @btn-disable-color ;
+                .i-select-options-item__icon {
+                    color: @btn-disable-color!important;
+                }
+            }
+        }
+    }
+}

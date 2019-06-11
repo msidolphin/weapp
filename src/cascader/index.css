@@ -105,7 +105,7 @@
   background-color: #f5f5f5;
 }
 .i-cascader__scroll-view {
-  max-height: 270px;
+  height: 270px;
 }
 .i-cascader__option {
   width: 100%;

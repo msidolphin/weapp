@@ -62,6 +62,7 @@
         <i-cell title="ImagePicker 图片选择" is-link url="/pages/image-picker/index"></i-cell>
         <i-cell title="Cascader 级联选择器" is-link url="/pages/cascader/index"></i-cell>
         <i-cell title="TreeSelect 树选择器" is-link url="/pages/tree-select/index"></i-cell>
+        <i-cell title="Select 选择器" is-link url="/pages/select/index"></i-cell>
     </i-cell-group>
 </i-panel>
 <i-panel title="模态容器">

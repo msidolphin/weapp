@@ -124,7 +124,7 @@ Component({
         getNormalizedValue (values) {
             if (!values) return []
             // 防止传递错误格式
-            if (!this.data.multiple && values.length) values = values[0]
+            if (!this.data.multiple && Array.isArray(values)) values = values[0]
             let select = []
             // let notExistsItems = this.data.notExistsItems
             if (Array.isArray(values)) {
