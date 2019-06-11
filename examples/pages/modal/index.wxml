@@ -7,11 +7,18 @@
 </view>
 
 <i-modal title="标题" visible="{{ visible1 }}" bind:ok="handleClose1" bind:cancel="handleClose1">
+  <scroll-view scroll-y style='height:150px;'>
     <view>一些文本</view>
     <view>一些文本</view>
     <view>一些文本</view>
     <view>一些文本</view>
     <view>一些文本</view>
+    <view>一些文本</view>
+    <view>一些文本</view>
+    <view>一些文本</view>
+    <view>一些文本</view>
+    <view>一些文本</view>
+  </scroll-view>
 </i-modal>
 
 <i-modal visible="{{ visible2 }}" bind:ok="handleClose2" bind:cancel="handleClose2">

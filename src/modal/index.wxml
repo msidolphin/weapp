@@ -1,8 +1,8 @@
 <i-popup visible="{{visible}}" bind:close="handleClickCancel">
-    <view class="i-modal-main">
+    <view class="i-class i-modal-main">
         <view class="i-modal-content">
             <view class="i-modal-title" catchtouchmove="true" wx:if="{{ title }}">{{ title }}</view>
-            <view class="i-modal-body"><slot></slot></view>
+            <view class="i-modal-body" catchtouchmove="doNothing"><slot></slot></view>
             <view class="i-modal-actions" catchtouchmove="true" wx:if="{{ actions.length }}">
                 <block wx:if="{{ actionMode === 'horizontal' }}">
                     <view style="display:flex;">

@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/select/index",
+    "pages/modal/index",
     "pages/tree-select/index",
     "pages/cascader/index",
     "pages/bottom-drawer/index",
@@ -12,7 +13,6 @@
     "pages/message/index",
     "pages/picker/index",
     "pages/action-sheet/index",
-    "pages/modal/index",
     "pages/popup/index",
     "pages/tabs/index",
     "pages/notice-bar/index",

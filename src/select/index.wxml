@@ -18,7 +18,7 @@
 </wxs>
 
 <i-popup direction="bottom" visible="{{visible}}" bind:close="handleClickCancel">
-    <view class="i-class i-select">
+    <view class="i-class i-select" catchtouchmove="doNothing">
         <view class="i-select-title">
             <view class="i-select-title__action" bindtap="handleClickCancel">取消</view>
                 <view class="i-select-title__title">{{title}}</view>

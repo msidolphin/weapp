@@ -49,6 +49,7 @@ Component({
         },
         handleClickCancel () {
             this.triggerEvent('cancel')
-        }
+        },
+        doNothing () {}
     }
 });

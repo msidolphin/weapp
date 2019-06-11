@@ -77,7 +77,7 @@ Component({
             this.scrollToView()
         },
         getNormlizedValue (values) {
-            if (!values) return []
+            if (values === undefined) return []
             // 防止传递错误格式
             if (!this.data.multiple && Array.isArray(values)) values = values[0]
             let select = []
@@ -156,13 +156,13 @@ Component({
             let values = select.map(s => s[this.data.fieldNames['value']]) // .concat(this.data.notExistsItems)
             if (this.data.controlled) {
                 if (!Array.isArray(this.data.value) && !this.data.multiple) {
-                    values = values[0] ? values[0] : {}
-                    options = options[0] ? options[0] : {}
+                    values = values[0] !== undefined ? values[0] : {}
+                    options = options[0] !== undefined ? options[0] : {}
                 }
             } else {
                 if (!Array.isArray(this.data.defaultValue) && !this.data.multiple) {
-                    values = values[0] ? values[0] : {}
-                    options = options[0] ? options[0] : {}
+                    values = values[0] !== undefined ? values[0] : {}
+                    options = options[0] !== undefined ? options[0] : {}
                 }
             }
             this.triggerEvent('change', {value: values ? values : '', options})
@@ -189,6 +189,7 @@ Component({
         },
         handleClickCancel () {
             this.triggerEvent('close')
-        }
+        },
+        doNothing () {}
     }
 })
