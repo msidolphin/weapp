@@ -1,3 +1,7 @@
+page {
+    background: #fff;
+}
+
 .i-index-demo,page{
     width:100%;
     height:100%;
@@ -6,4 +10,66 @@
     padding:10px;
     border-bottom:#ddd solid 1rpx;
     font-size:14px;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchbar {
+    background: transparent;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 24rpx;
+}
+
+
+.searchbar .searchbar-input-wrap {
+    flex: 1;
+    display: flex;
+    background: #f9f9f9;
+    height: 64rpx;
+    align-items: center;
+    border-radius: 32rpx;
+}
+
+.searchbar-input__icon, .searchbar-input__clear {
+    flex: 0 0 66rpx;
+    height: 100%;
+}
+
+.icon {
+    font-size: 36rpx!important;
+}
+
+.searchbar-input__input {
+    flex: 1;
+    font-size: 30rpx;
+}
+
+.searchbar-input__input input {
+    width: 100%;
+}
+
+.current-location {
+    padding: 10rpx 20rpx;
+}
+
+.current-location-header {
+    position: relative;
+    color: #333;
+    font-size: 28rpx;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+}
+
+.location {
+    width: 100rpx;
+    padding: 10rpx;
+    background: #fff;
+    border: 1px solid #DDDEE1;
+    border-radius: 8rpx;
 }

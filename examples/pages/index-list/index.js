@@ -1,7 +1,9 @@
 import { cities } from './city';
 Page({
     data : {
-        cities : []
+        cities : [],
+        keyword: '',
+        searching: false
     },
     onChange(event){
         console.log(event.detail,'click right menu callback data')
@@ -27,5 +29,17 @@ Page({
         this.setData({
             cities : this.data.cities
         })
+    },
+    onSearch (e) {
+        this.setData({
+            searching: true
+        })
+    },
+    onInput (e) {
+        if (!e.detail.value) {
+            this.setData({
+                searching: false
+            })
+        }
     }
 });

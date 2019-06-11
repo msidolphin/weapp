@@ -1,19 +1,39 @@
 <view class="i-index-demo">
-    <i-index height="100%" bind:change="onChange">
-        <i-index-item 
-            wx:for="{{ cities }}" 
-            wx:for-index="index" 
-            wx:key="{{index}}" 
-            wx:for-item="item" name="{{item.key}}">
-            <view 
-                class="i-index-demo-item" 
-                wx:for="{{item.list}}" 
-                wx:for-index="in" 
-                wx:key="{{in}}" 
-                wx:for-item="it">
-                {{it.name}}
+    <view class="searchbar">
+        <view class="searchbar-input-wrap">
+            <view class="searchbar-input__icon center">
+                <i-icon style="line-height:1;" i-class="icon" type="search" color="#CCCCCC"></i-icon>
             </view>
-        </i-index-item>
-        
-    </i-index>
+            <view class="searchbar-input__input">
+                <input value="{{keyword}}"  placeholder="请输入城市/拼音" confirm-type="search" bindconfirm="onSearch" bindinput="onInput" />
+            </view>
+        </view>
+    </view>
+    <view style="height:calc(100% - 88rpx)" hidden="{{searching}}">
+      <i-index height="100%" bind:change="onChange" corrected-value="{{-44}}">
+          <i-index-item ingore>
+            <view class='current-location'>
+              <view class='current-location-header'>当前定位</view>
+              <view class="location center"><i-icon type="coordinates_fill" color="#ffb700"/>珠海</view>
+            </view>
+          </i-index-item>
+          <i-index-item 
+              wx:for="{{ cities }}" 
+              wx:for-index="index" 
+              wx:key="{{index}}" 
+              wx:for-item="item" name="{{item.key}}">
+              <view 
+                  class="i-index-demo-item" 
+                  wx:for="{{item.list}}" 
+                  wx:for-index="in" 
+                  wx:key="{{in}}" 
+                  wx:for-item="it">
+                  {{it.name}}
+              </view>
+          </i-index-item>
+      </i-index>
+    </view>
+    <view style='height:calc(100% - 88rpx)' hidden="{{!searching}}">
+        搜索结果...
+    </view>
 </view>
