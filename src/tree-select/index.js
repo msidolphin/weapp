@@ -10,133 +10,205 @@ Component({
             type: Boolean,
             value: false
         },
+        options: {
+            type: Array,
+            value: [],
+            observer (val) {
+                if (val && val.length) {
+                    this.setSelect()
+                    this.setActiveNavIndex()
+                    let children = this.getChildren()
+                    this.setData({
+                        children
+                    })
+                }
+            }
+        },
         limit: {
             type: Number,
             value: 0
         },
-        defatltValue: {
+        defaultValue: {
             type: [String, Array, Number]
         },
         value: {
-            type: [String, Array, Number]
+            type: [String, Array, Number],
+            observer (newVal, oldVal) {
+                if (this.data.controlled && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                    this.setSelect()
+                }
+            }
         },
         controlled: {
             type: Boolean,
             value: false,
         },
+        props: {
+            type: Object,
+            value: {}
+        }
     },
     data: {
         activeNavIndex: 0, // 激活的导航栏，如果是多选，那么初始化的时候选中的是第一个存在选中项的导航栏
-        select: [{
-            id: 12,
-            label: '木工'
-        }],
+        select: [],
+        fieldNames: {},
         children: [],
-        options: [
-            {
-                id: 1,
-                label: '土建',
-                children: [
-                    {
-                        id: 11,
-                        label: '瓦工'
-                    },
-                    {
-                        id: 12,
-                        label: '木工'
-                    },
-                    {
-                        id: 13,
-                        label: '钢筋工'
-                    },
-                    {
-                        id: 14,
-                        label: '混凝土工'
-                    },
-                    {
-                        id: 15,
-                        label: '油漆工'
-                    }
-                ]
-            },
-            {
-                id: 2,
-                label: '安装材料',
-                children: [
-                    {
-                        id: 21,
-                        label: '电气设备'
-                    },
-                    {
-                        id: 22,
-                        label: '给排水'
-                    },
-                    {
-                        id: 23,
-                        label: '消防安装'
-                    },
-                    {
-                        id: 24,
-                        label: '通风空调'
-                    }
-                ]
-            },
-            {
-                id: 3,
-                label: '其它',
-                children: [
-                    {
-                        id: 31,
-                        label: '塔吊司机'
-                    },
-                    {
-                        id: 32,
-                        label: '塔吊指挥'
-                    },
-                    {
-                        id: 33,
-                        label: '司索工'
-                    },
-                    {
-                        id: 34,
-                        label: '电焊工'
-                    },
-                    {
-                        id: 35,
-                        label: '保安'
-                    },
-                    {
-                        id: 36,
-                        label: '后勤'
-                    },
-                    {
-                        id: 37,
-                        label: '挖掘机司机'
-                    },
-                    {
-                        id: 38,
-                        label: '电工'
-                    }
-                ]
-            }
-        ]
+        notExistsItems: [] // 不存在的项
     },
     methods: {
-        onNavItemTap (e) {
+        /**
+         * @description 获取父级项
+         */
+        getParentIndex (item) {
+            let index = -1
+            for (let i = 0; i < this.data.options.length; ++i) {
+                let children = this.data.options[i].children ? this.data.options[i].children : []
+                for (let j = 0; j < children.length; ++j) {
+                    if (children[j][this.data.fieldNames['value']] === item[this.data.fieldNames['value']]) {
+                        index = i
+                        break
+                    }
+                }
+            }
+            return index
+        },
+        /**
+         * @description 获取选择项
+         */
+        getItem (value) {
+            for (let i = 0; i < this.data.options.length; ++i) {
+                let children = this.data.options[i].children ? this.data.options[i].children : []
+                for (let j = 0; j < children.length; ++j) {
+                    if (children[j][this.data.fieldNames['value']] === value) {
+                        return children[j]
+                    }
+                }
+            }
+            return null
+        },
+        /**
+         * @description 设置选中项
+         */
+        setSelect () {
+            if (this.data.controlled) {
+                this.setData({
+                    select: this.getNormalizedValue(this.data.value)
+                })
+            } else {
+                this.setData({
+                    select: this.getNormalizedValue(this.data.defaultValue)
+                })
+            }
+        },
+        /**
+         * @description 设置默认
+         */
+        setActiveNavIndex () {
+            let activeIndex = 0
+            if (this.data.select.length) {
+                activeIndex = this.getParentIndex(this.data.select[0])
+            }
+            if (activeIndex === -1) activeIndex = 0
+            // if ( !this.data.options[activeIndex].children || !this.data.options[activeIndex].children.length) {
+            //     // 动态记载
+            //     this.emitLoad()
+            // }
             this.setData({
-                children: e.currentTarget.dataset.children,
-                activeNavIndex: e.currentTarget.dataset.index
+                activeNavIndex: activeIndex
             })
+        },
+        /**
+         * 格式归一化
+         * @param {Array | Object} values 默认值或绑定值 
+         */
+        getNormalizedValue (values) {
+            if (!values) return []
+            // 防止传递错误格式
+            if (!this.data.multiple && values.length) values = values[0]
+            let select = []
+            // let notExistsItems = this.data.notExistsItems
+            if (Array.isArray(values)) {
+                values.forEach(v => {
+                    let item = this.getItem(v)
+                    if (item) {
+                        if (this.data.multiple && (this.data.limit === 0 || select.length + 1 <= this.data.limit)) {
+                            select.push(item)
+                        } else if (!this.data.multiple && !select.length) {
+                            select.push(item)
+                        }
+                        // 移除之前不存在的值
+                        // let index = notExistsItems.findIndex(v => v === item[this.data.fieldNames['value']])
+                        // if (index !== -1) notExistsItems.splice(index, 1)
+                    } else {
+                        // if (notExistsItems.indexOf(v) === -1) notExistsItems.push(v)
+                    }
+                })
+                return JSON.parse(JSON.stringify(select))
+            } else {
+                let item = this.getItem(values)
+                if (item) {
+                    select.push(item)
+                    // let index = notExistsItems.findIndex(v => v === item[this.data.fieldNames['value']])
+                    // if (index !== -1) notExistsItems.splice(index, 1)
+                } else {
+                    // if (notExistsItems.indexOf(values) === -1) notExistsItems.push(values)
+                }
+                return select
+            }
+        },
+        onNavItemTap (e) {
+            let { children, index } = e.currentTarget.dataset
+            if (children) {
+                this.setData({
+                    children,
+                    activeNavIndex: index
+                })
+            } else {
+                this.setData({
+                    children: [],
+                    activeNavIndex: index
+                })
+                // this.emitLoad()
+            }
+        },
+        /**
+         * @description 动态加载
+         * 弃用：由于多选的特性，异步加载不推荐使用，容易引发bug，我也没想到好的解决方法
+         */
+        emitLoad () {
+            this.triggerEvent('load', { option: this.data.options[this.data.activeNavIndex], index: this.data.activeNavIndex, options: this.data.options })
+        },
+        emitChange () {
+            let select = this.data.select
+            let options = this.data.select
+            let values = select.map(s => s[this.data.fieldNames['value']]) // .concat(this.data.notExistsItems)
+            if (this.data.controlled) {
+                if (!Array.isArray(this.data.value) && !this.data.multiple) {
+                    values = values[0] ? values[0] : {}
+                    options = options[0] ? options[0] : {}
+                }
+            } else {
+                if (!Array.isArray(this.data.defaultValue) && !this.data.multiple) {
+                    values = values[0] ? values[0] : {}
+                    options = options[0] ? options[0] : {}
+                }
+            }
+            this.triggerEvent('change', {value: values ? values : '', options})
         },
         onItemSelected (e) {
             let { item, selected } = e.currentTarget.dataset
             if (this.data.multiple) {
                 let index = this.getItemIndexById(item.id)
                 let select = this.data.select
-                if (index === -1 && (this.data.limit === 0 || select.length + 1 < this.data.limit)) {
-                    select.push(item)
+                if (index === -1) {
+                    // 判断是否超出最大数量
+                    if (this.data.limit === 0 || select.length + 1 <= this.data.limit) {
+                        select.push(item)
+                        this.emitChange()
+                    } else this.triggerEvent('exceed')
                 } else {
                     select.splice(index, 1)
+                    this.emitChange()
                 }
                 this.setData({
                     select
@@ -151,6 +223,7 @@ Component({
                         select: [item]
                     })
                 }
+                this.emitChange()
             }
         },
         getItemIndexById (id) {
@@ -162,9 +235,18 @@ Component({
         }
     },
     attached () {
-        let children = this.getChildren()
+        const fieldNames = Object.assign({}, defaultFieldNames, this.data.props)
         this.setData({
-            children
+            fieldNames
         })
+        if (this.data.options && this.data.options.length) {
+            this.setSelect()
+            this.setActiveNavIndex()
+            let children = this.getChildren()
+            this.setData({
+                children
+            })
+        }
     }
+       
 })

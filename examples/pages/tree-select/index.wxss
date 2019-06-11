@@ -1,1 +1,9 @@
-/* pages/tree-select/index.wxss */
+.selected-list {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+.selected-list i-tag {
+  line-height: 1;
+  margin-right: 4px;
+}

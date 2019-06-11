@@ -1,6 +1,9 @@
 {
   "navigationBarTitleText": "TreeSelect 树选择器",
   "usingComponents": {
-    "i-tree-select": "../../dist/tree-select/index"
+    "i-tree-select": "../../dist/tree-select/index",
+    "i-message": "../../dist/message/index",
+    "i-panel": "../../dist/panel/index",
+    "i-tag": "../../dist/tag/index"
   }
 }

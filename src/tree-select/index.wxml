@@ -20,25 +20,24 @@
 <view class="i-tree-select">
     <!-- 一级导航 -->
     <view class="i-tree-select-nav">
-        <!-- 字段后期适配 -->
         <view wx:for="{{options}}"
-            wx:key="item.id"
+            wx:key="{{item}}"
             class="i-tree-select-nav-item {{activeNavIndex === index ? 'i-tree-select-nav-item--active' : ''}}"
             data-index="{{index}}"
-            data-children="{{item.children}}"
+            data-children="{{item[fieldNames['children']]}}"
             bindtap="onNavItemTap">
-            <text class="i-tree-select-nav-item__label">{{item.label}}</text>
+            <text class="i-tree-select-nav-item__label">{{item[fieldNames['label']]}}</text>
         </view>
     </view>
     <!-- 二级 -->
     <view class="i-tree-select-content">
         <view wx:for="{{children}}"
-            wx:key="{{item.id}}"
-            class="i-tree-select-content-item {{wsx.isSelected(select, item) ? 'i-tree-select-content-item--active' : ''}}"
+            wx:key="{{item}}"
+            class="i-tree-select-content-item {{wsx.isSelected(select, item, fieldNames['value']) ? 'i-tree-select-content-item--active' : ''}}"
             data-item="{{item}}"
-            data-selected="{{wsx.isSelected(select, item)}}"
+            data-selected="{{wsx.isSelected(select, item, fieldNames['value'])}}"
             bindtap="onItemSelected">
-            <text class="i-tree-select-content-item__label">{{item.label}}</text>
+            <text class="i-tree-select-content-item__label">{{item[fieldNames['label']]}}</text>
             <i-icon i-class="i-tree-select-content-item__icon" type="success_fill" size="18" color="#ffb700"/>
         </view>
     </view>

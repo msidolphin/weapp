@@ -1,2 +1,14 @@
-<i-tree-select></i-tree-select>
-<i-tree-select multiple></i-tree-select>
+
+<i-panel title="单选">
+  <view class='selected-list'>
+    <i-tag color="blue">{{valueModel.label}}</i-tag>
+  </view>
+  <i-tree-select options="{{options}}" default-value="{{value}}" bind:change="onChange"></i-tree-select>
+</i-panel>
+<i-panel title="多选">
+  <view class='selected-list'>
+    <i-tag wx:for="{{multipleValueModel}}" wx:key="{{item.id}}" color="blue">{{item.label}}</i-tag>
+  </view>
+  <i-tree-select multiple limit="{{3}}" bind:exceed="onExceed" controlled value="{{multipleValue}}" bind:change="onMultipleChange" options="{{options}}"></i-tree-select>
+</i-panel>
+<i-message id="message" />
