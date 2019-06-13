@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/color/index",
     "pages/picker/index",
     "pages/cascader/index",
     "pages/index-list/index",
@@ -20,7 +21,6 @@
     "pages/grid/index",
     "pages/switch/index",
     "pages/icon/index",
-    "pages/color/index",
     "pages/button/index",
     "pages/card/index",
     "pages/panel/index",

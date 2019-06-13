@@ -1,5 +1,5 @@
 Component({
-    externalClasses: ['i-class'],
+    externalClasses: ['i-class', 'i-class-body'],
 
     options: {
         multipleSlots: true

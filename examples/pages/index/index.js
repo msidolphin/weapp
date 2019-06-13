@@ -69,7 +69,7 @@ Page({
           },
           {
             label: 'Steps 步骤条',
-            url: '/pages/stepes/index'
+            url: '/pages/steps/index'
           },
           {
             label: 'NoticeBar 通告栏',
@@ -209,7 +209,7 @@ Page({
           },
           {
             label: 'Modal 模态框',
-            url: '/pages/radio/index'
+            url: '/pages/modal/index'
           },
           {
             label: 'ActionSheet 动作面板',

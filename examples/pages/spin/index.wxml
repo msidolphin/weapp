@@ -1,6 +1,6 @@
-<i-panel title="三种尺寸"></i-panel>
+<!-- <i-panel title="三种尺寸"></i-panel> -->
 
-<i-grid>
+<!-- <i-grid>
     <i-grid-item i-class="item">
         <i-spin size="small"></i-spin>
     </i-grid-item>
@@ -10,7 +10,7 @@
     <i-grid-item i-class="item">
         <i-spin size="large"></i-spin>
     </i-grid-item>
-</i-grid>
+</i-grid> -->
 
 <i-panel title="居中固定"></i-panel>
 
@@ -18,9 +18,9 @@
     <i-spin fix></i-spin>
 </view>
 
-<i-panel title="自定义内容"></i-panel>
+<!-- <i-panel title="自定义内容"></i-panel> -->
 
-<i-grid>
+<!-- <i-grid>
     <i-grid-item i-class="item">
         <i-spin custom>加载中...</i-spin>
     </i-grid-item>
@@ -35,7 +35,7 @@
             <view class="loading"></view>
         </i-spin>
     </i-grid-item>
-</i-grid>
+</i-grid> -->
 
 <i-panel title="切换显示状态"></i-panel>
 
