@@ -1,13 +1,19 @@
 <i-popup direction="bottom" visible="{{visible}}" bind:close="handleClickCancel">
     <view class="i-picker">
-        <view class="i-picker-header">
-            <view class="i-picker-header-left" bindtap="handleClickCancel">取消</view>
-            <view class="i-picker-header-middle">{{title}}</view>
-            <view class="i-picker-header-right primary" bindtap="handleConfirm">确定</view>
+        <view class="i-picker-hd">
+            <view class="i-picker-hd__action" bindtap="handleClickCancel">取消</view>
+            <view class="i-picker-hd__title">{{title}}</view>
+            <view class="i-picker-hd__action primary" bindtap="handleConfirm">确定</view>
         </view>
-        <picker-view class="i-picker-content" indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{values}}" bindchange="handleChange">
+        <picker-view class="i-picker-content"
+            indicator-style="height: 50px;"
+            style="width: 100%; height: 270px;"
+            value="{{values}}"
+            bindpickstart="onPickerStart"
+            bindpickend="onPickerEnd"
+            bindchange="handleChange">
             <picker-view-column wx:for="{{data}}" wx:key="{{index}}" wx:for-item="items" class="i-picker-column">
-                <view class="i-picker-column-item" wx:for="{{items}}" wx:key="{{item.id}}" style="line-height: 50px">{{item.label}}</view>
+                <view class="i-picker-column-item" wx:for="{{items}}" wx:key="{{item.id}}" style="line-height: 50px;font-size:14px;">{{item.label}}</view>
             </picker-view-column>
         </picker-view>
     </view>

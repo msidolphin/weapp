@@ -191,5 +191,11 @@ Component({
             this.triggerEvent('close')
         },
         doNothing () {}
+    },
+    attached () {
+        this.data.fieldNames = Object.assign({}, defaultFieldNames, this.data.props)
+        this.setData({
+            fieldNames: this.data.fieldNames
+        })
     }
 })

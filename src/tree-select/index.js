@@ -126,7 +126,6 @@ Component({
             // 防止传递错误格式
             if (!this.data.multiple && Array.isArray(values)) values = values[0]
             let select = []
-            // let notExistsItems = this.data.notExistsItems
             if (Array.isArray(values)) {
                 values.forEach(v => {
                     let item = this.getItem(v)
@@ -136,11 +135,6 @@ Component({
                         } else if (!this.data.multiple && !select.length) {
                             select.push(item)
                         }
-                        // 移除之前不存在的值
-                        // let index = notExistsItems.findIndex(v => v === item[this.data.fieldNames['value']])
-                        // if (index !== -1) notExistsItems.splice(index, 1)
-                    } else {
-                        // if (notExistsItems.indexOf(v) === -1) notExistsItems.push(v)
                     }
                 })
                 return JSON.parse(JSON.stringify(select))
@@ -148,10 +142,6 @@ Component({
                 let item = this.getItem(values)
                 if (item) {
                     select.push(item)
-                    // let index = notExistsItems.findIndex(v => v === item[this.data.fieldNames['value']])
-                    // if (index !== -1) notExistsItems.splice(index, 1)
-                } else {
-                    // if (notExistsItems.indexOf(values) === -1) notExistsItems.push(values)
                 }
                 return select
             }
@@ -168,7 +158,6 @@ Component({
                     children: [],
                     activeNavIndex: index
                 })
-                // this.emitLoad()
             }
         },
         /**
@@ -181,7 +170,7 @@ Component({
         emitChange () {
             let select = this.data.select
             let options = this.data.select
-            let values = select.map(s => s[this.data.fieldNames['value']]) // .concat(this.data.notExistsItems)
+            let values = select.map(s => s[this.data.fieldNames['value']])
             if (this.data.controlled) {
                 if (!Array.isArray(this.data.value) && !this.data.multiple) {
                     values = values[0] !== undefined ? values[0] : {}
@@ -247,6 +236,5 @@ Component({
                 children
             })
         }
-    }
-       
+    }  
 })

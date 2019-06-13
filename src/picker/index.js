@@ -87,8 +87,19 @@ Component({
     data: [],
     refactedRange: [],
     values: [],
+    lock: true
   },
   methods: {
+    onPickerStart () {
+        this.setData({
+            lock: true
+        })
+    },
+    onPickerEnd () {
+        this.setData({
+            lock: false
+        })
+    },
     handleChange (e) {
         let values = e.detail.value
         let changeIndex = this.getChangeIndex(values, this.data.values)
@@ -103,7 +114,8 @@ Component({
         }
         this.setData({
             data,
-            values
+            values,
+            lock: false
         }, () => {
             if (this.changeOnSelect) {
                 this.emitChange(values)
@@ -181,7 +193,8 @@ Component({
                 setTimeout(() => {
                     let valueIndex = this.getIndexByValue(this.data.data, this.data.value)
                     this.setData({
-                        values: valueIndex
+                        values: valueIndex,
+                        lock: false
                     }, () => {
                         if (this.data.immediate) this.emitChange(valueIndex)
                     })
@@ -238,6 +251,7 @@ Component({
         this.triggerEvent('close')
     },
     handleConfirm () {
+        if (this.data.lock) return
         this.emitChange(this.data.values)
         this.handleClickCancel()
     },
@@ -245,6 +259,7 @@ Component({
         if (this.data.refactedRange && this.data.refactedRange.length) this.init(this.data.refactedRange)
     },
     emitChange (indexs) {
+        if (this.data.lock) return
         this.triggerEvent('change', this.getValueByIndex(this.data.data, indexs))
     }
   },

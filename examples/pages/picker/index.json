@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Button 按钮",
+  "navigationBarTitleText": "Picker 滚动选择器",
   "usingComponents": {
     "i-button": "../../dist/button/index",
     "i-panel": "../../dist/panel/index",

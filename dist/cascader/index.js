@@ -97,7 +97,7 @@ Component({
             type: Boolean,
             value: false,
         },
-        defaultFieldNames: {
+        props: {
             type: Object,
             value: defaultFieldNames,
         },
@@ -314,10 +314,6 @@ Component({
             // 避免频繁的setData
             this.moveX = this.moveX + moveX
             this.moveY = this.moveY + moveY
-            // this.setData({
-            //     moveX: this.data.moveX + moveX,
-            //     moveY: this.data.moveY + moveY
-            // })
         },
         onTouchEnd () {
             // 上下滑动不处理
@@ -357,7 +353,7 @@ Component({
         }
         const { defaultValue, value, controlled } = this.data
         const activeValue = controlled ? value : defaultValue
-        const fieldNames = Object.assign({}, defaultFieldNames, this.data.defaultFieldNames)
+        const fieldNames = Object.assign({}, defaultFieldNames, this.data.props)
 
         this.setData({ activeValue, fieldNames }, () => this.getCurrentOptions(activeValue))
     },

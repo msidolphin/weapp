@@ -3,37 +3,38 @@
 
 .i-picker {
     background: #fff;
-    &-header {
+    &-hd {
         position: relative;
-        display: flex;
-        height: 80rpx;
+		display: flex;
+		height: 44px;
         align-items: center;
-        &-left, &-right {
-            width: 0;
+        background: #fff;
+		&__action {
+			width: 0;
             flex: 0 0 120rpx;
-            padding: 0 10px;
-            text-align: center;
-            &.primary {
-                color: @primary-color;
-            }
-        }
-        &-middle {
-            flex: 1;
-            text-align: center;
-        }
-        &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            transform: scale(.5);
-            transform-origin: 0 0;
-            pointer-events: none;
-            box-sizing: border-box;
-            border: 1px solid @border-color-split;
-        }
+			padding: 0 10px;
+			height: 44px;
+			line-height: 44px;
+			text-align: center;
+			box-sizing: border-box;
+			font-size: 14px;
+			&.primary {
+				color: @primary-color;
+			}
+		}
+		&__title {
+			flex: 1;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			box-sizing: border-box;
+		}
+		&::after {
+			.hairline();
+			border-bottom-width: 1px;
+		}
     }
     &-column {
         text-align: center;
