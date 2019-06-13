@@ -116,8 +116,8 @@ Component({
         startX: 0,
         startY: 0,
         moveX: 0, // 一次滑动的距离
-        threshold: 20,
-        yThreshold: 100,
+        threshold: 10,
+        yThreshold: 150,
         animation: null,
         endX: 0,
         currentOptions: {},
@@ -300,11 +300,11 @@ Component({
         // 横向滚动相关
         onTouchStart (e) {
             let touches = e.touches[0]
+            this.moveX = 0
+            this.moveY = 0
             this.setData({
                 startX: touches.pageX,
-                startY: touches.pageY,
-                moveX: 0,
-                moveY: 0
+                startY: touches.pageY
             })
         },
         onTouchMove (e) {
