@@ -11,14 +11,7 @@
     </view>
     <view class="i-image-upload-item  i-image-upload__btn" style="width:{{$span}}%;padding-bottom:{{$span}}%;" wx:if="{{imgList.length < limit}}">
         <view class="inner" bindtap="chooseImage" style="background:{{backgroundColor}}">
-            <i-icon type="camera" size="32" color="#80848f"></i-icon>
+            <i-icon type="{{iconType}}" size="{{iconSize}}" color="{{iconColor}}"></i-icon>
         </view>
     </view>
 </view>
-
-
-<!-- <view class="i-grid i-class" bindtap="tapGrid">
-    <view bindtap="tapGridItem" class="i-grid-item i-class-grid {{index%rowNum !== rowNum-1 &&(showBorder||showColBorder) ? 'side-grid':''}} {{(index<gridItems.length-(gridItems.length%rowNum||rowNum)) &&(showBorder||showRowBorder)? 'center-grid':''}}" wx:for="{{gridItems}}" wx:key="{{item.key}}" style="min-width:{{100/rowNum}}%;" data-index="{{index}}">
-        <slot name="{{item.key}}"></slot>
-    </view>
-</view> -->

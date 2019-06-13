@@ -5,7 +5,7 @@
 </i-panel>
 <i-panel title="图片（选填，提供问题截图）" label="{{imageList.length}} / 9">
   <view class="image-picker">
-    <i-image-picker bind:change="onChange" limit="{{9}}" backgroundColor="#EDEDED"/>
+    <i-image-picker bind:change="onChange" span="{{4}}" limit="{{9}}" backgroundColor="#EDEDED"/>
   </view>
 </i-panel>
 <i-panel title="联系电话">

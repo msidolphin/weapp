@@ -24,6 +24,18 @@ Component({
         backgroundColor: {
             type: String,
             value: '#fff'
+        },
+        iconType: {
+            type: String,
+            value: 'camera'
+        },
+        iconSize: {
+            type: Number,
+            value: 32
+        },
+        iconColor: {
+            type: String,
+            value: '#80848f'
         }
     },
     
