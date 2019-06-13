@@ -1,5 +1,5 @@
 Component({
-    externalClasses: ['i-class', 'i-class-mask'],
+    externalClasses: ['i-class', 'i-class-mask', 'i-class-body'],
 
     properties: {
         visible: {
