@@ -36,12 +36,13 @@
 
 .component .component-toggle {
   position: relative;
-  padding: 40rpx;
+  padding: 30rpx;
   display: flex;
   align-items: center;
   z-index: 100;
   background: #fff;
 }
+
 .component-toggle:active {
   background:rgba(247,247,247,1);
 }
