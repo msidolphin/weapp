@@ -5,7 +5,7 @@
         bindscroll="handlerScroll"
         scroll-top="{{scrollTop}}">
         <slot></slot>  
-        <view class="i-index-fixed" 
+        <view class="i-index-fixed i-fixed-class" 
             catchtouchstart="handlerTouchMove" 
             catchtouchmove="handlerTouchMove" 
             catchtouchend="handlerTouchEnd">

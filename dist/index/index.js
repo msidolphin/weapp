@@ -1,5 +1,5 @@
 Component({
-    externalClasses: ['i-class'],
+    externalClasses: ['i-class', 'i-fixed-class'],
     properties : {
         height : {
             type : String,
@@ -59,7 +59,11 @@ Component({
                 this.data.timer = setTimeout(()=>{
                     const data = [];
                     indexItems.forEach((item) => {
-                        if( item.data.name && fixedData.indexOf( item.data.name ) === -1 ){
+                        // if( item.data.name && fixedData.indexOf( item.data.name ) === -1 ){
+                        //     data.push(item.data.name);
+                        //     item.updateDataChange();
+                        // }
+                        if( item.data.name && !item.data.ingore){
                             data.push(item.data.name);
                             item.updateDataChange();
                         }
