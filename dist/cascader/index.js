@@ -311,16 +311,19 @@ Component({
             let touches = e.touches[0]
             let moveX = touches.pageX - this.data.startX
             let moveY = touches.pageY - this.data.startY
-            this.setData({
-                moveX: this.data.moveX + moveX,
-                moveY: this.data.moveY + moveY
-            })
+            // 避免频繁的setData
+            this.moveX = this.moveX + moveX
+            this.moveY = this.moveY + moveY
+            // this.setData({
+            //     moveX: this.data.moveX + moveX,
+            //     moveY: this.data.moveY + moveY
+            // })
         },
         onTouchEnd () {
             // 上下滑动不处理
-            if (Math.abs(this.data.moveY) > this.data.yThreshold) return
-            let moveX = this.data.moveX
-            if (Math.abs(this.data.moveX) > this.data.threshold) {
+            if (Math.abs(this.moveY) > this.data.yThreshold) return
+            let moveX = this.moveX
+            if (Math.abs(this.moveX) > this.data.threshold) {
                 let match = this.data.bodyStyle.match(new RegExp('translate' +'\\((-?[\\d\\.]+)%\\)'))
                 if (match && match.length > 0) {
                     let value = Number(match[1])
@@ -336,15 +339,17 @@ Component({
                     }
                     const bodyStyle = `transform: translate(${value}%)`
                     this.setData({
-                        bodyStyle,
-                        moveX: 0,
-                        moveY: 0
+                        bodyStyle
                     })
                 }
             }
+            this.moveX = 0
+            this.moveY = 0
         }
     },
     attached() {
+        if (this.moveX === undefined) this.moveX = 0
+        if (this.moveY === undefined) this.moveY = 0 
         if (this.data.mode === REGION) {
             this.setData({
                 $options: mapToTree(province)

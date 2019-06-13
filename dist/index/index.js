@@ -8,6 +8,10 @@ Component({
         itemHeight : {
             type : Number,
             value : 18
+        },
+        correctedValue : { // 修正值
+            type: Number,
+            value: 0
         }
     },
     relations : {
@@ -52,7 +56,6 @@ Component({
                         timer : null
                     })
                 }
-                
                 this.data.timer = setTimeout(()=>{
                     const data = [];
                     indexItems.forEach((item) => {
@@ -67,7 +70,7 @@ Component({
                     })
                     //组件加载完成之后重新设置顶部高度
                     this.setTouchStartVal();
-                },0);
+                }, 40);
                 this.setData({
                     timer : this.data.timer
                 })
@@ -90,7 +93,8 @@ Component({
             })
         },
         getCurrentItem(index){
-            const indexItems = this.getRelationNodes('../index-item/index');
+            let indexItems = this.getRelationNodes('../index-item/index');
+            indexItems = indexItems.filter(item => !item.data.ingore)
             let result = {};
             result = indexItems[index].data;
             result.total = indexItems.length;
@@ -103,7 +107,7 @@ Component({
             const eindex = event.currentTarget.dataset.index;
             const item = this.getCurrentItem(eindex);
             this.setData({
-                scrollTop : item.top,
+                scrollTop : item.top + this.data.correctedValue,
                 currentName : item.currentName,
                 isTouches : true
             })
@@ -130,7 +134,7 @@ Component({
             }
 
             this.setData({
-                scrollTop : movePosition.top,
+                scrollTop : movePosition.top + this.data.correctedValue,
                 currentName : movePosition.name,
                 isTouches : true
             })

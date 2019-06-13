@@ -4,6 +4,10 @@ Component({
         name : {
             type : String,
             value : ''
+        },
+        ingore: { // 本项是否忽略
+            type: Boolean,
+            value: false
         }
     },
     relations : {
@@ -21,11 +25,11 @@ Component({
             const className = '.i-index-item';
             const query = wx.createSelectorQuery().in(this);
             query.select( className ).boundingClientRect((res)=>{
-                    this.setData({
-                        top : res.top,
-                        height : res.height,
-                        currentName : this.data.name
-                    })
+                this.setData({
+                    top : res.top,
+                    height : res.height,
+                    currentName : this.data.name
+                })
             }).exec()
         }
     }
