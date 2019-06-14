@@ -1,4 +1,8 @@
+import rippleBehavior from '../mixins/ripple'
+
 Component({
+    behaviors: [rippleBehavior],
+
     externalClasses: ['i-class'],
 
     properties: {
@@ -59,11 +63,15 @@ Component({
     },
 
     methods: {
-        handleTap () {
+        handleLongpress (e) {
             if (this.data.disabled || this.data.loading) return false
-
+            this.$pushRipple(e)
+            this.triggerEvent('long-press', e)
+        },
+        handleTap (e) {
+            if (this.data.disabled || this.data.loading) return false
+            this.$pushRipple(e)
             this.triggerEvent('click')
-            // wx.vibrateShort()
         },
         bindgetuserinfo({ detail = {} } = {}) {
             this.triggerEvent('getuserinfo', detail)
@@ -78,4 +86,4 @@ Component({
             this.triggerEvent('error', detail)
         }
     }
-});
+})
