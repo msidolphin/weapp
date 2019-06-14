@@ -24,6 +24,7 @@
 		}
 		&__title {
 			flex: 1;
+			font-size: 16px;
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -39,9 +40,22 @@
     &-column {
         text-align: center;
         &-item {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: nowrap;
+			text {
+				flex: 1;
+				padding: 0 4px;
+				.ellipsis();
+				box-sizing: border-box;
+			}
         }
-    }
+	}
+	&-item-indicator {
+		height: 44px;
+		line-height: 44px;
+		font-size: 14px;
+	}
 }

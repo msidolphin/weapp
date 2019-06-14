@@ -37,7 +37,6 @@ export default Behavior({
                 rect: true,
                 computedStyle: ['backgroundColor']
             }).selectViewport().scrollOffset().exec(res => {
-                // debugger
                 if (res && res.length > 1 && res[0] && res[1]) {
                     const { width, height, left, top, backgroundColor = 'rgba(255, 255, 255, 1)' } = res[0]
                     const { scrollLeft, scrollTop } = res[1]

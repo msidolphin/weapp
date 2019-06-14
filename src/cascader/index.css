@@ -49,6 +49,7 @@
 }
 .i-cascader-title__title {
   flex: 1;
+  font-size: 16px;
   position: relative;
   display: flex;
   align-items: center;

@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/button/index",
-    "pages/color/index",
     "pages/picker/index",
-    "pages/cascader/index",
+    "pages/button/index",
     "pages/index-list/index",
+    "pages/color/index",
+    "pages/cascader/index",
     "pages/select/index",
     "pages/modal/index",
     "pages/tree-select/index",

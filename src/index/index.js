@@ -43,7 +43,7 @@ Component({
         _updateDataChange( ){
             const indexItems = this.getRelationNodes('../index-item/index');
             const len = indexItems.length;
-            const fixedData = this.data.fixedData;
+            // const fixedData = this.data.fixedData;
             /*
              * 使用函数节流限制重复去设置数组内容进而限制多次重复渲染
              * 暂时没有研究微信在渲染的时候是否会进行函数节流
@@ -88,11 +88,21 @@ Component({
             indexItems.forEach((item,index)=>{
                 let data = item.data;
                 let offset = data.top + data.height;
-                if( scrollTop < offset && scrollTop >= data.top ){
-                    this.setData({
-                        current : index,
-                        currentName : data.currentName
-                    })
+                if( scrollTop < offset && scrollTop >= data.top){
+                    if (this.data.current !== index) {
+                        this.setData({
+                            current : index,
+                            currentName : data.currentName,
+                            isTouches: !data.ingore
+                        })
+                        if (this.data.isTouches) {
+                            setTimeout(() => {
+                                this.setData({
+                                    isTouches: false
+                                })
+                            }, 400)
+                        }
+                    }
                 }
             })
         },

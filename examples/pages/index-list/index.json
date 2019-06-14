@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "index 索引选择器",
+  "navigationBarTitleText": "index 索引列表",
   "usingComponents": {
     "i-index": "../../dist/index/index",
     "i-index-item": "../../dist/index-item/index",

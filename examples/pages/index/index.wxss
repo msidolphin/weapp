@@ -1,3 +1,5 @@
+@import '../../styles/icon.wxss';
+
 .logo{
     text-align: center;
 }
@@ -14,7 +16,7 @@
   background-color:#FFFFFF;
   border-radius:4rpx;
   overflow:hidden;
-  font-size: 32rpx;
+  font-size: 36rpx;
   color: #333;
 }
 .component-list-wrap {
@@ -39,8 +41,13 @@
   padding: 30rpx;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   z-index: 100;
   background: #fff;
+}
+
+.component-toggle .iconfont {
+  font-size: 40rpx;
 }
 
 .component-toggle:active {
