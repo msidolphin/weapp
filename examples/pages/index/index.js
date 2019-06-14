@@ -10,6 +10,7 @@ Page({
       Layout: {
         label: '布局',
         show: false,
+        icon: 'layout',
         pages: [
           {
             label: 'Layout 栅格布局',
@@ -30,12 +31,17 @@ Page({
           {
             label: 'Card 卡片',
             url: '/pages/card/index'
+          },
+          {
+            label: 'Collapse 折叠面板',
+            url: '/pages/collapse/index'
           }
         ]
       },
       Basic: {
         label: '基础组件',
         show: false,
+        icon: 'component',
         pages: [
           {
             label: 'Button 按钮',
@@ -48,12 +54,29 @@ Page({
           {
             label: 'Icon 图标',
             url: '/pages/icon/index'
-          }
+          },
+          {
+            label: 'Badge 徽章',
+            url: '/pages/badge/index'
+          },
+          {
+            label: 'Tag 标签',
+            url: '/pages/tag/index'
+          },
+          {
+            label: 'Avatar 头像',
+            url: '/pages/avatar/index'
+          },
+          {
+            label: 'CountDown 倒计时',
+            url: '/pages/count-down/index'
+          },
         ]
       },
       Navigator: {
         label: '导航',
         show: false,
+        icon: 'nav',
         pages: [
           {
             label: 'TabBar 标签栏',
@@ -88,6 +111,7 @@ Page({
       Feedback: {
         label: '操作反馈',
         show: false,
+        icon: 'feedback',
         pages: [
           {
             label: 'Toast 轻提示',
@@ -111,51 +135,10 @@ Page({
           }
         ]
       },
-      View: {
-        label: '视图',
-        show: false,
-        pages: [
-          {
-            label: 'Badge 徽章',
-            url: '/pages/badge/index'
-          },
-          {
-            label: 'Alert 警告提示',
-            url: '/pages/alert/index'
-          },
-          {
-            label: 'Tag 标签',
-            url: '/pages/tag/index'
-          },
-          {
-            label: 'Progress 进度条',
-            url: '/pages/progress/index'
-          },
-          {
-            label: 'Avatar 头像',
-            url: '/pages/avatar/index'
-          },
-          {
-            label: 'CountDown 倒计时',
-            url: '/pages/count-down/index'
-          },
-          {
-            label: 'Divider 分隔符',
-            url: '/pages/divider/index'
-          },
-          {
-            label: 'Collapse 折叠面板',
-            url: '/pages/collapse/index'
-          },
-          {
-            label: 'LoadMore 页底提示',
-            url: '/pages/load-more/index'
-          }
-        ]
-      },
       Form: {
         label: '表单',
         show: false,
+        icon: 'form',
         pages: [
           {
             label: 'Input 输入框',
@@ -202,6 +185,7 @@ Page({
       Modal: {
         label: '模态容器',
         show: false,
+        icon:'popup',
         pages: [
           {
             label: 'Popup 弹出层',
@@ -218,6 +202,33 @@ Page({
           {
             label: 'BottomDrawer 上拉抽屉',
             url: '/pages/bottom-drawer/index'
+          }
+        ]
+      },
+      Others: {
+        label: '其它',
+        show: false,
+        icon: 'others',
+        pages: [
+          {
+            label: 'Alert 警告提示',
+            url: '/pages/alert/index'
+          },
+          {
+            label: 'Progress 进度条',
+            url: '/pages/progress/index'
+          },
+          {
+            label: 'CountDown 倒计时',
+            url: '/pages/count-down/index'
+          },
+          {
+            label: 'Divider 分隔符',
+            url: '/pages/divider/index'
+          },
+          {
+            label: 'LoadMore 页底提示',
+            url: '/pages/load-more/index'
           }
         ]
       }

@@ -11,5 +11,5 @@
   height: 100%;
 }
 .popup-demo.right {
-  width: 320rpx;
+  width: 100%;
 }

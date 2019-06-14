@@ -5,6 +5,7 @@
   <view class='component' wx:for="{{components}}" wx:key="{{item.id}}" wx:for-index="key">
     <view class='component-toggle' bindtap="toggle" data-key="{{key}}">
       <text>{{item.label}}</text>
+      <text class='iconfont icon-{{item.icon}}'></text>
     </view>
     <view class="component-list-wrap {{item.show ? 'is-show' : ''}}">
         <view class="component-list {{item.show ? 'is-show' : ''}}">
