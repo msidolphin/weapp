@@ -6,14 +6,16 @@
             <view class="i-picker-hd__action primary" bindtap="handleConfirm">确定</view>
         </view>
         <picker-view class="i-picker-content"
-            indicator-style="height: 50px;"
             style="width: 100%; height: 270px;"
             value="{{values}}"
+            indicator-class="i-picker-column-item-indicator"
             bindpickstart="onPickerStart"
             bindpickend="onPickerEnd"
             bindchange="handleChange">
             <picker-view-column wx:for="{{data}}" wx:key="{{index}}" wx:for-item="items" class="i-picker-column">
-                <view class="i-picker-column-item" wx:for="{{items}}" wx:key="{{item.id}}" style="line-height: 50px;font-size:14px;">{{item.label}}</view>
+                <view class="i-picker-column-item" wx:for="{{items}}" wx:key="{{item.id}}">
+                    <text>{{item.label}}</text>
+                </view>
             </picker-view-column>
         </picker-view>
     </view>
