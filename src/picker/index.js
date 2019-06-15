@@ -29,6 +29,7 @@ function arrayIsEqul (val1, val2) {
 }
 
 Component({
+    externalClasses: ['i-class', 'i-class-hd'],
     properties: {
         visible: {
             type: Boolean,

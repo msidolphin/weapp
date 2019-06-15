@@ -32,5 +32,8 @@ Component({
                 })
             }).exec()
         }
+    },
+    ready () {
+        this.updateDataChange()
     }
 })

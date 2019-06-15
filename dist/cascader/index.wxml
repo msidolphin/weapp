@@ -1,6 +1,6 @@
 <i-popup direction="bottom" visible="{{visible}}" bind:close="handleClickCancel">
-    <view class="i-cascader" catchtouchmove="doNothing">
-        <view class="i-cascader-hd">
+    <view class="i-cascader i-class" catchtouchmove="doNothing">
+        <view class="i-cascader-hd i-class-hd">
             <view class="i-cascader-title">
                 <view class="i-cascader-title__action" bind:tap="handleClickCancel">取消</view>
                 <view class="i-cascader-title__title" wx:if="{{ title }}">{{ title }}</view>

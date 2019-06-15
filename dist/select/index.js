@@ -9,7 +9,7 @@ const contentHeight = 270 // 内容高度
 const OPTION = 'option-'
 
 Component({
-    externalClasses: ['i-class'],
+    externalClasses: ['i-class', 'i-class-hd'],
     properties: {
         visible: {
             type: Boolean,

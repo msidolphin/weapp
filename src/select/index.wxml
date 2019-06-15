@@ -18,11 +18,11 @@
 </wxs>
 
 <i-popup direction="bottom" visible="{{visible}}" bind:close="handleClickCancel">
-    <view class="i-class i-select" catchtouchmove="doNothing">
-        <view class="i-select-title">
-            <view class="i-select-title__action" bindtap="handleClickCancel">取消</view>
-                <view class="i-select-title__title">{{title}}</view>
-                <view class="i-select-title__action primary" bindtap="onConfirm">确定</view>
+    <view class="i-select i-class" catchtouchmove="doNothing">
+        <view class="i-select-hd i-class-hd">
+            <view class="i-select-hd__action" bindtap="handleClickCancel">取消</view>
+                <view class="i-select-hd__title">{{title}}</view>
+                <view class="i-select-hd__action primary" bindtap="onConfirm">确定</view>
         </view>
         <scroll-view scroll-y scroll-into-view="{{scrollView}}" class="i-select-options">
             <view wx:for="{{options}}"

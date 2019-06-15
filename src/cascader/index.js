@@ -50,7 +50,7 @@ function arrayTreeFilter(data, filterFn, options) {
 }
 
 Component({
-    externalClasses: ['i-class'],
+    externalClasses: ['i-class', 'i-class-hd'],
     properties: {
         visible: {
             type: Boolean,
