@@ -128,7 +128,7 @@ function convertToDate (date) {
  * @param {String, Number} month 
  */
 function getFirstDay (year, month) {
-    let date = convertToDate(`${year}/${month}/1`)
+    date = convertToDate(`${year}/${month}/1`)
     return date.getDay()
 }
 
@@ -136,7 +136,7 @@ function getFirstDay (year, month) {
  * @description 获取指定日期（月份）的第一天是星期几
  */
 function getLastDay (year, month) {
-    let date = convertToDate(`${year}/${month}/${getDays(year, month)}`)
+    date = convertToDate(`${year}/${month}/${getDays(year, month)}`)
     return date.getDay()
 }
 
