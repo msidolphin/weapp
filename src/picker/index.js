@@ -1,7 +1,18 @@
 import area from './area.js'
+import { getYearsByStartDateAndEndDate,
+    getMonthsByDate,
+    getDaysByDate,
+    convertToDate,
+    MONTHS,
+    getLastDay,
+    getDaysRange,
+    getMonthsRange
+} from '../base/date'
 let region = JSON.parse(JSON.stringify(area))
 const CN = '86'
 const REGION = 'region'
+const DATE = 'date'
+const DATETIME = 'datetime'
 
 // 处理地区
 let province = region[CN]
@@ -36,7 +47,7 @@ Component({
             value: false
         },
         mode: {
-            type: String // TODO date TODO datetime region
+            type: String // region date
         },
         range: {
             type: Array,
@@ -48,11 +59,11 @@ Component({
             }
         },
         value: {
-            type: Array,
+            type: [Array, String], // value为string时只对date或datetime有作用
             value: [],
             observer (val, old) {
                 if (arrayIsEqul(val, old)) return
-                this.handleValueChange(val)
+                if (this.mode !== DATE) this.handleValueChange(val)
             }
         },
         all: { // 是否包含全部
@@ -82,6 +93,19 @@ Component({
         immediate: {
             type: Boolean,
             value: true
+        },
+        // date相关
+        start: {
+            type: String,
+            value: `${new Date().getFullYear() - 70}/02/01 00:00:00`
+        },
+        end: {
+            type: String,
+            value: `${new Date().getFullYear() + 20}/11/30 23:59:59`
+        },
+        fields: { // 对于date有效
+            type: String,
+            value: 'day' // day year month
         }
     },
   data: {
@@ -104,14 +128,80 @@ Component({
     handleChange (e) {
         let values = e.detail.value
         let changeIndex = this.getChangeIndex(values, this.data.values)
-        // 归零
-        for (let i = changeIndex + 1; i < this.data.level; ++i) {
-            values[i] = 0
+        if (this.data.mode !== DATE) {
+            // 归零
+            for (let i = changeIndex + 1; i < this.data.level; ++i) {
+                values[i] = 0
+            }
         }
         let data = this.data.data
-        for (let i = changeIndex; i < this.data.level - 1; ++i) {
-            let item = data[i][values[i]]
-            data[i + 1] = item.children
+        if (this.data.mode !== DATE) {
+            for (let i = changeIndex; i < this.data.level - 1; ++i) {
+                let item = data[i][values[i]]
+                data[i + 1] = item.children
+            }
+        } else {
+            let data = this.data.data
+            let year = Number(data[0][values[0]].id)
+            let month = Number(data[1][values[1]].id)
+            let day = Number(data[2][values[2]].id)
+            let currentDate = convertToDate(`${year}/${month}/${day}`)
+            // 可能出现的日期溢出情况，要进行修正
+            if (currentDate.getMonth() + 1 !== month) {
+                month = month
+            }
+            // 判断是月份否溢出
+            if (year === this.$start.getFullYear() && month < this.$start.getMonth() + 1) {
+                month = this.$start.getMonth() + 1
+            } else if (year === this.$end.getFullYear() && month > this.$end.getMonth() + 1) {
+                month = this.$end.getMonth() + 1
+            }
+            if (currentDate.getDate() !== day) day = getLastDay(year, month)
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day > this.$start.getDate()) {
+                day = this.$start.getDate()
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day > this.$end.getDate()) {
+                day = this.$end.getDate()
+            }
+            // 判断天数是否溢出
+            if (year )
+            currentDate = convertToDate(`${year}/${month}/${day}`)
+            let months = []
+            let days = []
+            // 日期处理
+            if (this.data.fields === 'day') {
+                if (changeIndex === 2) return
+                if (year === this.$start.getFullYear()){
+                    months = getMonthsByDate(this.$start, true)
+                    // 如果月份和开始月份相等，特殊处理
+                    days = getDaysRange(currentDate)
+                } else if (year === this.$end.getFullYear()) {
+                    months = getMonthsByDate(this.$end, false)
+                    days = getDaysRange(currentDate)
+                } else {
+                    months = getMonthsRange()
+                    days = getDaysRange(currentDate)
+                }
+                if (month !== months[values[1]]) {
+                    let index = months.findIndex(m => month === Number(m))
+                    if (index !== -1) values[1] = index
+                }
+                data[1] = months.map(month => {
+                    return {
+                        id: month,
+                        label: `${month}月`
+                    }
+                })
+                data[2] = days.map(day => {
+                    return {
+                        id: day,
+                        label: `${day}日`
+                    }
+                })
+                this.setData({
+                    data,
+                    values
+                })
+            }
         }
         this.setData({
             data,
@@ -262,7 +352,60 @@ Component({
     emitChange (indexs) {
         if (this.data.lock) return
         this.triggerEvent('change', this.getValueByIndex(this.data.data, indexs))
-    }
+    },
+    // 日期相关
+    initDate () {
+        let start = convertToDate(this.data.start)
+        let end = convertToDate(this.data.end)
+        if (start.getTime() > end.getTime()) {
+            this.$start = end
+            this.$end = start
+        } else {
+            this.$start = start
+            this.$end = end
+        }
+        let data = []
+        let years = getYearsByStartDateAndEndDate(this.$start, this.$end)
+        let months = []
+        // TODO time
+        let days = []
+        // 如果没有绑定value，今日存在那么选择今日，否则选择第一年
+        let value = this.data.value
+        let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : this.$start
+        let year = currentDate.getFullYear()
+        // 判断当前日期是否为开始时间或截止时间
+        if (year === this.$start.getFullYear()) {
+            months = getMonthsByDate(this.$start, true)
+            days = getDaysByDate(this.$start, true)
+        } else if (year === this.$end.getFullYear()) {
+            months = getMonthsByDate(this.$end, false)
+            days = getDaysByDate(this.$end, false)
+        } else {
+            months = getMonthsRange()
+            days = getDaysRange(currentDate)
+        }
+        // 转化为标准格式
+        data = [years.map(year => {
+            return {
+                id: year,
+                label: `${year}年`
+            }
+        }), months.map(month => {
+            return {
+                id: month,
+                label: `${month}月`
+            }
+        }), days.map(day => {
+            return {
+                id: day,
+                label: `${day}日`
+            }
+        })]
+        this.setData({
+            data
+        })
+    },
+    getCurrentValueIndex () {}
   },
   attached () {
     if (this.data.mode === REGION) {
@@ -271,6 +414,8 @@ Component({
         }, () => {
             this.init(this.data.refactedRange)
         })
+    } else if (this.data.mode === DATE) {
+        this.initDate()
     }
   }
 })

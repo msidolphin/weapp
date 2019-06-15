@@ -13,7 +13,7 @@
             bindpickend="onPickerEnd"
             bindchange="handleChange">
             <picker-view-column wx:for="{{data}}" wx:key="{{index}}" wx:for-item="items" class="i-picker-column">
-                <view class="i-picker-column-item" wx:for="{{items}}" wx:key="{{item.id}}">
+                <view class="i-picker-column-item" wx:for="{{items}}" wx:key="id">
                     <text>{{item.label}}</text>
                 </view>
             </picker-view-column>
