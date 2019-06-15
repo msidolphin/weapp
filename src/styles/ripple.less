@@ -1,0 +1,40 @@
+.i-ripple {
+    position: absolute;
+    border-radius: 100%;
+    opacity: 0.3;
+    transform: scale(0.3);
+}
+
+.i-ripple-animation {
+    animation: i-ripple 0.6s ease-out;
+    animation-fill-mode: forwards;
+}
+
+.i-ripple-animation-hold {
+    animation: i-ripple-hold 1s ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes i-ripple {
+    from {
+        transform: scale(0.1);
+        opacity: 0.3;
+    }
+
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes i-ripple-hold {
+    from {
+        transform: scale(0.1);
+        opacity: 0.3;
+    }
+
+    to {
+        transform: scale(2.5);
+        opacity: 0.3;
+    }
+}

@@ -1,7 +1,8 @@
 <button
-    class="i-class i-btn {{ long ? 'i-btn-long' : '' }} {{ 'i-btn-' + size }} {{ 'i-btn-' + type }} {{ 'i-btn-' + shape }} {{ loading ? 'i-btn-loading' : '' }} {{ disabled ? 'i-btn-disabled' : ''}} {{ inline ? 'i-btn-inline' : '' }}"
+    class="i-class i-btn {{ long ? 'i-btn-long' : '' }} {{ 'i-btn-' + size }} {{ 'i-btn-' + type }} {{ 'i-btn-' + shape }} {{ loading ? 'i-btn-loading' : '' }} {{ disabled ? 'i-btn-disabled' : ''}} {{ inline ? 'i-btn-inline' : '' }} {{ripple ? 'i-ripple-el' : ''}}"
     hover-class="i-btn-hover"
     bindtap="handleTap"
+    bindlongpress="handleLongpress"
     open-type="{{ openType }}"
     app-parameter="{{ appParameter }}"
     hover-stop-propagation="{{ hoverStopPropagation }}"
@@ -17,4 +18,12 @@
     bindgetphonenumber="bindgetphonenumber"
     binderror="binderror"
     plain="true"
-><view class="i-btn-loading-inner" wx:if="{{loading}}"></view><slot></slot></button>
+><view class="i-btn-loading-inner" wx:if="{{loading}}"></view><slot></slot><!--
+--><view wx:for="{{$ripples}}"
+    wx:key="id"
+    id="{{item.id}}"
+    style="width:{{item.width}}px;height:{{item.height}}px;left:{{item.left}}px;top:{{item.top}}px;background-color: {{item.backgroundColor}}"
+    class="i-ripple-class i-ripple {{item.start ? item.hold ? 'i-ripple-animation-hold' :'i-ripple-animation' : ''}}"
+    bindanimationend="{{item.hold ? 'noop' : '$popRipple'}}">
+</view>
+</button>

@@ -1,5 +1,6 @@
 @import "../styles/_base.less";
 @import "../styles/_mixins.less";
+@import '../styles/ripple.less';
 
 .button-size(@padding; @font-size;) {
     padding: @padding;
@@ -21,6 +22,7 @@
 }
 
 .i-btn{
+    position: relative;
     text-align: center;
     vertical-align: middle;
     touch-action: manipulation;
@@ -31,7 +33,6 @@
     font-size: @size-font-base;
     border-radius: 2px;
     border: 0 !important;
-    position: relative;
     text-decoration: none;
 
     height: @btn-circle-size;
