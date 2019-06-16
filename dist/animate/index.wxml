@@ -1,4 +1,0 @@
-<view 
-    class="i-animate {{customClass}} {{name ? 'i-animate-' + name : ''}}"
-    style="{{customStyle}}" animation="{{animation}}"
-    bindtransitionend="onAnimationEnd"><slot/></view>

@@ -12,6 +12,10 @@ Component({
         correctedValue : { // 修正值
             type: Number,
             value: 0
+        },
+        delaySetTouchStartVal: { // 延迟计算距顶部位置，自定义头部栏时可能会用到
+            type: Number,
+            value: 0
         }
     },
     relations : {
@@ -73,7 +77,12 @@ Component({
                         itemLength : indexItems.length
                     })
                     //组件加载完成之后重新设置顶部高度
-                    this.setTouchStartVal();
+                    if (!this.data.delaySetTouchStartVal) this.setTouchStartVal();
+                    else {
+                        setTimeout(() => {
+                            this.setTouchStartVal();
+                        }, this.data.delaySetTouchStartVal);
+                    }
                 }, 40);
                 this.setData({
                     timer : this.data.timer
@@ -88,21 +97,10 @@ Component({
             indexItems.forEach((item,index)=>{
                 let data = item.data;
                 let offset = data.top + data.height;
-                if( scrollTop < offset && scrollTop >= data.top){
-                    if (this.data.current !== index) {
-                        this.setData({
-                            current : index,
-                            currentName : data.currentName,
-                            isTouches: !data.ingore
-                        })
-                        if (this.data.isTouches) {
-                            setTimeout(() => {
-                                this.setData({
-                                    isTouches: false
-                                })
-                            }, 400)
-                        }
-                    }
+                if( scrollTop < offset && scrollTop >= data.top) {
+                    this.setData({
+                        current : index
+                    })
                 }
             })
         },

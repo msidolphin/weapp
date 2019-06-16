@@ -5,9 +5,13 @@ Component({
             type : String,
             value : ''
         },
-        ingore: { // 本项是否忽略
+        ingore: { // 是否忽略（不进行索引）
             type: Boolean,
             value: false
+        },
+        showHeader: { // 是否显示头部
+            type: Boolean,
+            value: true
         }
     },
     relations : {

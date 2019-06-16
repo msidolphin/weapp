@@ -1,4 +1,0 @@
-<view class="i-class i-cell-group i-collapse" bindcollapse="clickfn">
-  <slot></slot>
-</view>
-

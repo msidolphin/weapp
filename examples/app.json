@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/picker/index",
-    "pages/button/index",
     "pages/index-list/index",
     "pages/color/index",
     "pages/cascader/index",

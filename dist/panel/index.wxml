@@ -1,7 +1,0 @@
-<view class="i-class i-panel">
-    <view wx:if="{{ title || label }}" class="i-panel-title {{ hideTop ? 'i-panel-title-hide-top' : '' }}">
-        <text class="i-panel-title__title">{{ title }}</text>
-        <text class="i-panel-title__label">{{ label }}</text>
-    </view>
-    <view class="i-panel-content {{ hideBorder ? 'i-panel-without-border' : '' }}"><slot></slot></view>
-</view>

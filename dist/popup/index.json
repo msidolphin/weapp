@@ -1,7 +1,0 @@
-{
-    "component": true,
-    "usingComponents": {
-        "i-mask": "../mask/index",
-        "i-animate": "../animate/index"
-    }
-}
