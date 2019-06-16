@@ -1,5 +1,5 @@
 <view class="i-index-item i-class">
-    <view class="i-index-item-header" wx:if="{{name && show-header}}">{{name}}</view>
+    <view class="i-index-item-header" wx:if="{{name && showHeader}}">{{name}}</view>
     <view class="i-index-item-content">
         <slot></slot>
     </view>
