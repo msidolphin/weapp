@@ -1,0 +1,3 @@
+<view class="i-class i-cell-group {{bordered ? 'has-bordered' : ''}}">
+    <slot></slot>
+</view>

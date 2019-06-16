@@ -1,0 +1,43 @@
+<view class="i-class i-cell {{ isLastCell ? 'i-cell-last' : '' }} {{ showArrow ? 'i-cell-access' : '' }} {{ error ? 'i-input-error' : '' }} {{ mode === 'wrapped' ? 'i-input-wrapped' : '' }} {{required ? 'i-input-required' : ''}} {{type === 'textarea' ? 'is-textarea' : ''}}"
+    bindtap="handleTap">
+    <view wx:if="{{ title }}" class="i-cell-hd i-input-title"><text>{{ title }}</text></view>
+    <view wx:else class="i-cell-hd i-cell-icon">
+       <slot name="icon"></slot>
+    </view>
+        <view wx:if="{{custom}}" class="i-input-input i-cell-bd"><slot/></view>
+        <block wx:else>
+            <textarea
+                wx:if="{{ type === 'textarea' }}"
+                auto-height
+                disabled="{{ disabled }}"
+                focus="{{ autofocus }}"
+                value="{{ value }}"
+                placeholder="{{ placeholder }}"
+                maxlength="{{ maxlength ? maxlength : '999999' }}"
+                class="i-input-input i-input-input-textarea i-cell-bd {{ right ? 'i-input-input-right' : '' }}"
+                placeholder-class="i-input-placeholder"
+                bindinput="handleInputChange"
+                bindfocus="handleInputFocus"
+                bindblur="handleInputBlur"
+            ></textarea>
+            <input
+                wx:else
+                type="{{ type }}"
+                disabled="{{ disabled }}"
+                focus="{{ autofocus }}"
+                value="{{ value }}"
+                placeholder="{{ placeholder }}"
+                maxlength="{{ maxlength ? maxlength : '999999' }}"
+                class="i-input-input i-cell-bd {{ right ? 'i-input-input-right' : '' }}"
+                placeholder-class="i-input-placeholder"
+                bindinput="handleInputChange"
+                bindfocus="handleInputFocus"
+                bindblur="handleInputBlur"
+            />
+        </block>
+    <view class="i-cell-ft"> 
+        <i-icon i-class="i-cell-ft-icon" wx:if="{{clearable && value && focused && type !== 'textarea'}}" color="#80848f" type="delete_fill" size="16" bind:tap="handleClearValue"></i-icon>
+        <i-icon i-class="i-cell-ft-icon" wx:if="{{iconType}}" type="{{iconType}}" size="16" color="{{iconColor}}" bind:tap="handleIconTap"></i-icon>
+        <slot name="extra"></slot>
+    </view>
+</view>

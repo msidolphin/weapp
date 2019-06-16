@@ -4,5 +4,8 @@
 <i-button bind:click='onTap1' type="primary">一般用法</i-button>
 <i-panel title="地区选择器"></i-panel>
 <i-button bind:click='onTap2'>地区选择器</i-button>
+<i-button bind:click='onTap3'>日期选择器</i-button>
 <view>{{text2}}</view>
 <i-picker title="选择地区" visible="{{visible2}}" value="{{value2}}" mode="region" range="{{data}}" bind:change="onChange2" bind:close="onClose2"></i-picker>
+
+<i-picker title="选择日期" visible="{{visible3}}" mode="date" bind:change="onChange2" bind:close="onClose2"></i-picker>

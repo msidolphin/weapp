@@ -2,10 +2,12 @@ Page({
   data: {
     visible1: false,
     visible2: false,
+    visible3: false,
     text1: [],
     text2: [],
     value1: [2, 21, 212],
     value2: ['440000', '440400', '440403'],
+    value3: '',
     data: []
   },
   onLoad () {
@@ -121,6 +123,11 @@ Page({
   onTap2() {
     this.setData({
       visible2: true
+    })
+  },
+  onTap3 () {
+    this.setData({
+      visible3: true
     })
   },
   onChange1(e) {

@@ -1,0 +1,35 @@
+<i-popup visible="{{visible}}" bind:close="handleClickCancel">
+    <view class="i-class i-modal-main">
+        <view class="i-modal-content">
+            <view class="i-modal-title" catchtouchmove="true" wx:if="{{ title }}">{{ title }}</view>
+            <view class="i-modal-body i-class-body" catchtouchmove="doNothing"><slot></slot></view>
+            <view class="i-modal-actions" catchtouchmove="true" wx:if="{{ actions.length }}">
+                <block wx:if="{{ actionMode === 'horizontal' }}">
+                    <view style="display:flex;">
+                        <view class="{{ actions.length === (index + 1) ? 'i-modal-grid-item-last' : 'i-modal-grid-item' }}"
+                            style="flex:1;"
+                            wx:for="{{ actions }}" wx:key="{{ item.name }}">
+                            <template  is="button"  data="{{ item, index }}"></template>
+                        </view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="i-modal-action-vertical" wx:for="{{ actions }}" wx:key="{{ item.name }}">
+                        <template is="button" data="{{ item, index }}"></template>
+                    </view>
+                </block>
+            </view>
+            <view class="i-modal-actions default" catchtouchmove="true" wx:elif="{{ (showOk || showCancel) && !actions.length }}">
+                <view class="i-modal-action" wx:if="{{showCancel}}"><i-button i-class="i-modal-btn-cancel" long type="ghost" bind:click="handleClickCancel">{{ cancelText }}</i-button></view>
+                <view class="i-modal-action" wx:if="{{showOk}}"><i-button i-class="i-modal-btn-ok" long type="ghost" bind:click="handleClickOk">{{ okText }}</i-button></view>
+            </view>
+        </view>
+    </view>
+</i-popup>
+<template name="button">
+    <i-button long type="ghost" data-index="{{ index }}" bind:click="handleClickItem">
+        <view class="i-modal-btn-loading" wx:if="{{ item.loading }}"></view>
+        <i-icon wx:if="{{ item.icon }}" type="{{ item.icon }}" i-class="i-modal-btn-icon"></i-icon>
+        <view class="i-modal-btn-text" style="{{ item.color ? 'color: ' + item.color : '' }}">{{ item.name }}</view>
+    </i-button>
+</template>

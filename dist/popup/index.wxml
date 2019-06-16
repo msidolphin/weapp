@@ -1,0 +1,8 @@
+
+<view style="z-index: {{_zIndex + 1}};position:relative;">
+    <view class="i-popup {{direction ? 'i-popup-' + direction : ''}} {{show ? 'is-show' : ''}}">
+        <slot/>
+    </view>
+</view>
+<view catchtouchmove="true" class="i-mask {{show ? 'is-show' : ''}}" style="z-index: {{_zIndex}};" catchtap="close"></view>
+<!-- <i-mask show="{{show}}" zIndex="{{_zIndex}}" bind:close="close"/> -->

@@ -5,6 +5,9 @@
 }
 .i-cascader {
   overflow: hidden;
+  background: #fff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .i-cascader-hd {
   position: relative;
@@ -13,6 +16,8 @@
   line-height: 1.5;
   color: #444;
   background: #fff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .i-cascader-hd::after {
   content: '';
