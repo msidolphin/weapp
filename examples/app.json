@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/calendar/index",
     "pages/index/index",
     "pages/picker/index",
     "pages/index-list/index",

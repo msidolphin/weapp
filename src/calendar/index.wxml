@@ -1,0 +1,66 @@
+{{ currentYear }}{{ currentMonthName }}
+<view class="i-class i-calendar i-calendar--{{direction}}" catchtouchmove="noop">
+    <view class="i-calendar-content">
+        <!-- <view class="i-calendar-hd" wx:if="{{ toolbar }}">
+            <view class="i-calendar-toolbar">
+                <view class="i-calendar-picker">
+                    <view class="i-calendar-link" bindtap="prevMonth">
+                        <view class="i-calendar__icon--prev"></view>
+                    </view>
+                    <view class="i-calendar-value">{{ currentMonthName }}</view>
+                    <view class="i-calendar-link" bindtap="nextMonth">
+                        <view class="i-calendar__icon--next"></view>
+                    </view>
+                </view>
+                <view class="i-calendar-picker">
+                    <view class="i-calendar-link" bindtap="prevYear">
+                        <view class="i-calendar__icon--prev"></view>
+                    </view>
+                    <text class="i-calendar-value">{{ currentYear }}</text>
+                    <view class="i-calendar-link" bindtap="nextYear">
+                        <view class="i-calendar__icon--next"></view>
+                    </view>
+                </view>
+            </view>
+        </view> -->
+        <view class="i-calendar-bd">
+            <!-- <view class="i-calendar-weekdays" wx:if="{{ weekHeader }}">
+                <block wx:for="{{ weeks }}" wx:key="">
+                    <view class="i-calendar__weekday {{ item.weekend ? 'i-calendar__weekday--weekend' : '' }}">
+                        {{ item.dayName }}
+                    </view>
+                </block>
+            </view> -->
+            <view class="i-calendar-months">
+                <view class="i-calendar-months-content" bindtouchstart="onTouchStart" catchtouchmove="{{ swiping ? 'noop' : '' }}" capture-bind:touchmove="onTouchMove" bindtouchend="onTouchEnd" style="{{ wrapperTranslate }}">
+                    <block wx:for="{{ months }}" wx:for-item="month" wx:key="">
+                        <view
+                            data-year="{{ month.year }}"
+                            data-month="{{ month.month }}"
+                            class="i-calendar__month {{ index === 0 ?  'i-calendar__month--prev' : index === 1 ? ('i-calendar__month--current') : ('i-calendar__month--next') }}"
+                            style="{{ monthsTranslate[index] }}"
+                        >
+                            <block wx:for="{{ month.items }}" wx:for-item="row" wx:key="">
+                                <view class="i-calendar-days">
+                                    <block wx:for="{{ row }}" wx:for-item="col" wx:key="">
+                                        <view
+                                        data-year="{{ col.year }}"
+                                        data-month="{{ col.month }}"
+                                        data-day="{{ col.day }}"
+                                        data-date="{{ col.date }}"
+                                        data-type="{{ col.type }}"
+                                        class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ col.type.selected ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }}"
+                                        bindtap="onDayClick"
+                                        >
+                                            <text class="i-calendar__text">{{ col.day }}</text>
+                                        </view>
+                                    </block>
+                                </view>
+                            </block>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
