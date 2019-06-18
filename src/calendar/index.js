@@ -1,3 +1,5 @@
+import calendar from './calendarinit'
+
 const bind = (fn, ctx) => {
     return (...args) => {
         return args.length ? fn.apply(ctx, args) : fn.call(ctx)
@@ -9,7 +11,7 @@ const defaults = {
     monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-    dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     firstDay: 1, // First day of the week, Monday
     weekendDays: [0, 6], // Sunday and Saturday
     multiple: false,
@@ -55,6 +57,14 @@ Component({
         direction: {
             type: String,
             value: 'horizontal' // or 'vertical'
+        },
+        fill: { // 是否在本月填充上一个月或下一个月的日期
+            type: Boolean,
+            value: true
+        },
+        lunar: { // 是否显示农历
+            type: Boolean,
+            value: true
         }
     },
     data: defaults,
@@ -231,6 +241,7 @@ Component({
          * @param {Object} e 事件对象
          */
         onDayClick(e) {
+            if (e.currentTarget.dataset.empty) return
             if (this.allowItemClick) {
                 const dataset = e.currentTarget.dataset
                 const dateYear = dataset.year
@@ -536,7 +547,7 @@ Component({
             let daysInPrevMonth = this.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - 10 * 24 * 60 * 60 * 1000),
                 daysInMonth = this.daysInMonth(date),
                 firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay()
-            if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7
+            if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7 // 周日
 
             let dayDate, currentValues = [],
                 i, j,
@@ -552,7 +563,11 @@ Component({
                     currentValues.push(new Date(this.data.value[i]).setHours(0, 0, 0, 0))
                 }
             }
-            // debugger
+
+            // 本月中是否存在上一月或下一个的日期
+            let hasNextMonth = false
+            let hasPrevMonth = false
+
             for (let i = 1; i <= rows; i++) {
                 let rowHTML = []
                 let row = i
@@ -564,52 +579,78 @@ Component({
                     let type = {}
 
                     if (dayNumber < 0) {
-                        dayNumber = daysInPrevMonth + dayNumber + 1
-                        type.prev = true
-                        dayDate = new Date(month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1, dayNumber).getTime()
+                        if (this.data.fill) {
+                            // prev month
+                            if (!hasNextMonth) hasNextMonth = true
+                            dayNumber = daysInPrevMonth + dayNumber + 1
+                            type.prev = true
+                            dayDate = new Date(month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1, dayNumber).getTime()
+                        } else {
+                            type.empty = true
+                        }
                     } else {
                         dayNumber = dayNumber + 1
                         if (dayNumber > daysInMonth) {
-                            dayNumber = dayNumber - daysInMonth
-                            type.next = true
-                            dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime()
+                            if (this.data.fill) {
+                                // next month
+                                if (!hasPrevMonth) hasPrevMonth = true
+                                dayNumber = dayNumber - daysInMonth
+                                type.next = true
+                                dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime()
+                            } else {
+                                type.empty = true
+                            } 
                         } else {
                             dayDate = new Date(year, month, dayNumber).getTime()
                         }
                     }
 
-                    // Today
-                    if (dayDate === today) type.today = true
+                    if (!type.empty) {
+                        // Today
+                        if (dayDate === today) type.today = true
 
-                    // Selected
-                    if (currentValues.indexOf(dayDate) >= 0) type.selected = true
+                        // Selected
+                        if (currentValues.indexOf(dayDate) >= 0) type.selected = true
 
-                    // Weekend
-                    if (this.data.weekendDays.indexOf(col - 1) >= 0) {
-                        type.weekend = true
+                        // Weekend
+                        if (this.data.weekendDays.indexOf(col - 1) >= 0) {
+                            type.weekend = true
+                        }
+
+                        // Disabled
+                        if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
+                            type.disabled = true
+                        }
+
+                        dayDate = new Date(dayDate)
+                        const dayYear = dayDate.getFullYear()
+                        const dayMonth = dayDate.getMonth()
+
+                        // 农历
+                        let lunar = {}
+                        lunar = this.data.lunar ? calendar.solar2lunar(dayYear, dayMonth + 1, dayNumber) : {}
+                        rowHTML.push({
+                            type,
+                            year: dayYear,
+                            lunar,
+                            empty: false,
+                            month: dayMonth,
+                            day: dayNumber,
+                            date: `${dayYear}-${dayMonth + 1}-${dayNumber}`,
+                        })
+                    } else {
+                        rowHTML.push({
+                            type,
+                            lunar: {}
+                        })
                     }
-
-                    // Disabled
-                    if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
-                        type.disabled = true
-                    }
-
-                    dayDate = new Date(dayDate)
-                    const dayYear = dayDate.getFullYear()
-                    const dayMonth = dayDate.getMonth()
-
-                    rowHTML.push({
-                        type,
-                        year: dayYear,
-                        month: dayMonth,
-                        day: dayNumber,
-                        date: `${dayYear}-${dayMonth + 1}-${dayNumber}`,
-                    })
                 }
 
                 monthHTML.year = year
                 monthHTML.month = month
                 monthHTML.time = time
+                monthHTML.prev = hasPrevMonth
+                monthHTML.next = hasNextMonth
 
                 monthHTML.items.push(rowHTML)
             }
@@ -622,6 +663,7 @@ Component({
         setMonthsHTML() {
             const layoutDate = this.data.value && this.data.value.length ? this.data.value[0] : new Date().setHours(0, 0, 0, 0)
             const prevMonthHTML = this.monthHTML(layoutDate, `prev`)
+            // debugger
             const currentMonthHTML = this.monthHTML(layoutDate)
             const nextMonthHTML = this.monthHTML(layoutDate, `next`)
 
@@ -689,7 +731,6 @@ Component({
          */
         updateValue() {
             const changedPath = {}
-            console.log(this.data.value)
             this.data.months.forEach((n, i) => {
                 n.items.forEach((v, k) => {
                     v.forEach((p, j) => {
@@ -700,6 +741,7 @@ Component({
                 })
             })
 
+            // 设置选中值
             for (let ii = 0; ii < this.data.value.length; ii++) {
                 const valueDate = new Date(this.data.value[ii])
                 const valueYear = valueDate.getFullYear()
@@ -707,9 +749,7 @@ Component({
                 const valueDay = valueDate.getDate()
 
                 this.data.months.forEach((n, i) => {
-                    // debugger
-                    // 判断month是否存在valueMonth
-                    if (n.year === valueYear) {
+                    if (n.next || n.prev || n.year === valueYear && n.month === valueMonth) {
                         n.items.forEach((v, k) => {
                             v.forEach((p, j) => {
                                 if (p.year === valueYear && p.month === valueMonth && p.day === valueDay) {
@@ -720,7 +760,6 @@ Component({
                     }
                 })
             }
-            console.log(changedPath)
             this.setData(changedPath)
 
             if (typeof this.fns.onChange === 'function') {

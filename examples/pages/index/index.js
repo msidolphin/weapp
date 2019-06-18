@@ -229,6 +229,10 @@ Page({
           {
             label: 'LoadMore 页底提示',
             url: '/pages/load-more/index'
+          },
+          {
+            label: 'Calendar 日历',
+            url: '/pages/calendar/index'
           }
         ]
       }

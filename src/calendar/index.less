@@ -1,9 +1,35 @@
-// @import "../styles/base/fn.wxss";
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-calendar-weekdays {
+	height: 32px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	color: @title-color;
+	box-sizing: border-box;
+	position: relative;
+
+	&::after {
+		.hairline();
+		border-bottom-width: 1px;
+	}
+
+	.i-calendar__weekday {
+		flex-shrink: 1;
+		width: 14.28571429%;
+		width: calc(100% / 7);
+		line-height: 32px;
+		text-align: center;
+	}
+}
+
 
 .i-calendar {
 	position: relative;
 	background: #fff;
-	height: 100vw;
+	height: 321.36px;
 	width: 100%;
 	overflow: hidden;
 
@@ -25,16 +51,8 @@
 		width: 100%;
 		
 		&:before {
-			content: " ";
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			height: 1px;
-			border-bottom: 1px solid #d9d9d9;
-			color: #d9d9d9;
-			transform-origin: 0 100%;
-			transform: scaleY(0.5);
+			.hairline();
+			border-bottom-width: 1px;
 		}
 	}
 
@@ -43,7 +61,6 @@
 	}
 
 	&-toolbar {
-		// height: 2.2rem;
 		display: flex;
 		text-align: center;
 	}
@@ -59,79 +76,6 @@
 		line-height: 2.2rem;
 	}
 
-	// &-link {
-	// 	float: left;
-	// 	width: 25%;
-	// 	height: 2.2rem;
-	// 	line-height: 2rem;
-	// 	min-width: 36px;
-	// }
-
-	// &__icon {
-	// 	display: inline-block;
-	// 	vertical-align: middle;
-	// 	background-size: 100% auto;
-	// 	background-position: center;
-
-	// 	&--next,
-	// 	&--prev {
-	// 		width: 0.75rem;
-	// 		height: 0.75rem;
-	// 	}
-
-	// 	&--next {
-	// 		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23007aff'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-	// 	}
-
-	// 	&--prev {
-	// 		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23007aff'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-	// 	}
-	// }
-
-	// &-value {
-	// 	flex-shrink: 1;
-	// 	position: relative;
-	// 	overflow: hidden;
-	// 	text-overflow: ellipsis;
-	// 	float: left;
-	// 	width: 50%;
-	// 	height: 2.2rem;
-	// }
-
-	&-weekdays {
-		height: 18px;
-		background: #fff;
-		display: flex;
-		font-size: 11px;
-		box-sizing: border-box;
-		position: relative;
-
-		&:after {
-			content: " ";
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			height: 1px;
-			border-bottom: 1px solid #d9d9d9;
-			color: #d9d9d9;
-			transform-origin: 0 100%;
-			transform: scaleY(0.5);
-		}
-	}
-
-	&-weekdays + &-months {
-		// height: calc(100% - 18px);
-	}
-
-	&__weekday {
-		flex-shrink: 1;
-		width: 14.28571429%;
-		width: calc(100% / 7);
-		line-height: 17px;
-		text-align: center;
-	}
-
 	&-months {
 		width: 100%;
 		height: 100%;
@@ -144,7 +88,7 @@
 			height: 100%;
 		    display: flex;
 		    position: relative;
-		    -webkit-backface-visibility: hidden;
+		    backface-visibility: hidden;
 			transform: translate3d(0px, 0px, 0px)
 		}
 	}
@@ -168,16 +112,8 @@
 		position: relative;
 		
 		&:after {
-			content: " ";
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			height: 1px;
-			border-bottom: 1px solid #d9d9d9;
-			color: #d9d9d9;
-			transform-origin: 0 100%;
-			transform: scaleY(0.5);
+			.hairline();
+			border-bottom-width: 1px;
 		}
 
 		&:last-child:after {
@@ -186,18 +122,28 @@
 	}
 
 	&__day {
+		position: relative;
 		flex-shrink: 1;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		flex-direction: column;
 		box-sizing: border-box;
 		width: 14.28571429%;
 		width: calc(100% / 7);
 		text-align: center;
 		color: #3d4145;
-		font-size: 15px;
+		font-size: 14px;
 		cursor: pointer;
-
+		&-inner {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			border-radius: 50%;
+		}
 		&--prev,
 		&--next {
 			color: #cccccc;
@@ -207,22 +153,54 @@
 			color: #d4d4d4;
 			cursor: auto;
 		}
+
+		// 节气
+		&--term:not(&--next):not(&--prev) {
+			.i-calendar__lunar {
+				color: @error-color;
+			}
+		}
+		&:active {
+			background: #fff!important;
+		}
 	}
 
-	&__day--today &__text {
-		background: #e3e3e3;
+	&__range {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 150%;
+		height: 100%;
+		pointer-events: none;
+		z-index: 0;
 	}
 
-	&__day--selected &__text {
-		background: #0894ec;
-		color: #fff;
+	&__day--today {
+		.i-calendar__day-inner {
+			background: #e3e3e3;
+		}
+	}
+
+	&__day--selected  {
+		.i-calendar__day-inner {
+			width: 100%;
+			height: 100%;
+			background: @primary-color;
+			.i-calendar__text, .i-calendar__lunar {
+				color: #fff!important;
+			}
+		}
 	}
 
 	&__text {
+		position: relative;
 		display: inline-block;
 		border-radius: 100%;
-		width: 30px;
-		height: 30px;
-		line-height: 30px;
+		z-index: 1;
+	}
+	&__lunar {
+		font-size: 12px;
+		position: relative;
+		z-index: 1;
 	}
 }
