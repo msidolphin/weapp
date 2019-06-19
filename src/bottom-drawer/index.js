@@ -17,7 +17,15 @@ Component({
         },
         bottom: {
             type: Number,
-            value: 100
+            value: 100,
+            observer (val, old) {
+                if (val !== old) {
+                  this.setData({
+                    styles: `transform: translateY(-${val}px)!important;transition: unset!important;`,
+                    y: -val
+                  })
+                }
+            }
         }
     },
     data: {
