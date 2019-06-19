@@ -12,7 +12,6 @@ const defaults = {
     monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-    firstDay: 1, // First day of the week, Monday
     weekendDays: [0, 6], // Sunday and Saturday
     multiple: false,
     dateFormat: 'yyyy-mm-dd',
@@ -65,7 +64,11 @@ Component({
         lunar: { // 是否显示农历
             type: Boolean,
             value: true
-        }
+        },
+        firstDay: {
+            type: Number,
+            value: 1
+        }, // First day of the week, Monday
     },
     data: defaults,
     methods: {
@@ -85,7 +88,7 @@ Component({
          * 打开日历
          * @param {Object} opts
          */
-        open(opts = {}) {
+        open (opts = {}) {
             const options = this.merge(Object.assign({}, defaults, opts))
 
             this.monthsTranslate = 0

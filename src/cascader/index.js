@@ -103,6 +103,18 @@ Component({
         },
         mode: {
             type: String
+        },
+        all: { // 是否添加全部选择项
+            type: Boolean,
+            value: false
+        },
+        allValue: {
+            type: String,
+            value: ''
+        },
+        allText: {
+            type: String,
+            value: '所有'
         }
     },
     data: {
@@ -344,16 +356,23 @@ Component({
         }
     },
     attached() {
+        const fieldNames = Object.assign({}, defaultFieldNames, this.data.props)
         if (this.moveX === undefined) this.moveX = 0
         if (this.moveY === undefined) this.moveY = 0 
         if (this.data.mode === REGION) {
+            let _province = mapToTree(province)
+            if (this.data.all) {
+                _province.unshift({
+                    [fieldNames['label']]: this.data.allText,
+                    [fieldNames['value']]: this.data.allValue
+                })
+            }
             this.setData({
-                $options: mapToTree(province)
+                $options: _province
             })
         }
         const { defaultValue, value, controlled } = this.data
         const activeValue = controlled ? value : defaultValue
-        const fieldNames = Object.assign({}, defaultFieldNames, this.data.props)
 
         this.setData({ activeValue, fieldNames }, () => this.getCurrentOptions(activeValue))
     },
