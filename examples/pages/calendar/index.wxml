@@ -1,2 +1,2 @@
-<i-calendar/>
+<i-calendar fill="{{false}}"/>
 <i-calendar direction="vertical"/>

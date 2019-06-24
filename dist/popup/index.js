@@ -20,6 +20,10 @@ Component({
         zIndex: {
             type: Number,
             value: 1000
+        },
+        closeOnClickModal: {
+            type: Boolean,
+            value: true
         }
     },
     data: {
@@ -28,6 +32,7 @@ Component({
     },
     methods: {
         close () {
+            if (!this.data.closeOnClickModal) return
             setTimeout(() => {
                 this.setData({
                     show: false

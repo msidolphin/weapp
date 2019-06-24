@@ -11,8 +11,8 @@ const defaults = {
     monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-    weekendDays: [0, 6], // Sunday and Saturday
+    dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
+    weekendDays: [5, 6], // Sunday and Saturday
     multiple: false,
     dateFormat: 'yyyy-mm-dd',
     minDate: null,
@@ -70,7 +70,9 @@ Component({
             value: 1
         }, // First day of the week, Monday
     },
-    data: defaults,
+    data: {
+        ...defaults
+    },
     methods: {
         merge (opts = {}, fns = this.fns) {
             const options = Object.assign({}, opts)
@@ -151,22 +153,34 @@ Component({
             if (typeof dir === 'undefined') {
                 const currentMonth = parseInt(months[1].month, 10)
                 const currentYear = parseInt(months[1].year, 10)
+                const currentHeight = months[1].height
                 const currentMonthName = monthNames[currentMonth]
-
+                this.triggerEvent('month-change', {
+                    currentMonth,
+                    currentYear,
+                    currentMonthName
+                })
                 return {
                     currentMonth,
                     currentYear,
+                    currentHeight,
                     currentMonthName,
                 }
             }
 
             const currentMonth = parseInt(months[dir === 'next' ? (months.length - 1) : 0].month, 10)
             const currentYear = parseInt(months[dir === 'next' ? (months.length - 1) : 0].year, 10)
+            const currentHeight = months[dir === 'next' ? (months.length - 1) : 0].height
             const currentMonthName = monthNames[currentMonth]
-
+            this.triggerEvent('month-change', {
+                currentMonth,
+                currentYear,
+                currentMonthName
+            })
             return {
                 currentMonth,
                 currentYear,
+                currentHeight,
                 currentMonthName,
             }
         },
@@ -197,27 +211,30 @@ Component({
             }
 
             this.setData({ swiping: true })
-
-            const query = wx.createSelectorQuery().in(this)
-            query.select(`.i-calendar-months-content`).boundingClientRect((rect) => {
-
-                // 由于 boundingClientRect 为异步方法，某些情况下其回调函数在 onTouchEnd 之后触发，导致 wrapperTranslate 计算错误
-                // 所以判断 this.isMoved = false 时阻止回调函数的执行
-                if (!rect || !this.isMoved) return
-
+            if (!this.data.isIos) {
                 this.move = getTouchPosition(e)
                 this.touchesDiff = this.isH ? this.move.x - this.start.x : this.move.y - this.start.y
+            } else {
+                const query = wx.createSelectorQuery().in(this)
+                query.select(`.i-calendar-months-content`).boundingClientRect((rect) => {
+                    // 由于 boundingClientRect 为异步方法，某些情况下其回调函数在 onTouchEnd 之后触发，导致 wrapperTranslate 计算错误
+                    // 所以判断 this.isMoved = false 时阻止回调函数的执行
+                    if (!rect || !this.isMoved) return
 
-                const { width, height } = rect
-                const percentage = this.touchesDiff / (this.isH ? width : height)
-                const currentTranslate = (this.monthsTranslate + percentage) * 100
-                const transform = getTransform(currentTranslate, this.isH)
+                    this.move = getTouchPosition(e)
+                    this.touchesDiff = this.isH ? this.move.x - this.start.x : this.move.y - this.start.y
 
-                this.setData({
-                    wrapperTranslate: `transition-duration: 0s; ${transform}`,
+                    const { width, height } = rect
+                    const percentage = this.touchesDiff / (this.isH ? width : height)
+                    const currentTranslate = (this.monthsTranslate + percentage) * 100
+                    const transform = getTransform(currentTranslate, this.isH)
+
+                    this.setData({
+                        wrapperTranslate: `transition-duration: 0s; ${transform}`,
+                    })
                 })
-            })
-            query.exec()
+                query.exec()
+            }
         },
         /**
          * 手指触摸动作结束
@@ -551,10 +568,13 @@ Component({
                 daysInMonth = this.daysInMonth(date),
                 firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay()
             if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7 // 周日
+            // 判断是否固定高度
+            let remain = daysInMonth % 7 // 剩余天数
+            let rows = Math.ceil(daysInMonth / 7)
+            if (firstDayOfMonthIndex - 1 > 6 - remain + 1 || remain === 0 && firstDayOfMonthIndex !== 1) rows += 1
+            let height = rows * 51 // 51单行高度
 
             let dayDate, currentValues = [],
-                i, j,
-                rows = 6,
                 cols = 7,
                 dayIndex = 0 + (this.data.firstDay - 1),
                 today = new Date().setHours(0, 0, 0, 0),
@@ -644,12 +664,18 @@ Component({
                     } else {
                         rowHTML.push({
                             type,
+                            date: '',
+                            empty: true,
+                            day: '',
+                            year: '',
+                            month: '',
                             lunar: {}
                         })
                     }
                 }
 
                 monthHTML.year = year
+                monthHTML.height = height
                 monthHTML.month = month
                 monthHTML.time = time
                 monthHTML.prev = hasPrevMonth
@@ -773,6 +799,15 @@ Component({
     },
     created () {
         this.fns = {}
+        wx.getSystemInfo({
+            success: (res) => {
+                // 仅有IOS提供滑动效果
+                let isIos = res.system.indexOf('iOS') !== -1
+                this.setData({
+                    isIos
+                })
+            }
+        })
     },
     ready () {
         this.open()

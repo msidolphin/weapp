@@ -1,4 +1,3 @@
-{{ currentYear }}{{ currentMonthName }}
 <view class="i-calendar-weekdays" wx:if="{{ weekHeader }}">
     <block wx:for="{{ weeks }}" wx:key="">
         <view class="i-calendar__weekday {{ item.weekend ? 'i-calendar__weekday--weekend' : '' }}">
@@ -6,30 +5,8 @@
         </view>
     </block>
 </view>
-<view class="i-class i-calendar i-calendar--{{direction}}" catchtouchmove="noop">
+<view class="i-class i-calendar i-calendar--{{direction}}" catchtouchmove="noop" style="height:{{currentHeight}}px;">
     <view class="i-calendar-content">
-        <!-- <view class="i-calendar-hd" wx:if="{{ toolbar }}">
-            <view class="i-calendar-toolbar">
-                <view class="i-calendar-picker">
-                    <view class="i-calendar-link" bindtap="prevMonth">
-                        <view class="i-calendar__icon--prev"></view>
-                    </view>
-                    <view class="i-calendar-value">{{ currentMonthName }}</view>
-                    <view class="i-calendar-link" bindtap="nextMonth">
-                        <view class="i-calendar__icon--next"></view>
-                    </view>
-                </view>
-                <view class="i-calendar-picker">
-                    <view class="i-calendar-link" bindtap="prevYear">
-                        <view class="i-calendar__icon--prev"></view>
-                    </view>
-                    <text class="i-calendar-value">{{ currentYear }}</text>
-                    <view class="i-calendar-link" bindtap="nextYear">
-                        <view class="i-calendar__icon--next"></view>
-                    </view>
-                </view>
-            </view>
-        </view> -->
         <view class="i-calendar-bd">
             <view class="i-calendar-months">
                 <view class="i-calendar-months-content" bindtouchstart="onTouchStart" catchtouchmove="{{ swiping ? 'noop' : '' }}" capture-bind:touchmove="onTouchMove" bindtouchend="onTouchEnd" style="{{ wrapperTranslate }}">
