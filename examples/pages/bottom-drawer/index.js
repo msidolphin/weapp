@@ -14,6 +14,10 @@ Page({
         drawer.hide()
     },
     onPageScroll (e) {
+        if (e.scrollTop <= 0) {
+          this.show()
+          return
+        }
         if (this.data.scrollTop < e.scrollTop) {
             // 向下滚动 隐藏
             this.hide()
