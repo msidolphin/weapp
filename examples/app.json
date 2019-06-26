@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/bottom-drawer/index",
     "pages/index/index",
+    "pages/tabs/index",
+    "pages/bottom-drawer/index",
     "pages/calendar/index",
     "pages/cascader/index",
     "pages/picker/index",
@@ -17,7 +18,6 @@
     "pages/message/index",
     "pages/action-sheet/index",
     "pages/popup/index",
-    "pages/tabs/index",
     "pages/notice-bar/index",
     "pages/grid/index",
     "pages/switch/index",

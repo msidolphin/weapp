@@ -6,6 +6,7 @@ Component({
             type: 'child',
             linked (target) {
                 this.changeCurrent();
+                target.setBar(this.data.bar)
                 if (target) this.data.items.push(target)
             },
             linkChanged () {
@@ -34,6 +35,10 @@ Component({
         fixed: {
             type: Boolean,
             value: false
+        },
+        bar: {
+            type: Boolean,
+            value: true
         }
     },
 

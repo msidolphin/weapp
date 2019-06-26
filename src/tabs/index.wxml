@@ -1,6 +1,6 @@
-<scroll-view wx:if="{{ scroll }}"
+<view wx:if="{{ scroll }}" style="overflow:hidden;white-space:nowrap;"><scroll-view
     scroll-x="true"
     scroll-left="{{scrollLeft}}"
     scroll-with-animation
-    class="i-class i-tabs i-tabs-scroll {{ fixed ? 'i-tabs-fixed' : '' }}"><slot></slot></scroll-view>
+    class="i-tabs i-tabs-scroll {{ fixed ? 'i-tabs-fixed' : '' }} i-class"><slot></slot></scroll-view></view>
 <view wx:else class="i-class i-tabs {{ fixed ? 'i-tabs-fixed' : '' }}"><slot></slot></view>

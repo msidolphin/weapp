@@ -1,5 +1,5 @@
 Component({
-    externalClasses: ['i-class'],
+    externalClasses: ['i-class', 'i-active-class'],
 
     relations: {
         '../tabs/index': {
@@ -30,7 +30,8 @@ Component({
         current: false,
         currentColor: '',
         scroll: false,
-        width: 0
+        width: 0,
+        bar: true
     },
 
     methods: {
@@ -58,6 +59,11 @@ Component({
                         resolve(res && res[0] ? res[0].width + 20 : 0)
                     })
                 })
+            })
+        },
+        setBar (bar) {
+            this.setData({
+                bar
             })
         }
     }
