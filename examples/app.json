@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/bottom-drawer/index",
+    "pages/index/index",
     "pages/calendar/index",
     "pages/cascader/index",
     "pages/picker/index",

@@ -28,4 +28,10 @@ gulp.task('compile-wxml', () => {
         .pipe(gulp.dest('../dist/'));
 });
 
-gulp.task('default', ['compile-css', 'compile-js', 'compile-json', 'compile-wxml']);
+
+gulp.task('compile-wxs', () => {
+    return gulp.src(['../src/**/*.wxs'])
+        .pipe(gulp.dest('../dist/'));
+});
+
+gulp.task('default', ['compile-css', 'compile-js', 'compile-json', 'compile-wxml', 'compile-wxs']);

@@ -1,12 +1,142 @@
-<view id="drawer" class="i-class bottom-drawer" data-y="{{y}}" style="{{styles}};" animation="{{animation}}" bindtransitionend="handleAnimationEnd">
-    <view class="bottom-drawer-header" id="header" data-y="{{y}}" catchtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd">
+<view class="i-class bottom-drawer"  data-y="{{y}}" style="{{styles}}" animation="{{animation}}" bindtransitionend="handleAnimationEnd" data-max-y="{{maxY}}" data-bottom="{{bottom}}" data-threshold="{{threshold}}">
+    <view class="bottom-drawer-header" data-y="{{y}}" catchtouchstart="{{movable.touchstart}}" catchtouchmove="{{movable.touchmove}}" catchtouchend="{{movable.touchend}}">
         <slot name="header"></slot>
         <view class="bottom-drawer-header-line"></view>
     </view>
-    <view class="bottom-drawer-body" catchtouchmove="doNothing">
+    <view class="bottom-drawer-body" catchtouchmove="noop" >
         <scroll-view class="scroll-view" style="{{scrollViewStyle}}" scroll-y bindscrolltolower="onScrollToBottom">
             <slot/>
         </scroll-view>
     </view>
 </view>
 <view class="bottom-drawer-mask {{showMask ? 'is-show' : ''}}" animation="{{backgroundAnimation}}" style="{{maskStyle}}" catchtouchmove="doNothing" catchtap="onMaskTap"></view>
+<wxs module="movable">
+    var startY = 0
+    var minAlpha = 0
+    var maxAlpha = 0.3
+    var totalMoveY = 0
+    var endY = null
+    var reachedTop = false
+    var reachedBottom = true
+
+    function touchstart (event) {
+        var touch = event.touches[0] || event.changedTouches[0]
+        startY = touch.pageY
+        totalMoveY = 0
+        endY = null
+    }
+
+    function touchmove (event, ins) {
+        var touch = event.touches[0] || event.changedTouches[0]
+        var pageY = touch.pageY
+        var moveY = (pageY - startY)
+        var instance = ins.selectComponent('.bottom-drawer')
+        var maxY = instance.getDataset().maxY
+        var bottom = instance.getDataset().bottom
+        var orignY = instance.getDataset().y
+        endY = orignY + moveY >= -bottom ? -bottom : orignY + moveY
+        if (endY <= -maxY) endY = -maxY
+        // 计算透明度
+        // 系数
+        var k = (maxAlpha - minAlpha) / maxY
+        var opacity = minAlpha + k * (Math.abs(endY) - 0)
+        if (endY === -bottom) opacity = 0
+        totalMoveY += moveY
+        instance.setStyle({
+            transform:  'translateY(' + endY + 'px)!important',
+            transition: 'unset!important'
+        })
+        ins.selectComponent('.bottom-drawer-mask').setStyle({
+            background: 'rgba(0, 0, 0, ' + opacity  +')!important',
+            transition: 'unset!important'
+        })
+        ins.callMethod('setShowMask', {show: endY !== -bottom})
+        ins.callMethod('setReachedTop', {value: endY === -maxY})
+        ins.callMethod('setReachedBottom', {value: endY !== -bottom})
+    }
+
+    function touchend (event, ins) {
+        if (Math.abs(totalMoveY) === 0) {
+            ins.callMethod('complete')
+        } else {
+            var instance = ins.selectComponent('.bottom-drawer')
+            var maxY = instance.getDataset().maxY
+            var bottom = instance.getDataset().bottom
+            reachedTop = endY === -maxY
+            reachedBottom = endY === -bottom
+            var threshold = instance.getDataset().threshold
+            if (reachedTop) {
+                ins.callMethod('setY', {value: -maxY})
+            } else if (reachedBottom) {
+                ins.callMethod('setY', {value: -bottom})
+            } else {
+                var min = -(maxY - threshold)
+                var max = -(bottom + threshold)
+                if (totalMoveY < 0) {
+                    // 朝上
+                    if (endY <= max) {
+                        complete(ins)
+                    } else {
+                        restart(ins)
+                    }
+                } else {
+                    // 朝下
+                    if (endY >= min) {
+                        restart(ins)
+                    } else {
+                        complete(ins)
+                    }
+                }
+            }
+        }
+        totalMoveY = 0
+        endY = null
+    }
+
+    function complete (ins) {
+        if (reachedBottom) return
+        var instance = ins.selectComponent('.bottom-drawer')
+        var maxY = instance.getDataset().maxY
+        instance.setStyle({
+            transform:  'translateY(' + -maxY + 'px)!important',
+            transition: '.3s transform!important'
+        })
+        ins.selectComponent('.bottom-drawer-mask').setStyle({
+            background: 'rgba(0, 0, 0, ' + maxAlpha +')!important',
+            transition: '.3s background!important'
+        })
+        ins.callMethod('setShowMask', {show: true})
+        ins.callMethod('setY', {value: -maxY})
+        reachedTop = true
+        reachedBottom = false
+        ins.callMethod('setReachedTop', {value: true})
+        ins.callMethod('setReachedBottom', {value: false})
+    }
+
+    function restart (ins) {
+        if (reachedBottom) return
+        var instance = ins.selectComponent('.bottom-drawer')
+        var bottom = instance.getDataset().bottom
+        instance.setStyle({
+            transform:  'translateY(' + -bottom + 'px)!important',
+            transition: '.3s transform!important'
+        })
+        ins.selectComponent('.bottom-drawer-mask').setStyle({
+            background: 'rgba(0, 0, 0, 0)!important',
+            transition: '.3s background!important'
+        })
+        ins.callMethod('setShowMask', {show: false})
+        ins.callMethod('setY', {value: -bottom})
+        reachedTop = false
+        reachedBottom = true
+        ins.callMethod('setReachedTop', {value: false})
+        ins.callMethod('setReachedBottom', {value: true})
+        
+    }
+
+    module.exports = {
+        touchstart: touchstart,
+        touchmove: touchmove,
+        touchend: touchend
+    }
+</wxs> 

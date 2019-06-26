@@ -13,19 +13,28 @@ Component({
         },
         height: {
             type: Number,
-            value: 500
+            value: 500,
+            observer (val, old) {
+                if (val !== old) {
+                    this.initHeight()
+                }
+            }
         },
         bottom: {
             type: Number,
             value: 100,
-            observer (val, old) {
+            observer(val, old) {
                 if (val !== old) {
-                  this.setData({
-                    styles: `transform: translateY(-${val}px)!important;transition: unset!important;`,
-                    y: -val
-                  })
+                    this.setData({
+                        styles: `transform: translateY(-${val}px)!important;transition: unset!important;`,
+                        y: -val
+                    })
                 }
             }
+        },
+        threshold: { // 阈值，超过100则自动置顶
+            type: Number,
+            value: 100
         }
     },
     data: {
@@ -43,8 +52,9 @@ Component({
         animation: null
     },
     methods: {
-        onTouchStart (e) {
+        onTouchStart(e) {
             let touches = e.touches[0]
+            this.moveY = 0
             this.setData({
                 startY: touches.pageY
             })
@@ -52,7 +62,23 @@ Component({
                 animation: null
             })
         },
-        onTouchMove (e) {
+        setShowMask (e) {
+            this.setData({
+                showMask: e.show
+            })
+        },
+        setReachedTop (e) {
+            this.reachedTop = e.value
+        },
+        setReachedBottom (e) {
+            this.reachedBottom = e.value
+        },
+        setY (e) {
+            this.setData({
+                y: e.value
+            })
+        },
+        onTouchMove(e) {
             // 移动模式 阈值模式TODO
             let touches = e.touches[0]
             let target = e.currentTarget
@@ -64,44 +90,65 @@ Component({
             // 系数
             let k = (maxAlpha - minAlpha) / this.data.maxY
             let opacity = minAlpha + k * (Math.abs(endY) - 0)
-            if (endY === -100) opacity = 0
+            if (endY === -this.data.bottom) opacity = 0
+            this.moveY += (touches.pageY - this.data.startY)
+            this.endY = endY
             this.setData({
                 styles: `transform: translateY(${endY}px)!important;transition: unset!important;`,
-                endY: endY,
                 maskStyle: `background: rgba(0, 0, 0, ${opacity})!important;`,
                 showMask: endY !== -this.data.bottom
             })
+            // 是否到达顶部
+            this.reachedTop = endY === -this.data.maxY
+            this.reachedBottom = endY === -this.data.bottom
         },
-        onTouchEnd () {
-            this.setData({
-                y: this.data.endY
-            })
+        onTouchEnd() {
+            if (Math.abs(this.moveY) === 0) {
+                this.complete()
+            } else {
+                if (this.reachedTop) {
+                    this.setData({
+                        y: -this.data.maxY
+                    })
+                } else if (this.reachedBottom) {
+                    this.setData({
+                        y: -this.data.bottom
+                    })
+                } else {
+                    let min = -(this.data.maxY - this.data.threshold)
+                    let max = -(this.data.bottom + this.data.threshold)
+                    if (this.moveY < 0) {
+                        // 朝上
+                        if (this.endY <= max) {
+                            this.complete()
+                        } else {
+                            this.restart(true)
+                        }
+                    } else {
+                        // 朝下
+                        if (this.endY >= min) {
+                            this.restart(true)
+                        } else {
+                            this.complete()
+                        }
+                    }
+                }
+            }
+            this.moveY = 0
         },
-        doNothing () {},
-        onScrollToBottom () {
+        noop () {},
+        onScrollToBottom() {
             this.triggerEvent('reached-bottom')
         },
-        show (duration = 200) {
-            if (this.data.y === -this.data.bottom || this.data.animated) return
-            var animation = wx.createAnimation({
-                duration,
-                timingFunction: 'linear',
-                delay: 0
-            })
-            animation.translate(0, -this.data.bottom).step()
-            this.setData({
-                animation: animation.export(),
-                animated: true,
-                y: -this.data.bottom,
-                showMask: false
-            })
+        show () {
+            this.restart(false)
         },
-        handleAnimationEnd () {
+        handleAnimationEnd() {
             this.setData({
                 animated: false
             })
         },
-        hide () {
+        hide() {
             if (this.data.y === 0 || this.data.animated) return
             var animation = wx.createAnimation({
                 duration: 200,
@@ -115,9 +162,44 @@ Component({
                 animated: true,
                 showMask: false
             })
+            this.reachedTop = false
+            this.reachedBottom = false
         },
-        onMaskTap () {
-            if (this.data.y === -this.data.bottom || this.data.animated) return
+        restart (opacity = true) {
+            if (this.reachedBottom || this.data.animated) return
+            var animation = wx.createAnimation({
+                duration: 200,
+                timingFunction: 'linear',
+                delay: 0
+            })
+            animation.translate(0, -this.data.bottom).step()
+            if (opacity) {
+                var backgroundAnimation = wx.createAnimation({
+                    duration: 200,
+                    timingFunction: 'linear',
+                    delay: 0
+                })
+                backgroundAnimation.backgroundColor(`rgba(0, 0, 0, 0)`).step()
+                this.setData({
+                    animation: animation.export(),
+                    backgroundAnimation: backgroundAnimation.export(),
+                    y: -this.data.bottom,
+                    animated: true,
+                    showMask: false
+                })
+            } else {
+                this.setData({
+                    animation: animation.export(),
+                    y: -this.data.bottom,
+                    animated: true,
+                    showMask: false
+                })
+            }
+            this.reachedTop = false
+            this.reachedBottom = true
+        },
+        complete () {
+            if (this.reachedTop || this.data.animated) return
             var animation = wx.createAnimation({
                 duration: 200,
                 timingFunction: 'linear',
@@ -128,34 +210,45 @@ Component({
                 timingFunction: 'linear',
                 delay: 0
             })
-            backgroundAnimation.backgroundColor('rgba(0, 0, 0, 0)').step()
-            animation.translate(0, -this.data.bottom).step()
+            backgroundAnimation.backgroundColor(`rgba(0, 0, 0, ${maxAlpha})`).step()
+            animation.translate(0, -this.data.maxY).step()
             this.setData({
                 animation: animation.export(),
                 backgroundAnimation: backgroundAnimation.export(),
+                y: -this.data.maxY,
                 animated: true,
-                y: -this.data.bottom,
-                showMask: false
+                showMask: true
+            })
+            this.reachedTop = true
+            this.reachedBottom = false
+        },
+        onMaskTap() {
+            this.restart()
+        },
+        initHeight() {
+            wx.getSystemInfo({
+                success: (res) => {
+                    setTimeout(() => {
+                        const query = this.createSelectorQuery()
+                        query.select('.bottom-drawer-header').boundingClientRect()
+                        query.exec(qRes => {
+                            let windowHeight = res.windowHeight - this.data.amend
+                            let headerHeight = qRes.length && qRes[0] ? qRes[0].height : 30
+                            // 固定高
+                            let height = this.data.height <= windowHeight ? this.data.height : windowHeight
+                            this.setData({
+                                maxY: height,
+                                headerHeight: headerHeight,
+                                scrollViewStyle: `height: ${height - headerHeight}px;` // 减去头部的高度
+                            })
+                        })
+                    }, 100)
+                }
             })
         }
     },
     ready () {
-        wx.getSystemInfo({
-            success: (res) => {
-                const query = this.createSelectorQuery()
-                query.select('#header').boundingClientRect()
-                query.exec(qRes => {
-                    let windowHeight = res.windowHeight - this.data.amend
-                    let headerHeight = qRes.length ? qRes[0].height : 30
-                    // 固定高
-                    let height = this.data.height <= windowHeight ? this.data.height : windowHeight
-                    this.setData({
-                        maxY:  height,
-                        headerHeight: headerHeight,
-                        scrollViewStyle: `height: ${height - headerHeight}px;` // 减去头部的高度
-                    })
-                })
-            }
-        })
+        this.reachedTop = false
+        this.initHeight()
     }
 })
