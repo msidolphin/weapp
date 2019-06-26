@@ -2,6 +2,10 @@
 @import "../styles/_mixins.less";
 @import '../styles/ripple.less';
 
+button::after {
+    border: none;
+}
+
 .button-size(@padding; @font-size;) {
     padding: @padding;
     font-size: @font-size;
@@ -14,6 +18,7 @@
 
 .btn-primary() {
     .btn-color(@primary-color);
+    color: @title-color!important;
 }
 
 .btn-ghost() {
@@ -124,6 +129,9 @@
 
     &-inline{
         display: inline-block;
+    }
+    &::after {
+        border: none;
     }
 }
 @keyframes btn-spin {
