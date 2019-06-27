@@ -149,7 +149,7 @@ Component({
             })
         },
         hide() {
-            if (this.data.y === 0 || this.data.animated) return
+            if (this.data.y === 0) return
             var animation = wx.createAnimation({
                 duration: 200,
                 timingFunction: 'linear',
@@ -166,7 +166,7 @@ Component({
             this.reachedBottom = false
         },
         restart (opacity = true) {
-            if (this.reachedBottom || this.data.animated) return
+            if (this.reachedBottom) return
             var animation = wx.createAnimation({
                 duration: 200,
                 timingFunction: 'linear',

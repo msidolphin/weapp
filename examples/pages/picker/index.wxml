@@ -8,4 +8,4 @@
 <view>{{text2}}</view>
 <i-picker title="选择地区" visible="{{visible2}}" value="{{value2}}" mode="region" range="{{data}}" bind:change="onChange2" bind:close="onClose2"></i-picker>
 
-<i-picker title="选择日期" visible="{{visible3}}" mode="date" bind:change="onChange2" bind:close="onClose2"></i-picker>
+<i-picker title="选择日期" visible="{{visible3}}" mode="date" bind:change="onChange2" bind:close="onClose3"></i-picker>

@@ -2,7 +2,7 @@ Page({
   data: {
     visible1: false,
     visible2: false,
-    visible3: false,
+    visible3: true,
     text1: [],
     text2: [],
     value1: [2, 21, 212],
@@ -150,6 +150,11 @@ Page({
   onClose2() {
     this.setData({
       visible2: false
+    })
+  },
+  onClose3 () {
+    this.setData({
+      visible3: false
     })
   }
 });

@@ -1,4 +1,4 @@
-import area from './area.js'
+import area from '../data/area'
 import { getYearsByStartDateAndEndDate,
     getMonthsByDate,
     getDaysByDate,
@@ -146,25 +146,16 @@ Component({
             let month = Number(data[1][values[1]].id)
             let day = Number(data[2][values[2]].id)
             let currentDate = convertToDate(`${year}/${month}/${day}`)
-            // 可能出现的日期溢出情况，要进行修正
-            if (currentDate.getMonth() + 1 !== month) {
-                month = month
+            // 判断是否溢出
+            let isOverflow = false
+            if (month !== currentDate.getMonth() + 1) isOverflow = true
+            if (year !== currentDate.getFullYear()) isOverflow = true
+            if (day !== currentDate.getDate()) isOverflow = true
+            if (isOverflow) {
+                if (this.data.fields === 'day') currentDate = new Date(year, month, 0) // 当前月最后一天 month的前一个月也就是当前月份最后一天
             }
-            // 判断是月份否溢出
-            if (year === this.$start.getFullYear() && month < this.$start.getMonth() + 1) {
-                month = this.$start.getMonth() + 1
-            } else if (year === this.$end.getFullYear() && month > this.$end.getMonth() + 1) {
-                month = this.$end.getMonth() + 1
-            }
-            if (currentDate.getDate() !== day) day = getLastDay(year, month)
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day > this.$start.getDate()) {
-                day = this.$start.getDate()
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day > this.$end.getDate()) {
-                day = this.$end.getDate()
-            }
-            // 判断天数是否溢出
-            if (year )
-            currentDate = convertToDate(`${year}/${month}/${day}`)
+            if (currentDate < this.$start) currentDate = this.$start
+            else if (currentDate > this.$end) currentDate = this.$end
             let months = []
             let days = []
             // 日期处理
@@ -172,7 +163,6 @@ Component({
                 if (changeIndex === 2) return
                 if (year === this.$start.getFullYear()){
                     months = getMonthsByDate(this.$start, true)
-                    // 如果月份和开始月份相等，特殊处理
                     days = getDaysRange(currentDate)
                 } else if (year === this.$end.getFullYear()) {
                     months = getMonthsByDate(this.$end, false)
@@ -181,6 +171,7 @@ Component({
                     months = getMonthsRange()
                     days = getDaysRange(currentDate)
                 }
+                // 修正月份索引
                 if (month !== months[values[1]]) {
                     let index = months.findIndex(m => month === Number(m))
                     if (index !== -1) values[1] = index
