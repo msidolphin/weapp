@@ -36,7 +36,7 @@
   <i-tab key="tab9" title="选项9999"></i-tab>
 </i-tabs>
 <view style='padding: 20rpx 0;background:#fff;margin-top:10px;'>
-  <i-tabs i-class="custom-tabs"  current="{{ current_scroll }}" bar="{{false}}" scroll bindchange="handleChangeScroll">
+  <i-tabs i-class="custom-tabs" current="{{ current_scroll }}" bar="{{false}}" scroll bindchange="handleChangeScroll">
     <i-tab i-class="custom-tab" i-active-class="custom-tab--current"  key="tab1" title="选项1"></i-tab>
     <i-tab i-class="custom-tab" i-active-class="custom-tab--current"  key="tab2" title="选项22"></i-tab>
     <i-tab i-class="custom-tab" i-active-class="custom-tab--current"  key="tab3" title="选项33"></i-tab>

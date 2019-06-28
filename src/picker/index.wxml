@@ -1,5 +1,5 @@
 <i-popup direction="bottom" visible="{{visible}}" bind:close="handleClickCancel">
-    <view class="i-picker i-class">
+    <view class="i-picker i-class" catchtouchmove="noop">
         <view class="i-picker-hd i-class-hd">
             <view class="i-picker-hd__action" bindtap="handleClickCancel">取消</view>
             <view class="i-picker-hd__title">{{title}}</view>

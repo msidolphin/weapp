@@ -1,3 +1,8 @@
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .i-cell {
   position: relative;
   padding: 12px 15px;
@@ -6,17 +11,20 @@
   align-items: center;
   line-height: 1.4;
   font-size: 14px;
-  overflow: visible;
+  overflow: hidden;
 }
 .i-cell::after {
-  content: ' ';
+  content: '';
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: 0 0;
   pointer-events: none;
   box-sizing: border-box;
-  transform: scaleY(0.5);
-  border-bottom: 1px solid #e9eaec;
-  left: 0;
-  bottom: 0;
+  border: 0 solid #e9eaec;
   border-bottom-width: 1px;
   left: 15px;
   right: 0;
@@ -48,7 +56,7 @@
 .i-cell-ft {
   position: relative;
   text-align: right;
-  color: #495060;
+  color: #4C4E52;
   display: flex;
   align-items: center;
 }

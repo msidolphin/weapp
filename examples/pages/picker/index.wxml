@@ -1,11 +1,19 @@
-<i-panel title="一般用法"></i-panel>
-<view>{{text1}}</view>
-<i-picker wx:if="{{data && data.length}}"  visible="{{visible1}}" value="{{value1}}"  range="{{data}}" bind:change="onChange1" bind:close="onClose1"></i-picker>
-<i-button bind:click='onTap1' type="primary">一般用法</i-button>
-<i-panel title="地区选择器"></i-panel>
-<i-button bind:click='onTap2'>地区选择器</i-button>
-<i-button bind:click='onTap3'>日期选择器</i-button>
-<view>{{text2}}</view>
-<i-picker title="选择地区" visible="{{visible2}}" value="{{value2}}" mode="region" range="{{data}}" bind:change="onChange2" bind:close="onClose2"></i-picker>
+<i-cell-group>
+  <i-cell title="一般用法" bind:click="onTap1" value="{{text1}}" is-link/>
+  <i-cell title="地区选择器" bind:click="onTap2" value="{{text2}}" is-link/>
+  <i-cell title="日期时间选择（年）" bind:click="onTap3" value="{{date1}}" is-link/>
+  <i-cell title="日期时间选择（月）" bind:click="onTap4" value="{{date2}}" is-link/>
+  <i-cell title="日期时间选择（日）" bind:click="onTap5" value="{{date3}}" is-link/>
+  <i-cell title="日期时间选择（时）" bind:click="onTap6" value="{{date4}}" is-link/>
+  <i-cell title="日期时间选择（分）" bind:click="onTap7" value="{{date5}}" is-link/>
+  <i-cell title="日期时间选择（秒）" bind:click="onTap8" value="{{date6}}" is-link/>
+</i-cell-group>
 
-<i-picker title="选择日期" visible="{{visible3}}" mode="date" bind:change="onChange2" bind:close="onClose3"></i-picker>
+<i-picker wx:if="{{data && data.length}}"  visible="{{visible1}}" value="{{value1}}"  range="{{data}}" bind:change="onChange1" bind:close="onClose1"></i-picker>
+<i-picker title="选择地区" visible="{{visible2}}" value="{{value2}}" mode="region" range="{{data}}" bind:change="onChange2" bind:close="onClose2"></i-picker>
+<i-picker title="选择年" visible="{{visible3}}" mode="date" fields="year" bind:change="onChange3" value="2019-06-28 13:14:55" bind:close="onClose3"></i-picker>
+<i-picker title="选择年月" visible="{{visible4}}" mode="date" fields="month" bind:change="onChange4" value="2019-06-28 13:14:55"bind:close="onClose4"></i-picker>
+<i-picker title="选择年月日" visible="{{visible5}}" mode="date" fields="day" bind:change="onChange5" value="2019-06-28 13:14:55"bind:close="onClose5"></i-picker>
+<i-picker title="选择年月日时" visible="{{visible6}}" mode="date" fields="hour" bind:change="onChange6" value="2019-06-28 13:14:55"bind:close="onClose6"></i-picker>
+<i-picker title="选择年月日时分" visible="{{visible7}}" mode="date" fields="minute" bind:change="onChange7" value="2019-06-28 13:14:55"bind:close="onClose7"></i-picker>
+<i-picker title="选择年月日时分秒" visible="{{visible8}}" mode="date" fields="second" bind:change="onChange8" value="2019-06-28 13:14:55"bind:close="onClose8"></i-picker>
