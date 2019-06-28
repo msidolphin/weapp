@@ -1,9 +1,6 @@
 import { isString, getType, isDate, isNumber } from './utils'
 
-
 export const MONTHS = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
-const DAYS = ['周天', '周一', '周二', '周三', '周四', '周五', '周六']
-const DATS_SHORT = ['日', '一', '二', '三', '四', '五', '六']
 
 // 月份天数关系
 const MONTH_DAY_MAP = {
@@ -66,6 +63,7 @@ export function convertToDate (date) {
         if (!isDate(date)) {
             let tmp = date
             if (isString(date)) {
+                date = date.replace(/-/g, '/')
                 date = Date.parse(date)
             }
             if (isNumber(date)) {
@@ -181,38 +179,48 @@ export function getMonthsRange () {
     return months
 }
 
+/**
+ * @description 获取小时数组
+ * 如果传入了日期，那么获取
+ */
+export function getHours (date) {
+    let maxHour = 23
+    if (date) {
+        date = convertToDate(date)
+        maxHour = date.getHours()
+    }
+    let hours = []
+    for (let i = 0; i <= maxHour; ++i) {
+        if (i < 10) i = '0' + i
+        hours.push(String(i))
+    }
+    return hours
+}
 
-// 测试
+export function getMinutes (date) {
+    let maxMinute = 59
+    if (date) {
+        date = convertToDate(date)
+        maxMinute = date.getMinutes()
+    }
+    let minutes = []
+    for (let i = 0; i <= maxMinute; ++i) {
+        if (i < 10) i = '0' + i
+        minutes.push(String(i))
+    }
+    return minutes
+}
 
-// let start = '2000-01-01'
-// let end = '2020-12-31'
-// let fields = 'day' // ['year', 'month', 'day']
-
-// function getDatesArrayByString (val, separator = '-') {
-//     return val.split(separator)
-// }
-
-// function getYear (val) {
-//     return getDatesArray(val)[0]
-// }
-
-// function getMonth (val) {
-//     return getDatesArray(val)[1]
-// }
-
-// function getDay (val) {
-//     return getDatesArray(val)[2]
-// }
-
-// let startYear = getYear(start)
-// let endYear = getYear(end)
-
-// let years = []
-
-// for (let year = startYear; year <= endYear; ++year) {
-//     years.push(year)
-// }
-
-
-
-// TODO 构造日历结构
+export function getSeconds (date) {
+    let maxSecond = 59
+    if (date) {
+        date = convertToDate(date)
+        maxSecond = date.getSeconds()
+    }
+    let seconds = []
+    for (let i = 0; i <= maxSecond; ++i) {
+        if (i < 10) i = '0' + i
+        seconds.push(String(i))
+    }
+    return seconds
+}
