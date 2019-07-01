@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "InfiniteCalendar 无限滚动日历",
+  "usingComponents": {
+    "i-infinite-calendar": "../../dist/infinite-calendar/index"
+  }
+}

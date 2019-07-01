@@ -1,0 +1,264 @@
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-calendar-wrap {
+  width: 100%;
+  height: 100%;
+}
+
+.i-calendar-hd-wrap {
+  position: relative;
+  height: 95px;
+  z-index: 2;
+}
+
+.i-calendar-hd {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background:linear-gradient(40deg,rgba(250,217,97,1) 0%,rgba(255,142,0,1) 100%);
+  height: 95px;
+  padding: 12px 15px;
+  box-sizing: border-box;
+  &-range {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    height: 42px;
+    border-radius: 21px;
+    &-start, &-end {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      color: @primary-color;
+    }
+    &-middle {
+      position: relative;
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+      &::after{
+        content: " ";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        position: absolute;
+        top: 50%;
+        right: 2px;
+        border-width: 2px 2px 0 0;
+        border-color: @primary-color;
+        border-style: solid;
+        transform: translateY(-50%) matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+      }
+    }
+  }
+  &-tip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+  }
+}
+
+.i-calendar-list {
+  position: relative;
+  z-index: 1;
+}
+
+// 占位
+.block {
+  height: 74px;
+}
+
+.i-calendar-ft {
+  position: fixed;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  z-index: 2;
+}
+
+.i-calendar-date {
+  background: #fff;
+  height: 31px;
+  text-align: center;
+  line-height: 31px;
+  color: @title-color;
+  font-size: 14px;
+}
+
+.i-calendar-weekdays {
+	height: 31px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	font-size: 12px;
+	color: @assist-color;
+	box-sizing: border-box;
+	position: relative;
+
+	&::after {
+		.hairline();
+		border-bottom-width: 1px;
+	}
+
+	.i-calendar__weekday {
+		width: 14.28571429%;
+		width: calc(100% / 7);
+		line-height: 31px;
+		text-align: center;
+	}
+}
+
+.i-calendar {
+	position: relative;
+	background: #fff;
+	// height: 255px;
+	width: 100%;
+	overflow: hidden;
+
+	&-content {
+		position: relative;
+	    width: 100%;
+	    height: 100%;
+	    transition: transform .3s;
+	}
+
+	&-bd {
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+	}
+
+	&-months {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+
+		&-content {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		    display: flex;
+		    position: relative;
+		    backface-visibility: hidden;
+			transform: translate3d(0px, 0px, 0px)
+		}
+	}
+
+	&__month {
+    display: flex;
+    width: 100%;
+		flex-direction: column;
+	}
+
+	&-days {
+		height: 102rpx;
+		display: flex;
+		flex-shrink: 1;
+		width: 100%;
+		position: relative;
+		
+		&:after {
+			.hairline();
+			border-bottom-width: 1px;
+		}
+
+		&:last-child:after {
+			display: none;
+		}
+	}
+
+	&__day {
+		position: relative;
+		flex-shrink: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		box-sizing: border-box;
+		width: 14.28571429%;
+		width: calc(100% / 7);
+		color: #3d4145;
+		font-size: 14px;
+		cursor: pointer;
+		&-inner {
+			width: 41px;
+			height: 41px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			border-radius: 50%;
+		}
+		&--prev,
+		&--next {
+			color: #cccccc;
+		}
+
+		&--disabled {
+			color: #d4d4d4;
+			cursor: auto;
+		}
+
+		// 节气
+		&--term:not(&--next):not(&--prev) {
+			.i-calendar__lunar {
+				color: @error-color;
+			}
+		}
+		&:active {
+			background: #fff!important;
+		}
+	}
+
+	&__range {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 150%;
+		height: 100%;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	&__day--today {
+		.i-calendar__day-inner {
+			background: #e3e3e3;
+		}
+	}
+	
+	&__day--weekend {
+		.i-calendar__day-inner {
+			.i-calendar__text, .i-calendar__lunar {
+				color: #B6B7B9!important;
+			}
+		}
+	}
+
+	&__day--selected  {
+		.i-calendar__day-inner {
+			background: #FFF5D9;
+			.i-calendar__text, .i-calendar__lunar {
+				color: @primary-color!important;
+			}
+		}
+	}
+
+	&__text {
+		position: relative;
+		display: inline-block;
+		border-radius: 100%;
+		z-index: 1;
+	}
+	&__lunar {
+		font-size: 12px;
+		position: relative;
+		z-index: 1;
+	}
+}

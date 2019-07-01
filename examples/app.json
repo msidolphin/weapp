@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/infinite-calendar/index",
     "pages/keyboard/index",
     "pages/picker/index",
     "pages/tabs/index",

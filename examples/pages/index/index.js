@@ -235,6 +235,10 @@ Page({
             url: '/pages/calendar/index'
           },
           {
+            label: 'InfiniteCalendar 无限滚动日历',
+            url: '/pages/infinite-calendar/index'
+          },
+          {
             label: 'Keyboard 键盘',
             url: '/pages/keyboard/index'
           }
