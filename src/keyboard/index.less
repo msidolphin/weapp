@@ -1,0 +1,85 @@
+@import "../styles/_base.less";
+@import "../styles/_mixins.less";
+
+.i-keyboard {
+    // height: 227px;
+    background: #E9EAEC;
+    padding: 4px;
+    box-sizing: border-box;
+    &-shortcut {
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        &-item {
+            flex: 1;
+            background: #fff;
+            height: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &__text {
+                font-size: 14px;
+                color: @title-color;
+            }
+        }
+    }
+    &-body {
+        display: flex;
+    }
+    &-main {
+        flex: 1;
+        overflow: hidden;
+        &-item {
+            float: left;
+            width: 33.33%;
+            height: 48px;
+            padding-right: 4px;
+            padding-top: 4px;  
+            box-sizing: border-box;  
+            &__text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                border-radius: 2px;
+                background: #fff;
+                font-size: 25px;
+                color: @title-color;
+                &:active {
+                    background: rgba(0, 0, 0, .1);
+                }
+            }
+        }
+    }
+    &-btns {
+        flex: 0 0 94px;
+        width: 94px;
+    }
+    &-delete {
+        margin-top: 4px;
+        height: 92px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+        &:active {
+            background: rgba(0, 0, 0, .1);
+        }
+    }
+    &-confirm {
+        margin-top: 4px;
+        height: 92px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: @primary-color;
+        color: @title-color;
+        font-size: 21px;
+        &:active {
+            background: rgba(0, 0, 0, .1);
+        }
+    }
+}

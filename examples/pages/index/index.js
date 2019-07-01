@@ -233,6 +233,21 @@ Page({
           {
             label: 'Calendar 日历',
             url: '/pages/calendar/index'
+          },
+          {
+            label: 'Keyboard 键盘',
+            url: '/pages/keyboard/index'
+          }
+        ]
+      },
+      Demo: {
+        label: 'Demo页面',
+        show: false,
+        icon: 'others',
+        pages: [
+          {
+            label: 'Sticky 吸顶demo',
+            url: '/pages/demo/sticky/index'
           }
         ]
       }

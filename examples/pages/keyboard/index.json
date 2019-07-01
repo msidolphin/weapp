@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "Keyboard 键盘",
+  "usingComponents": {
+    "i-keyboard": "../../dist/keyboard/index"
+  }
+}

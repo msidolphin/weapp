@@ -1,0 +1,29 @@
+<!-- <view class="container">
+  <image wx:if="{{!avatarUrl}}" class="avatar" src="/images/avatar/5.png"></image>
+  <image wx:else class="avatar" src="{{avatarUrl}}"></image>
+  <text class="welcome">hello {{nickName ? nickName : 'world'}}</text>
+  <button class="start-btn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">开启小程序之旅</button>
+</view> -->
+<!-- 顶部固定区域 -->
+<view class='hd'>
+  <view class="hdb"></view>
+</view>
+<!-- 内容区域 -->
+<view class='bd'>
+  <view class='charts' style="{{cStyle}}">
+    <view style="{{chStyle}}">
+      <view class='c'></view>
+      <view class='b'>查看趋势图</view>
+    </view>
+  </view>
+  <view class="block" style="{{bs}}"></view>
+  <view class='tabs'>
+    <view class='tab'>tab1</view>
+    <view class='tab'>tab2</view>
+    <view class='tab'>tab3</view>
+    <view class='tab'>tab4</view>
+  </view>
+  <view class='list'>
+    <view class='list-item' wx:for="{{100}}">item {{index + 1}}</view>
+  </view>
+</view>

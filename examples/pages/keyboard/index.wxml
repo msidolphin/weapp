@@ -1,0 +1,5 @@
+<view style="{{contentStyle}}" class="content">
+    <view class="item item-{{index}}" wx:for="{{data}}" wx:key="{{index}}" data-index="{{index}}" data-value="{{item}}" bindtap="onTap">{{item}}</view>
+</view>
+
+<i-keyboard value="{{value}}" visible="{{visible}}" id="keyboard" content-height="{{contentHeight}}" bind:close="onClose" bind:input="onInput"></i-keyboard>
