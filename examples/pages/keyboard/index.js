@@ -52,6 +52,7 @@ Page({
     })
   },
   onClose () {
+    this.y = 0
     this.setData({
       visible: false,
       contentStyle: `transform:translateY(${0}px)`
