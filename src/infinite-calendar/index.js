@@ -19,7 +19,9 @@ Component({
         weeks: [],
         scrollTop: 0,
         height: 0,
-        loading: false
+        loading: false,
+        startDate: null,
+        endDate: null
     },
     methods: {
         initWeeks () {
@@ -90,6 +92,55 @@ Component({
                     scrollTop: totalHeight
                 })
             }, 1000)
+        },
+        /**
+         * @description 点击日期
+         */
+        onDayClick (e) {
+            if (e.currentTarget.dataset.empty) return
+            const dataset = e.currentTarget.dataset
+            const date = dataset.date
+            const datetime = dataset.datetime
+            const type = dataset.type
+            if (type.disabled) return
+            let startDate = this.data.startDate
+            let endDate = this.data.endDate
+            let d = {
+                date: this.formatDate(date.replace(/-/g, '/')),
+                datetime
+            }
+            if (startDate && !endDate && startDate.datetime === datetime) {
+                startDate = null
+            } else if (endDate && !startDate && endDate.datetime === datetime) {
+                endDate = null
+            } else if (!startDate) {
+                startDate = d
+            } else if (startDate && !endDate) {
+                endDate = d
+            } else if (startDate && endDate && (startDate.datetime === datetime || endDate.datetime === datetime)) {
+                // 若选中的时间等于起始时间或结束时间，那么结束时间置空，并设置起始时间
+                if (startDate.datetime === datetime) {
+                    startDate = endDate
+                    endDate = null
+                } else {
+                    endDate = null
+                }
+                
+            } else {
+                // 如果起始时间和结束时间都选择，那么情况当前时间并设置为起始时间
+                startDate = d
+                endDate = null
+            }      
+            // 若结束时间小于起始时间，进行交换
+            if (startDate && endDate && endDate.datetime < startDate.datetime) {
+                let t = endDate
+                endDate = startDate
+                startDate = t
+            }
+            this.setData({
+                startDate,
+                endDate
+            })
         }
     },
     attached () {

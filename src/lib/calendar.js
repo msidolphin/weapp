@@ -10,6 +10,8 @@ const defaults = {
     dateFormat: 'yyyy-mm-dd',
     minDate: null,
     maxDate: null,
+    lunar: true,
+    firstDay: 1,
     weekHeader: true,
     value: []
 }
@@ -34,7 +36,7 @@ export default Behavior({
         }, // First day of the week, Monday
     },
     data: {
-        ...defaults
+        ...defaults,
     },
     methods: {
         /**
@@ -160,6 +162,11 @@ export default Behavior({
                             } 
                         } else {
                             dayDate = new Date(year, month, dayNumber).getTime()
+                            if (dayNumber === 1) type.first = true
+                            if (col === 1) type.first = true
+                            if (dayNumber === daysInMonth) type.last = true
+                            if (col === 7) type.last = true
+
                         }
                     }
 
@@ -194,6 +201,7 @@ export default Behavior({
                             empty: false,
                             month: dayMonth,
                             day: dayNumber,
+                            datetime: dayDate.getTime(),
                             date: `${dayYear}-${dayMonth + 1}-${dayNumber}`,
                         })
                     } else {
@@ -204,6 +212,7 @@ export default Behavior({
                             day: '',
                             year: '',
                             month: '',
+                            datetime: '',
                             lunar: {}
                         })
                     }

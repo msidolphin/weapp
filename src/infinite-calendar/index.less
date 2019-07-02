@@ -158,7 +158,7 @@
 	}
 
 	&-days {
-		height: 102rpx;
+		height: 51px;
 		display: flex;
 		flex-shrink: 1;
 		width: 100%;
@@ -195,6 +195,8 @@
 			justify-content: center;
 			flex-direction: column;
 			border-radius: 50%;
+			position: relative;
+			z-index: 1;
 		}
 		&--prev,
 		&--next {
@@ -219,12 +221,14 @@
 
 	&__range {
 		position: absolute;
-		left: 0;
-		top: 0;
-		width: 150%;
-		height: 100%;
+		left: 50%;
+		top: 50%;
+		width: 100%;
+		height: 41px;
+		transform: translateY(-50%);
 		pointer-events: none;
 		z-index: 0;
+		background: #FFF2D0;
 	}
 
 	&__day--today {
@@ -241,12 +245,36 @@
 		}
 	}
 
+	&__day--in-range {
+		.i-calendar__day-inner {
+			background: #FFF2D0;
+			// .i-calendar__text, .i-calendar__lunar {
+			// 	color: #fff!important;
+			// }
+		}
+	}
+	
 	&__day--selected  {
 		.i-calendar__day-inner {
-			background: #FFF5D9;
+			background: @primary-color;
 			.i-calendar__text, .i-calendar__lunar {
-				color: @primary-color!important;
+				color: #fff!important;
 			}
+		}
+	}
+
+	// &__day--first {
+	// 	.i-calendar__range {
+	// 		left: 0;
+	// 		border-top-left-radius:  20.5px;
+	// 		border-bottom-left-radius: 20.5px;
+
+	// 	}
+	// }
+
+	&__day--last {
+		.i-calendar__range {
+			display: none;
 		}
 	}
 

@@ -3,11 +3,11 @@
         <view class="i-calendar-hd">
             <view class="i-calendar-hd-range">
                 <view class="i-calendar-hd-range-start">
-                    <text class="i-calendar-hd-range-start__value">起始日期</text>
+                    <text class="i-calendar-hd-range-start__value">{{ startDate ? startDate.date : '起始日期' }}</text>
                 </view>
                 <view class="i-calendar-hd-range-middle"></view>
                 <view class="i-calendar-hd-range-end">
-                    <text class="i-calendar-hd-range-start__value">终止日期</text>
+                    <text class="i-calendar-hd-range-start__value">{{ endDate ? endDate.date : '终止日期' }}</text>
                 </view>
             </view>
             <view class="i-calendar-hd-tip">
@@ -35,33 +35,33 @@
                         <view class="i-calendar-bd">
                             <view class="i-calendar-months">
                                 <view class="i-calendar-months-content">
-                                    <!-- <block> -->
-                                        <view
-                                            data-year="{{ month.year }}"
-                                            data-month="{{ month.month }}"
-                                            class="i-calendar__month">
-                                            <block wx:for="{{ month.items }}" wx:for-item="row" wx:key="">
-                                                <view class="i-calendar-days">
-                                                    <block wx:for="{{ row }}" wx:for-item="col" wx:key="">
-                                                        <view
-                                                        data-year="{{ col.year }}"
-                                                        data-month="{{ col.month }}"
-                                                        data-day="{{ col.day }}"
-                                                        data-date="{{ col.date }}"
-                                                        data-empty="{{ col.empty }}"
-                                                        data-type="{{ col.type }}"
-                                                        class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ col.type.selected ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }} {{col.lunar.Term ? 'i-calendar__day--term' : ''}}">
-                                                            <view class="i-calendar__day-inner">
-                                                                <view class="i-calendar__text">{{ col.day }}</view>
-                                                                <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
-                                                            </view>
-                                                            <view class="i-calendar__range"></view>
-                                                    </view>
-                                                    </block>
+                                    <view
+                                        data-year="{{ month.year }}"
+                                        data-month="{{ month.month }}"
+                                        class="i-calendar__month">
+                                        <block wx:for="{{ month.items }}" wx:for-item="row" wx:key="">
+                                            <view class="i-calendar-days">
+                                                <block wx:for="{{ row }}" wx:for-item="col" wx:key="">
+                                                    <view
+                                                    data-year="{{ col.year }}"
+                                                    data-month="{{ col.month }}"
+                                                    data-day="{{ col.day }}"
+                                                    data-date="{{ col.date }}"
+                                                    data-empty="{{ col.empty }}"
+                                                    data-type="{{ col.type }}"
+                                                    data-datetime="{{ col.datetime }}"
+                                                    class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ startDate && startDate.datetime === col.datetime || endDate && endDate.datetime === col.datetime ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }} {{col.lunar.Term ? 'i-calendar__day--term' : ''}} {{col.type.first ? 'i-calendar__day--first' : ''}} {{col.type.last ? 'i-calendar__day--last' : ''}} {{startDate && endDate && col.datetime >= startDate.datetime && col.datetime < endDate.datetime ? 'i-calendar__day--in-range' : ''}}"
+                                                    bindtap="onDayClick">
+                                                        <view class="i-calendar__day-inner">
+                                                            <view class="i-calendar__text">{{ col.day }}</view>
+                                                            <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
+                                                        </view>
+                                                        <view class="i-calendar__range" wx:if="{{startDate && endDate && col.datetime >= startDate.datetime && col.datetime < endDate.datetime}}"></view>
                                                 </view>
-                                            </block>
-                                        </view>
-                                    <!-- </block> -->
+                                                </block>
+                                            </view>
+                                        </block>
+                                    </view>
                                 </view>
                             </view>
                         </view>
