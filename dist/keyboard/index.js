@@ -39,29 +39,16 @@ Component({
         },
         contentHeight: { // 内容区域高度 用于计算上移距离
             type: Number,
-            value: 0,
-            observer (val) {
-                this.setData({
-                    height: val - HEIGHT // 内容的高度
-                })
-            }
+            value: 0
         },
         visible: {
             type: Boolean,
             value: false
-        },
-        precision: {
-            type: Number,
-            value: 1,
-            observer (val) {
-                this.regex = new RegExp(`^\\d+\\.\\d{0,${val}}$`)
-            }
         }
     },
     data: {
         values: VALUES,
-        currentValue: '',
-        height: 0
+        currentValue: ''
     },
     methods: {
         /**
@@ -70,7 +57,6 @@ Component({
         setValueByShortcut (e) {
             let { value } = e.currentTarget.dataset
             if (isNaN(value) && value !== '.') return
-            if (value.indexOf('.') !== -1 && value.match(this.regex) === null) return
             if (this.data.maxlength && value.length > this.data.maxlength) return
             if (this.data.max && Number(value) > this.data.max) newVal = String(this.data.max)
             if (Number(value) <= this.data.min) {
@@ -90,10 +76,9 @@ Component({
             let { value } = e.currentTarget.dataset
             let newVal = this.isShortcut ? value : currentValue + value
             if (isNaN(newVal) && newVal !== '.') return
-            if (newVal.indexOf('.') !== -1 && newVal.match(this.regex) === null) return
             if (this.data.maxlength && newVal.length >= this.data.maxlength) return
             if (this.data.max &&  Number(newVal) > this.data.max) newVal = String(this.data.max)
-            if (Number(newVal) < this.data.min) {
+            if (Number(newVal) <= this.data.min) {
                 newVal = this.data.min.toFixed(1) // 暂时写死1
                 this.isShortcut = true
             } else {
@@ -112,11 +97,12 @@ Component({
             let currentValue = this.data.currentValue
             if (!currentValue.length) return
             currentValue = this.isShortcut ? '' : currentValue.substr(0, currentValue.length - 1)
-            // if (Number(currentValue) <= this.data.min) currentValue = this.data.min.toFixed(1)
+            if (Number(currentValue) <= this.data.min) currentValue = this.data.min.toFixed(1)
             this.setData({
                 currentValue
             })
             this.emitInput()
+            this.isShortcut = true
         },
         /**
          * @description 获取应该向上滚动的距离
@@ -144,8 +130,5 @@ Component({
                 value: this.data.currentValue
             })
         }
-    },
-    attached () {
-        this.regex = new RegExp(`^\\d+\\.\\d{0,${this.data.precision}}$`)
     }
 })

@@ -1,0 +1,10 @@
+{
+    "component": true,
+    "usingComponents":
+    {
+      "i-button": "../button/index",
+      "i-icon": "../icon/index",
+      "i-popup": "../popup/index"
+    }
+}
+  

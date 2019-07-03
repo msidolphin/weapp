@@ -1,0 +1,77 @@
+<view class="i-calendar-wrap">
+    <view class="i-calendar-hd-wrap">
+        <view class="i-calendar-hd">
+            <view class="i-calendar-hd-range">
+                <view class="i-calendar-hd-range-start">
+                    <text class="i-calendar-hd-range-start__value">{{ startDate ? startDate.date : '起始日期' }}</text>
+                </view>
+                <view class="i-calendar-hd-range-middle"></view>
+                <view class="i-calendar-hd-range-end">
+                    <text class="i-calendar-hd-range-start__value">{{ endDate ? endDate.date : '终止日期' }}</text>
+                </view>
+            </view>
+            <view class="i-calendar-hd-tip">
+                <text class="i-calendar-hd-tip__text">请选择一个日期，作为起始日期</text>
+            </view>
+        </view>
+    </view>
+    <scroll-view scroll-y scroll-top="{{scrollTop}}" bindscrolltoupper="onScrollToUpper" bindscroll="onScroll">
+        <view class="i-calendar-list" style="height:{{height}}px;">
+            <i-load-more wx:if="{{!isLast}}"></i-load-more>
+            <i-load-more wx:else loading="{{false}}"></i-load-more>
+            <block wx:for="{{months}}"  wx:for-item="month" >
+                <view class="i-calendar-date">
+                    <text class="i-calendar-date__text">{{month.year}}年{{month.month + 1 < 10 ? '0' + (month.month + 1) : month.month + 1}}月</text>
+                </view>
+                <view class="i-calendar-weekdays">
+                    <block wx:for="{{ weeks }}" wx:key="{{it.dayName}}" wx:for-item="it">
+                        <view class="i-calendar__weekday {{ it.weekend ? 'i-calendar__weekday--weekend' : '' }}">
+                            {{ it.dayName }}
+                        </view>
+                    </block>
+                </view>
+                <view class="i-class i-calendar">
+                    <view class="i-calendar-content">
+                        <view class="i-calendar-bd">
+                            <view class="i-calendar-months">
+                                <view class="i-calendar-months-content">
+                                    <view
+                                        data-year="{{ month.year }}"
+                                        data-month="{{ month.month }}"
+                                        class="i-calendar__month">
+                                        <block wx:for="{{ month.items }}" wx:for-item="row" wx:key="">
+                                            <view class="i-calendar-days">
+                                                <block wx:for="{{ row }}" wx:for-item="col" wx:key="">
+                                                    <view
+                                                    data-year="{{ col.year }}"
+                                                    data-month="{{ col.month }}"
+                                                    data-day="{{ col.day }}"
+                                                    data-date="{{ col.date }}"
+                                                    data-empty="{{ col.empty }}"
+                                                    data-type="{{ col.type }}"
+                                                    data-datetime="{{ col.datetime }}"
+                                                    class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ startDate && startDate.datetime === col.datetime || endDate && endDate.datetime === col.datetime ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }} {{col.lunar.Term ? 'i-calendar__day--term' : ''}} {{col.type.first ? 'i-calendar__day--first' : ''}} {{col.type.last ? 'i-calendar__day--last' : ''}} {{startDate && endDate && col.datetime >= startDate.datetime && col.datetime < endDate.datetime ? 'i-calendar__day--in-range' : ''}}"
+                                                    bindtap="onDayClick">
+                                                        <view class="i-calendar__day-inner">
+                                                            <view class="i-calendar__text">{{ col.day }}</view>
+                                                            <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
+                                                        </view>
+                                                        <view class="i-calendar__range" wx:if="{{startDate && endDate && col.datetime >= startDate.datetime && col.datetime < endDate.datetime}}"></view>
+                                                </view>
+                                                </block>
+                                            </view>
+                                        </block>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <view class="block"></view>
+        </view>
+    </scroll-view>
+    <view class="i-calendar-ft">
+        <i-button type="primary" long>确认</i-button>
+    </view>
+</view>
