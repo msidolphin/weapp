@@ -109,11 +109,6 @@
 		flex-shrink: 1;
 		width: 100%;
 		position: relative;
-		
-		&:after {
-			.hairline();
-			border-bottom-width: 1px;
-		}
 
 		&:last-child:after {
 			display: none;
@@ -132,8 +127,8 @@
 		width: calc(100% / 7);
 		color: #3d4145;
 		font-size: 14px;
-		cursor: pointer;
 		&-inner {
+			position: relative;
 			width: 41px;
 			height: 41px;
 			display: flex;
@@ -161,6 +156,18 @@
 		&:active {
 			background: #fff!important;
 		}
+	}
+
+	&__marker {
+		position: absolute;
+		right: 6px;
+		top: 5px;
+		width: 3px;
+		height: 6px;
+		border-color: @success-color;
+		border-style: solid;
+		border-width: 0 2px 2px 0;
+		transform: rotate(45deg);
 	}
 
 	&__range {

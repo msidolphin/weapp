@@ -34,4 +34,9 @@ gulp.task('compile-wxs', () => {
         .pipe(gulp.dest('../dist/'));
 });
 
-gulp.task('default', ['compile-css', 'compile-js', 'compile-json', 'compile-wxml', 'compile-wxs']);
+gulp.task('compile-image', () => {
+    return gulp.src(['../src/**/*.png', '../src/**/*.jpg', '../src/**/*.gif']).pipe(gulp.dest('../examples/dist/'));
+});
+
+
+gulp.task('default', ['compile-css', 'compile-js', 'compile-json', 'compile-wxml', 'compile-wxs', 'compile-image']);
