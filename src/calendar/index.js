@@ -1,4 +1,4 @@
-import calendar from './calendarinit'
+import calendar from '../lib/calendarinit'
 
 const bind = (fn, ctx) => {
     return (...args) => {
