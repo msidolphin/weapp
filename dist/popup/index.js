@@ -24,6 +24,10 @@ Component({
         closeOnClickModal: {
             type: Boolean,
             value: true
+        },
+        mask: {
+            type: Boolean,
+            value: true
         }
     },
     data: {

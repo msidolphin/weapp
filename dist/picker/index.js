@@ -11,6 +11,7 @@ import { getYearsByStartDateAndEndDate,
     getDaysRange,
     getMonthsRange
 } from '../base/date'
+import { isDate } from '../base/utils'
 let region = JSON.parse(JSON.stringify(area))
 const CN = '86'
 const REGION = 'region'
@@ -95,7 +96,7 @@ Component({
             }
         },
         value: {
-            type: [Array, String], // value为string时只对date或datetime有作用
+            type: [Array, String, Object], // value为string时只对date或datetime有作用
             value: [],
             observer (val, old) {
                 if (val === old) return
@@ -147,6 +148,10 @@ Component({
         fields: { // 对于date有效
             type: String,
             value: 'day' // day year month
+        },
+        dateFormat: {
+            type: String,
+            value: 'yyyy-mm-dd'
         }
     },
   data: {
@@ -182,131 +187,135 @@ Component({
                 data[i + 1] = item.children
             }
         } else {
-            if (changeIndex !== DATE_INDEX_MAP[this.data.fields]) {
-                let data = this.data.data
-                let year = hasYear(this.data.fields) ? Number(data[0][values[0]].id) : this.$start.getFullYear()
-                let month = hasMonth(this.data.fields) ? Number(data[1][values[1]].id) : 1
-                let day = hasDay(this.data.fields) ? Number(data[2][values[2]].id) : 1
-                let hour = hasHour(this.data.fields) ? Number(data[3][values[3]].id) : 0
-                let minute = hasMinute(this.data.fields) ? Number(data[4][values[4]].id) : 0
-                let second = hasSecond(this.data.fields) ? Number(data[5][values[5]].id) : 0
-                let currentDate = convertToDate(`${year}/${month}/${day} ${hour}:${minute}:${second}`)
-                // 判断是否溢出
-                let isOverflow = false
-                if (month !== currentDate.getMonth() + 1) isOverflow = true
-                if (year !== currentDate.getFullYear()) isOverflow = true
-                if (day !== currentDate.getDate()) isOverflow = true
-                if (hour !== currentDate.getHours()) isOverflow = true
-                if (minute !== currentDate.getMinutes()) isOverflow = true
-                if (second !== currentDate.getSeconds()) isOverflow = true
+            let data = this.data.data
+            let year = hasYear(this.data.fields) ? Number(data[0][values[0]].id) : this.$start.getFullYear()
+            let month = hasMonth(this.data.fields) ? Number(data[1][values[1]].id) : 1
+            let day = hasDay(this.data.fields) ? Number(data[2][values[2]].id) : 1
+            let hour = hasHour(this.data.fields) ? Number(data[3][values[3]].id) : 0
+            let minute = hasMinute(this.data.fields) ? Number(data[4][values[4]].id) : 0
+            let second = hasSecond(this.data.fields) ? Number(data[5][values[5]].id) : 0
+            let currentDate = convertToDate(`${year}/${month}/${day} ${hour}:${minute}:${second}`)
+            // 判断是否溢出
+            let isOverflow = false
+            if (month !== currentDate.getMonth() + 1) isOverflow = true
+            if (year !== currentDate.getFullYear()) isOverflow = true
+            if (day !== currentDate.getDate()) isOverflow = true
+            if (hour !== currentDate.getHours()) isOverflow = true
+            if (minute !== currentDate.getMinutes()) isOverflow = true
+            if (second !== currentDate.getSeconds()) isOverflow = true
 
-                if (isOverflow) {
-                    if (this.data.fields === 'day') currentDate = new Date(year, month, 0) // 当前月最后一天 month的前一个月也就是当前月份最后一天
-                    if (this.data.fields === 'hour') currentDate = new Date(year, month, 0, 23)
-                    if (this.data.fields === 'minute') currentDate = new Date(year, month, 0, 23, 59)
-                    if (this.data.fields === 'second') currentDate = new Date(year, month, 0, 23, 59, 59)
-                }
+            if (isOverflow) {
+                if (this.data.fields === 'day') currentDate = new Date(year, month, 0) // 当前月最后一天 month的前一个月也就是当前月份最后一天
+                if (this.data.fields === 'hour') currentDate = new Date(year, month, 0, 23)
+                if (this.data.fields === 'minute') currentDate = new Date(year, month, 0, 23, 59)
+                if (this.data.fields === 'second') currentDate = new Date(year, month, 0, 23, 59, 59)
+            }
 
-                if (currentDate < this.$start) currentDate = this.$start
-                else if (currentDate > this.$end) currentDate = this.$end
-                this.currentDate = currentDate
-                let months = []
-                let days = []
-                let hours = []
-                let minutes = []
-                let seconds = []
-                
-                // 获取月份
-                if (year === this.$start.getFullYear()) {
-                    months = getMonthsByDate(this.$start, true)
-                } else if (year === this.$end.getFullYear()) {
-                    months = getMonthsByDate(this.$end, false)
-                } else {
-                    months = getMonthsRange()
-                }
-                // 获取日
+            if (currentDate < this.$start) currentDate = this.$start
+            else if (currentDate > this.$end) currentDate = this.$end
+            this.currentDate = currentDate
+            let months = []
+            let days = []
+            let hours = []
+            let minutes = []
+            let seconds = []
+            
+            // 获取月份
+            if (year === this.$start.getFullYear()) {
+                months = getMonthsByDate(this.$start, true)
+            } else if (year === this.$end.getFullYear()) {
+                months = getMonthsByDate(this.$end, false)
+            } else {
+                months = getMonthsRange()
+            }
+            // 获取日
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1) {
+                days = getDaysByDate(this.$start, true)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1) {
+                days = getDaysByDate(this.$end, false)
+            } else {
                 days = getDaysRange(currentDate)
-                // 获取小时
-                if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate()) {
-                    hours = getHours(this.$start)
-                } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate()) {
-                    hours = getHours(this.$end)
-                } else {
-                    hours = getHours()
-                }
-                // 获取分钟
-                if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours()) {
-                    minutes = getMinutes(this.$start)
-                } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours()) {
-                    minutes = getMinutes(this.$end)
-                } else {
-                    minutes = getMinutes()
-                }
-                // 获取秒
-                if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours() && minute === this.$start.getMinutes()) {
-                    seconds = getSeconds(this.$start)
-                } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours() && minute === this.$end.getMinutes()) {
-                    seconds = getSeconds(this.$end)
-                } else {
-                    seconds = getSeconds()
-                }
+            }
+            // 获取小时
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate()) {
+                hours = getHours(this.$start)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate()) {
+                hours = getHours(this.$end)
+            } else {
+                hours = getHours()
+            }
+            // 获取分钟
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours()) {
+                minutes = getMinutes(this.$start)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours()) {
+                minutes = getMinutes(this.$end)
+            } else {
+                minutes = getMinutes()
+            }
+            // 获取秒
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours() && minute === this.$start.getMinutes()) {
+                seconds = getSeconds(this.$start)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours() && minute === this.$end.getMinutes()) {
+                seconds = getSeconds(this.$end)
+            } else {
+                seconds = getSeconds()
+            }
 
-                let currentValues = [
-                    {value: year, values: this.years},
-                    {value: month, values: months},
-                    {value: day, values: days},
-                    {value: hour, values: hours},
-                    {value: minute, values: minutes},
-                    {value: second, values: seconds}
-                ]
+            let currentValues = [
+                {value: year, values: this.years},
+                {value: month, values: months},
+                {value: day, values: days},
+                {value: hour, values: hours},
+                {value: minute, values: minutes},
+                {value: second, values: seconds}
+            ]
 
-                // 修正索引，尽量保持选中值的一致性
-                for (let i = 0; i <= DATE_INDEX_MAP[this.data.fields]; ++i) {
-                    let value = Number(currentValues[i].value)
-                    let valueSet = currentValues[i].values
-                    let index = valueSet.findIndex(v => value === Number(v))
-                    if (index !== -1) values[i] = index
-                }
-                if (hasMonth(this.data.fields)) {
-                    data[1] = months.map(month => {
-                        return {
-                            id: month,
-                            label: `${month}月`
-                        }
-                    })
-                }
-                if (hasDay(this.data.fields)) {
-                    data[2] = days.map(day => {
-                        return {
-                            id: day,
-                            label: `${day}日`
-                        }
-                    })
-                }
-                if (hasHour(this.data.fields)) {
-                    data[3] = hours.map(hour => {
-                        return {
-                            id: hour,
-                            label: `${hour}时`
-                        }
-                    })
-                }
-                if (hasMinute(this.data.fields)) {
-                    data[4] = minutes.map(minute => {
-                        return {
-                            id: minute,
-                            label: `${minute}分`
-                        }
-                    })
-                }
-                if (hasSecond(this.data.fields)) {
-                    data[5] = seconds.map(second => {
-                        return {
-                            id: second,
-                            label: `${second}秒`
-                        }
-                    })
-                }
+            // 修正索引，尽量保持选中值的一致性
+            for (let i = 0; i <= DATE_INDEX_MAP[this.data.fields]; ++i) {
+                let value = Number(currentValues[i].value)
+                let valueSet = currentValues[i].values
+                let index = valueSet.findIndex(v => value === Number(v))
+                if (index !== -1) values[i] = index
+            }
+            if (hasMonth(this.data.fields)) {
+                data[1] = months.map(month => {
+                    return {
+                        id: month,
+                        label: `${month}月`
+                    }
+                })
+            }
+            if (hasDay(this.data.fields)) {
+                data[2] = days.map(day => {
+                    return {
+                        id: day,
+                        label: `${day}日`
+                    }
+                })
+            }
+            if (hasHour(this.data.fields)) {
+                data[3] = hours.map(hour => {
+                    return {
+                        id: hour,
+                        label: `${hour}时`
+                    }
+                })
+            }
+            if (hasMinute(this.data.fields)) {
+                data[4] = minutes.map(minute => {
+                    return {
+                        id: minute,
+                        label: `${minute}分`
+                    }
+                })
+            }
+            if (hasSecond(this.data.fields)) {
+                data[5] = seconds.map(second => {
+                    return {
+                        id: second,
+                        label: `${second}秒`
+                    }
+                })
             }
         }
         this.setData({
@@ -353,8 +362,29 @@ Component({
             value: values.map(v => v.id),
             model: values,
             text: values.map(v => v.label),
-            date: this.currentDate
+            date: this.currentDate,
+            dateStr: this.formatDate(this.currentDate)
         }
+    },
+    formatDate (date) {
+        date = new Date(date)
+        const year = date.getFullYear()
+        const month = date.getMonth()
+        const month1 = month + 1
+        const day = date.getDate()
+        // const weekDay = date.getDay()
+
+        return this.data.dateFormat
+            .replace(/yyyy/g, year)
+            .replace(/yy/g, (year + '').substring(2))
+            .replace(/mm/g, month1 < 10 ? '0' + month1 : month1)
+            .replace(/m/g, month1)
+            // .replace(/MM/g, this.data.monthNames[month])
+            // .replace(/M/g, this.data.monthNamesShort[month])
+            .replace(/dd/g, day < 10 ? '0' + day : day)
+            .replace(/d/g, day)
+            // .replace(/DD/g, this.data.dayNames[weekDay])
+            // .replace(/D/g, this.data.dayNamesShort[weekDay])
     },
     /**
      * @description 添加全部
@@ -483,12 +513,13 @@ Component({
         let seconds = []
         // 如果没有绑定value，今日存在那么选择今日，否则选择第一年
         let value = this.data.value
-        let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : this.$start
+        let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
         this.currentDate = currentDate
         // 构造当前值 yyyy-MM-dd HH:mm:ss
         let values
         if (!!value && typeof value === 'string') value = currentDate
-        else value = this.$start
+        else if (!isDate(value)) value = this.$start
+        else value = currentDate
         const genValues = (date) => {
             let values = []
             if (hasYear(this.data.fields)) {

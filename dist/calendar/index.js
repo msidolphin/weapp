@@ -1,4 +1,4 @@
-import calendar from './calendarinit'
+import calendar from '../lib/calendarinit'
 
 const bind = (fn, ctx) => {
     return (...args) => {
@@ -12,7 +12,7 @@ const defaults = {
     monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
-    weekendDays: [5, 6], // Sunday and Saturday
+    weekendDays: [0, 6], // Sunday and Saturday
     multiple: false,
     dateFormat: 'yyyy-mm-dd',
     minDate: null,
@@ -67,8 +67,15 @@ Component({
         },
         firstDay: {
             type: Number,
-            value: 1
+            value: 0
         }, // First day of the week, Monday
+        markers: { // 标记点
+            type: Array,
+            value: [],
+            observer () {
+                this.setMarkers(this.data.months)
+            }
+        }
     },
     data: {
         ...defaults
@@ -125,8 +132,37 @@ Component({
             if (typeof this.fns.onMonthAdd === 'function') {
                 months.forEach((month) => this.fns.onMonthAdd.call(this, month))
             }
+            this.setMarkers(months)
             this.setData({ weeks, months, monthsTranslate, wrapperTranslate: '' })
             this.setData({...this.updateCurrentMonthYear()})
+        },
+        setMarkers (months) {
+            if (!months || !months.length) return
+            this.__setMarkers(months)
+        },
+        __setMarkers (months) {
+            for (let i = 0; i < this.data.markers.length; i++) {
+                const marker = this.data.markers[i]
+                const year = marker.year
+                const month = marker.month
+                const days = marker.days
+                months.forEach(m => {
+                    if (!m.items) return
+                    const my = m.year
+                    const mm = m.month + 1
+                    if (year === my && month === mm) {
+                        m.items.forEach(col => {
+                            col.forEach(e => {
+                                if (days.indexOf(e.day) !== -1) {
+                                    e.marker = true
+                                } else {
+                                    e.marker = false
+                                }
+                            })
+                        })
+                    }
+                })
+            }
         },
         /**
          * 设置月份的位置信息
@@ -322,9 +358,10 @@ Component({
 
                 const translate = -(prevTranslate - 1) * 100
                 const nextMonthTranslate = getTransform(translate, this.isH)
-
+                const months = [months[1], months[2], newMonthHTML]
+                this.setMarkers(months)
                 this.setData({
-                    months: [months[1], months[2], newMonthHTML],
+                    months,
                     monthsTranslate: [monthsTranslate[1], monthsTranslate[2], nextMonthTranslate],
                 })
             } else {
@@ -332,12 +369,14 @@ Component({
 
                 const translate = -(prevTranslate + 1) * 100
                 const prevMonthTranslate = getTransform(translate, this.isH)
-
+                const months = [newMonthHTML, months[0], months[1]]
+                this.setMarkers(months)
                 this.setData({
-                    months: [newMonthHTML, months[0], months[1]],
+                    months,
                     monthsTranslate: [prevMonthTranslate, monthsTranslate[0], monthsTranslate[1]],
                 })
             }
+            
 
             this.onMonthChangeStart(dir)
 
@@ -385,7 +424,7 @@ Component({
                 const nextMonthHTML = this.monthHTML(nextDateTime, 'next')
                 const nextMonthTranslate = getTransform(translate, this.isH)
                 const months = [this.data.months[1], this.data.months[2], nextMonthHTML]
-
+                this.setMarkers(months)
                 this.setData({
                     months,
                     monthsTranslate: [monthsTranslate[1], monthsTranslate[2], nextMonthTranslate],
@@ -430,7 +469,7 @@ Component({
                 const prevMonthHTML = this.monthHTML(prevDateTime, 'prev')
                 const prevMonthTranslate = getTransform(translate, this.isH)
                 const months = [prevMonthHTML, this.data.months[0], this.data.months[1]]
-
+                this.setMarkers(months)
                 this.setData({
                     months,
                     monthsTranslate: [prevMonthTranslate, monthsTranslate[0], monthsTranslate[1]],
@@ -491,6 +530,7 @@ Component({
             const monthsTranslate = this.setMonthsTranslate(this.monthsTranslate)
 
             this.isRendered = true
+            this.setMarkers(months)
             this.setData({ months, monthsTranslate })
             this.isRendered = false
 
@@ -673,7 +713,7 @@ Component({
                         })
                     }
                 }
-
+                
                 monthHTML.year = year
                 monthHTML.height = height
                 monthHTML.month = month
@@ -682,6 +722,25 @@ Component({
                 monthHTML.next = hasNextMonth
 
                 monthHTML.items.push(rowHTML)
+            }
+            if (!this.data.fill) {
+                // 查看是否存在空行，存在过滤空行
+                let rows = []
+                for (let i = 0; i < monthHTML.items.length; ++i) {
+                    let flag = false
+                    for (let j = 0; j < monthHTML.items[i].length; ++j) {
+                        if (!monthHTML.items[i][j].empty) {
+                            flag = true
+                            break
+                        }
+                    }
+                    if (flag) {
+                        rows.push(monthHTML.items[i])
+                    }
+                }
+                height = rows.length * 51
+                monthHTML.items = rows
+                monthHTML.height = height
             }
 
             return monthHTML

@@ -1,0 +1,24 @@
+<i-popup direction="bottom" visible="{{visible}}" mask="{{false}}" close-on-click-modal="{{false}}">
+    <view class="i-keyboard">
+        <!-- 快捷方式 -->
+        <view class="i-keyboard-shortcut">
+            <view class="i-keyboard-shortcut-item" wx:for="{{shortcut}}" wx:key="{{index}}" data-value="{{item}}" bindtap="setValueByShortcut">
+                <text class="i-keyboard-shortcut-item__text">{{item}}</text>
+            </view>
+        </view>
+        <view class="i-keyboard-body">
+            <view class="i-keyboard-main">
+                <view class="i-keyboard-main-item" wx:for="{{values}}" wx:key="{{item}}" data-value="{{item}}" bindtap="setValue">
+                    <text class="i-keyboard-main-item__text">{{item}}</text>
+                </view>
+                <view class="i-keyboard-main-item" bindtap="onClose">
+                    <text class="i-keyboard-main-item__text">取消</text>
+                </view>
+            </view>
+            <view class="i-keyboard-btns">
+                <view class="i-keyboard-delete" bindtap="delete">删除</view>
+                <view class="i-keyboard-confirm" bindtap="onClose">确定</view>
+            </view>
+        </view>
+    </view>
+</i-popup>

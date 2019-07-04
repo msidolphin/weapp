@@ -34,6 +34,9 @@ gulp.task('compile-wxs', () => {
         .pipe(gulp.dest('../examples/dist/'))
 })
 
+gulp.task('compile-image', () => {
+    return gulp.src(['../src/**/*.png', '../src/**/*.jpg', '../src/**/*.gif']).pipe(gulp.dest('../examples/dist/'))
+})
 
 gulp.task('clean', () => {
     return gulp.src(['../src/**/*.css'])
@@ -47,7 +50,8 @@ gulp.task('auto', () => {
     gulp.watch('../src/**/*.json', ['compile-json'])
     gulp.watch('../src/**/*.wxml', ['compile-wxml'])
     gulp.watch('../src/**/*.wxs', ['compile-wxs'])
+    gulp.watch(['../src/**/*.png', '../src/**/*.jpg', '../src/**/*.gif'], ['compile-image'])
     // gulp.watch('../src/**/*.css', ['clean'])
 })
 
-gulp.task('default', ['compile-css', 'compile-js', 'compile-json', 'compile-wxml', 'compile-wxs','auto'])
+gulp.task('default', ['compile-css', 'compile-js', 'compile-json', 'compile-wxml', 'compile-wxs', 'compile-image', 'auto'])
