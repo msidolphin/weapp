@@ -224,6 +224,7 @@ export default Behavior({
                 monthHTML.time = time
                 monthHTML.prev = hasPrevMonth
                 monthHTML.next = hasNextMonth
+                monthHTML.yearMonth = `${year}年${month + 1 < 10 ? '0' + (month + 1) : month + 1}月`
 
                 monthHTML.items.push(rowHTML)
             }

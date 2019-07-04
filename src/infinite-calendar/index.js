@@ -46,7 +46,6 @@ Component({
             this.setData({
                 months
             })
-            console.log(months)
         },
         onScroll (e) {
             if (this.scrollTop === undefined) this.scrollTop = e.detail.scrollTop

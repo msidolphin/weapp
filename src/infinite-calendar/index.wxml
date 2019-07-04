@@ -19,9 +19,9 @@
         <view class="i-calendar-list" style="height:{{height}}px;">
             <i-load-more wx:if="{{!isLast}}"></i-load-more>
             <i-load-more wx:else loading="{{false}}"></i-load-more>
-            <block wx:for="{{months}}"  wx:for-item="month" >
+            <block wx:for="{{months}}"  wx:for-item="month" wx:key="{{month.year}}{{month.month}}">
                 <view class="i-calendar-date">
-                    <text class="i-calendar-date__text">{{month.year}}年{{month.month + 1 < 10 ? '0' + (month.month + 1) : month.month + 1}}月</text>
+                    <text class="i-calendar-date__text">{{month.yearMonth}}</text>
                 </view>
                 <view class="i-calendar-weekdays">
                     <block wx:for="{{ weeks }}" wx:key="{{it.dayName}}" wx:for-item="it">
