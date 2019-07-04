@@ -1,10 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/picker/index",
     "pages/calendar/index",
     "pages/infinite-calendar/index",
     "pages/keyboard/index",
-    "pages/picker/index",
     "pages/tabs/index",
     "pages/bottom-drawer/index",
     "pages/cascader/index",

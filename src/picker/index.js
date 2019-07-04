@@ -211,13 +211,15 @@ Component({
     },
     getDateData (years, months, days, hours, minutes, seconds) {
         let data = []
-        if (hasYear(this.data.fields)) {
+        if (hasYear(this.data.fields) && !this.data.data[0]) {
             data.push(years.map(year => {
                 return {
                     id: year,
                     label: `${year}年`
                 }
             }))
+        } else if (hasYear(this.data.fields)) {
+            data[0] = this.data.data[0]
         }
         if (hasMonth(this.data.fields)) {
             data.push(months.map(month => {
@@ -330,6 +332,7 @@ Component({
     handleChange (e) {
         let values = e.detail.value
         let changeIndex = this.getChangeIndex(values, this.data.values)
+        // debugger
         if (this.data.mode !== DATE) {
             // 归零
             for (let i = changeIndex + 1; i < this.data.level; ++i) {
@@ -343,13 +346,13 @@ Component({
                 data[i + 1] = item.children
             }
         } else {
-            let data = this.data.data
-            let year = hasYear(this.data.fields) ? Number(data[0][values[0]].id) : this.$start.getFullYear()
-            let month = hasMonth(this.data.fields) ? Number(data[1][values[1]].id) : 1
-            let day = hasDay(this.data.fields) ? Number(data[2][values[2]].id) : 1
-            let hour = hasHour(this.data.fields) ? Number(data[3][values[3]].id) : 0
-            let minute = hasMinute(this.data.fields) ? Number(data[4][values[4]].id) : 0
-            let second = hasSecond(this.data.fields) ? Number(data[5][values[5]].id) : 0
+            let oldData = this.data.data
+            let year = hasYear(this.data.fields) ? Number(oldData[0][values[0]].id) : this.$start.getFullYear()
+            let month = hasMonth(this.data.fields) ? Number(oldData[1][values[1]].id) : 1
+            let day = hasDay(this.data.fields) ? Number(oldData[2][values[2]].id) : 1
+            let hour = hasHour(this.data.fields) ? Number(oldData[3][values[3]].id) : 0
+            let minute = hasMinute(this.data.fields) ? Number(oldData[4][values[4]].id) : 0
+            let second = hasSecond(this.data.fields) ? Number(oldData[5][values[5]].id) : 0
             let currentDate = convertToDate(`${year}/${month}/${day} ${hour}:${minute}:${second}`)
             // 判断是否溢出
             let isOverflow = false
@@ -370,7 +373,7 @@ Component({
             if (currentDate < this.$start) currentDate = this.$start
             else if (currentDate > this.$end) currentDate = this.$end
             this.currentDate = currentDate
-            let {months, days, hours, minutes, seconds} = this.getDateColumns(year, month, hour, minute)
+            let {months, days, hours, minutes, seconds} = this.getDateColumns(year, month, day, hour, minute)
             let currentValues = [
                 {value: year, values: this.years},
                 {value: month, values: months},
@@ -379,7 +382,6 @@ Component({
                 {value: minute, values: minutes},
                 {value: second, values: seconds}
             ]
-
             // 修正索引，尽量保持选中值的一致性
             for (let i = 0; i <= DATE_INDEX_MAP[this.data.fields]; ++i) {
                 let value = Number(currentValues[i].value)
@@ -387,46 +389,7 @@ Component({
                 let index = valueSet.findIndex(v => value === Number(v))
                 if (index !== -1) values[i] = index
             }
-            if (hasMonth(this.data.fields)) {
-                data[1] = months.map(month => {
-                    return {
-                        id: month,
-                        label: `${month}月`
-                    }
-                })
-            }
-            if (hasDay(this.data.fields)) {
-                data[2] = days.map(day => {
-                    return {
-                        id: day,
-                        label: `${day}日`
-                    }
-                })
-            }
-            if (hasHour(this.data.fields)) {
-                data[3] = hours.map(hour => {
-                    return {
-                        id: hour,
-                        label: `${hour}时`
-                    }
-                })
-            }
-            if (hasMinute(this.data.fields)) {
-                data[4] = minutes.map(minute => {
-                    return {
-                        id: minute,
-                        label: `${minute}分`
-                    }
-                })
-            }
-            if (hasSecond(this.data.fields)) {
-                data[5] = seconds.map(second => {
-                    return {
-                        id: second,
-                        label: `${second}秒`
-                    }
-                })
-            }
+            data = this.getDateData(this.years, months, days, hours, minutes, seconds)
         }
         this.setData({
             data,
@@ -484,19 +447,13 @@ Component({
         const month = date.getMonth()
         const month1 = month + 1
         const day = date.getDate()
-        // const weekDay = date.getDay()
-
         return this.data.dateFormat
             .replace(/yyyy/g, year)
             .replace(/yy/g, (year + '').substring(2))
             .replace(/mm/g, month1 < 10 ? '0' + month1 : month1)
             .replace(/m/g, month1)
-            // .replace(/MM/g, this.data.monthNames[month])
-            // .replace(/M/g, this.data.monthNamesShort[month])
             .replace(/dd/g, day < 10 ? '0' + day : day)
             .replace(/d/g, day)
-            // .replace(/DD/g, this.data.dayNames[weekDay])
-            // .replace(/D/g, this.data.dayNamesShort[weekDay])
     },
     /**
      * @description 添加全部
@@ -604,6 +561,9 @@ Component({
         if (this.data.lock) return
         this.triggerEvent('change', this.getValueByIndex(this.data.data, indexs))
     },
+    /**
+     * @description 日期改变 - 外部原因导致
+     */
     onDateChange () {
         let values
         let value = this.data.value
@@ -655,44 +615,7 @@ Component({
         if (!!value && typeof value === 'string') value = currentDate
         else if (!isDate(value)) value = this.$start
         else value = currentDate
-        const genValues = (date) => {
-            let values = []
-            if (hasYear(this.data.fields)) {
-                values.push(String(date.getFullYear()))
-            }
-            if (hasMonth(this.data.fields)) {
-                let month = date.getMonth() + 1
-                if (month < 10) month = '0' + month
-                else month = String(month)
-                values.push(month)
-            }
-            if (hasDay(this.data.fields)) {
-                let day = date.getDate()
-                if (day < 10) day = '0' + day
-                else day = String(day)
-                values.push(day)
-            }
-            if (hasHour(this.data.fields)) {
-                let hour = date.getHours()
-                if (hour < 10) hour = '0' + hour
-                else hour = String(hour)
-                values.push(hour)
-            }
-            if (hasMinute(this.data.fields)) {
-                let minute = date.getMinutes()
-                if (minute < 10) minute = '0' + minute
-                else minute = String(minute)
-                values.push(minute)
-            }
-            if (hasSecond(this.data.fields)) {
-                let second = date.getSeconds()
-                if (second < 10) second = '0' + second
-                else second = String(second)
-                values.push(second)
-            }
-            return values
-        }
-        values = genValues(value)
+        values = genValues(value, this.data.fields)
         let year = currentDate.getFullYear()
         // 判断当前日期是否为开始时间或截止时间
         if (year === this.$start.getFullYear()) {
@@ -714,61 +637,12 @@ Component({
             minutes = getMinutes()
             seconds = getSeconds()
         }
-        // 转化为标准格式
-        if (hasYear(this.data.fields)) {
-            data.push(years.map(year => {
-                return {
-                    id: year,
-                    label: `${year}年`
-                }
-            }))
-        }
-        if (hasMonth(this.data.fields)) {
-            data.push(months.map(month => {
-                return {
-                    id: month,
-                    label: `${month}月`
-                }
-            }))
-        }
-        if (hasDay(this.data.fields)) {
-            data.push(days.map(day => {
-                return {
-                    id: day,
-                    label: `${day}日`
-                }
-            }))
-        }
-        if (hasHour(this.data.fields)) {
-            data.push(hours.map(hour => {
-                return {
-                    id: hour,
-                    label: `${hour}时`
-                }
-            }))
-        }
-        if (hasMinute(this.data.fields)) {
-            data.push(minutes.map(minute => {
-                return {
-                    id: minute,
-                    label: `${minute}分`
-                }
-            }))
-        }
-        if (hasSecond(this.data.fields)) {
-            data.push(seconds.map(second => {
-                return {
-                    id: second,
-                    label: `${second}秒`
-                }
-            }))
-        }
+        data = this.getDateData(years, months, days, hours, minutes, seconds)
         this.setData({
             data,
             values: this.getIndexByValue(data, values)
         })
     },
-    getCurrentValueIndex () {},
     noop () {}
   },
   attached () {
