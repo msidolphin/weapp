@@ -67,6 +67,44 @@ function hasSecond (fields) {
     return fields === 'second'
 }
 
+function genValues (date, fields) {
+    let values = []
+    if (hasYear(fields)) {
+        values.push(String(date.getFullYear()))
+    }
+    if (hasMonth(fields)) {
+        let month = date.getMonth() + 1
+        if (month < 10) month = '0' + month
+        else month = String(month)
+        values.push(month)
+    }
+    if (hasDay(fields)) {
+        let day = date.getDate()
+        if (day < 10) day = '0' + day
+        else day = String(day)
+        values.push(day)
+    }
+    if (hasHour(fields)) {
+        let hour = date.getHours()
+        if (hour < 10) hour = '0' + hour
+        else hour = String(hour)
+        values.push(hour)
+    }
+    if (hasMinute(fields)) {
+        let minute = date.getMinutes()
+        if (minute < 10) minute = '0' + minute
+        else minute = String(minute)
+        values.push(minute)
+    }
+    if (hasSecond(fields)) {
+        let second = date.getSeconds()
+        if (second < 10) second = '0' + second
+        else second = String(second)
+        values.push(second)
+    }
+    return values
+}
+
 const DATE_INDEX_MAP = {
     year: 0,
     month: 1,
@@ -100,11 +138,11 @@ Component({
             value: [],
             observer (val, old) {
                 if (val === old) return
-                if (this.mode !== DATE) {
+                if (this.data.mode !== DATE) {
                     if (arrayIsEqul(val, old)) return
                     this.handleValueChange(val)
                 } else {
-                    this.initDate()
+                    if (this.data.data) this.onDateChange()
                 }
             }
         },
@@ -171,6 +209,124 @@ Component({
             lock: false
         })
     },
+    getDateData (years, months, days, hours, minutes, seconds) {
+        let data = []
+        if (hasYear(this.data.fields)) {
+            data.push(years.map(year => {
+                return {
+                    id: year,
+                    label: `${year}年`
+                }
+            }))
+        }
+        if (hasMonth(this.data.fields)) {
+            data.push(months.map(month => {
+                return {
+                    id: month,
+                    label: `${month}月`
+                }
+            }))
+        }
+        if (hasDay(this.data.fields)) {
+            data.push(days.map(day => {
+                return {
+                    id: day,
+                    label: `${day}日`
+                }
+            }))
+        }
+        if (hasHour(this.data.fields)) {
+            data.push(hours.map(hour => {
+                return {
+                    id: hour,
+                    label: `${hour}时`
+                }
+            }))
+        }
+        if (hasMinute(this.data.fields)) {
+            data.push(minutes.map(minute => {
+                return {
+                    id: minute,
+                    label: `${minute}分`
+                }
+            }))
+        }
+        if (hasSecond(this.data.fields)) {
+            data.push(seconds.map(second => {
+                return {
+                    id: second,
+                    label: `${second}秒`
+                }
+            }))
+        }
+        return data
+    },
+    getDateColumns (year, month, day, hour, minute) {
+        let months = []
+        let days = []
+        let hours = []
+        let minutes = []
+        let seconds = []
+        if (!this.$start || !this.$end) return
+        // 获取月份
+        if (year !== undefined) {
+            if (year === this.$start.getFullYear()) {
+                months = getMonthsByDate(this.$start, true)
+            } else if (year === this.$end.getFullYear()) {
+                months = getMonthsByDate(this.$end, false)
+            } else {
+                months = getMonthsRange()
+            }
+        }
+        if (year !== undefined && month !== undefined) {
+            // 获取日
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1) {
+                days = getDaysByDate(this.$start, true)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1) {
+                days = getDaysByDate(this.$end, false)
+            } else {
+                days = getDaysRange(this.currentDate)
+            }
+        }
+        if (year !== undefined && month !== undefined && day !== undefined) {
+            // 获取小时
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate()) {
+                hours = getHours(this.$start)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate()) {
+                hours = getHours(this.$end)
+            } else {
+                hours = getHours()
+            }
+        }
+        if (year !== undefined && month !== undefined && day !== undefined && hour !== undefined) {
+            // 获取分钟
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours()) {
+                minutes = getMinutes(this.$start)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours()) {
+                minutes = getMinutes(this.$end)
+            } else {
+                minutes = getMinutes()
+            }
+        }
+        if (year !== undefined && month !== undefined && day !== undefined && hour !== undefined && minute !== undefined) {
+            // 获取秒
+            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours() && minute === this.$start.getMinutes()) {
+                seconds = getSeconds(this.$start)
+            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours() && minute === this.$end.getMinutes()) {
+                seconds = getSeconds(this.$end)
+            } else {
+                seconds = getSeconds()
+            }
+        }
+        
+        return {
+            months,
+            days,
+            hours,
+            minutes,
+            seconds
+        }
+    },
     handleChange (e) {
         let values = e.detail.value
         let changeIndex = this.getChangeIndex(values, this.data.values)
@@ -214,53 +370,7 @@ Component({
             if (currentDate < this.$start) currentDate = this.$start
             else if (currentDate > this.$end) currentDate = this.$end
             this.currentDate = currentDate
-            let months = []
-            let days = []
-            let hours = []
-            let minutes = []
-            let seconds = []
-            
-            // 获取月份
-            if (year === this.$start.getFullYear()) {
-                months = getMonthsByDate(this.$start, true)
-            } else if (year === this.$end.getFullYear()) {
-                months = getMonthsByDate(this.$end, false)
-            } else {
-                months = getMonthsRange()
-            }
-            // 获取日
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1) {
-                days = getDaysByDate(this.$start, true)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1) {
-                days = getDaysByDate(this.$end, false)
-            } else {
-                days = getDaysRange(currentDate)
-            }
-            // 获取小时
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate()) {
-                hours = getHours(this.$start)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate()) {
-                hours = getHours(this.$end)
-            } else {
-                hours = getHours()
-            }
-            // 获取分钟
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours()) {
-                minutes = getMinutes(this.$start)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours()) {
-                minutes = getMinutes(this.$end)
-            } else {
-                minutes = getMinutes()
-            }
-            // 获取秒
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours() && minute === this.$start.getMinutes()) {
-                seconds = getSeconds(this.$start)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours() && minute === this.$end.getMinutes()) {
-                seconds = getSeconds(this.$end)
-            } else {
-                seconds = getSeconds()
-            }
-
+            let {months, days, hours, minutes, seconds} = this.getDateColumns(year, month, hour, minute)
             let currentValues = [
                 {value: year, values: this.years},
                 {value: month, values: months},
@@ -321,9 +431,10 @@ Component({
         this.setData({
             data,
             lock: false
-        })
-        this.setData({
-            values
+        }, () => {
+            this.setData({
+                values
+            })
         })
         if (this.changeOnSelect) {
             this.emitChange(values)
@@ -343,6 +454,7 @@ Component({
         return -1
     },
     getIndexByValue (data, values = []) {
+        if (data.length !== values.length) return
         let indexs = []
         let level = this.data.mode !== DATE ? this.data.level : DATE_INDEX_MAP[this.data.fields] + 1
         for (let i = 0; i < level; ++i) {
@@ -491,6 +603,29 @@ Component({
     emitChange (indexs) {
         if (this.data.lock) return
         this.triggerEvent('change', this.getValueByIndex(this.data.data, indexs))
+    },
+    onDateChange () {
+        let values
+        let value = this.data.value
+        let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
+        this.currentDate = currentDate
+        if (!!value && typeof value === 'string') value = currentDate
+        else if (!isDate(value)) value = this.$start
+        else value = currentDate
+        values = genValues(value, this.data.fields)
+        let [year, month, day, hour, minute] = values
+        let res = this.getDateColumns(Number(year), Number(month), Number(day), Number(hour), Number(minute))
+        if (!res) return
+        let {months, days, hours, minutes, seconds} = res
+        let data = this.getDateData(this.years, months, days, hours, minutes, seconds)
+        values = this.getIndexByValue(data, values)
+        this.setData({
+            data
+        }, () => {
+            this.setData({
+                values
+            })
+        })
     },
     // 日期相关
     initDate () {

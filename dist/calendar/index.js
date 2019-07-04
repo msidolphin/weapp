@@ -15,8 +15,6 @@ const defaults = {
     weekendDays: [0, 6], // Sunday and Saturday
     multiple: false,
     dateFormat: 'yyyy-mm-dd',
-    minDate: null,
-    maxDate: null,
     touchMove: true,
     animate: true,
     closeOnSelect: true,
@@ -73,8 +71,16 @@ Component({
             type: Array,
             value: [],
             observer () {
-                this.setMarkers(this.data.months)
+                this.setMarkers(this.data.months, true)
             }
+        },
+        minDate: {
+            type: [String, Number, Object],
+            value: null
+        },
+        maxDate: {
+            type: [String, Number, Object],
+            value: null
         }
     },
     data: {
@@ -136,9 +142,10 @@ Component({
             this.setData({ weeks, months, monthsTranslate, wrapperTranslate: '' })
             this.setData({...this.updateCurrentMonthYear()})
         },
-        setMarkers (months) {
+        setMarkers (months, shouldUpdate = false) {
             if (!months || !months.length) return
             this.__setMarkers(months)
+            if (shouldUpdate) this.setData({months})
         },
         __setMarkers (months) {
             for (let i = 0; i < this.data.markers.length; i++) {
@@ -358,8 +365,8 @@ Component({
 
                 const translate = -(prevTranslate - 1) * 100
                 const nextMonthTranslate = getTransform(translate, this.isH)
-                const months = [months[1], months[2], newMonthHTML]
-                this.setMarkers(months)
+                const newMonths = [months[1], months[2], newMonthHTML]
+                this.setMarkers(newMonths)
                 this.setData({
                     months,
                     monthsTranslate: [monthsTranslate[1], monthsTranslate[2], nextMonthTranslate],
@@ -369,8 +376,8 @@ Component({
 
                 const translate = -(prevTranslate + 1) * 100
                 const prevMonthTranslate = getTransform(translate, this.isH)
-                const months = [newMonthHTML, months[0], months[1]]
-                this.setMarkers(months)
+                const newMonths = [newMonthHTML, months[0], months[1]]
+                this.setMarkers(newMonths)
                 this.setData({
                     months,
                     monthsTranslate: [prevMonthTranslate, monthsTranslate[0], monthsTranslate[1]],
@@ -423,16 +430,18 @@ Component({
                 const translate = -(this.monthsTranslate) * 100
                 const nextMonthHTML = this.monthHTML(nextDateTime, 'next')
                 const nextMonthTranslate = getTransform(translate, this.isH)
-                const months = [this.data.months[1], this.data.months[2], nextMonthHTML]
-                this.setMarkers(months)
+                const newMonths = [this.data.months[1], this.data.months[2], nextMonthHTML]
+                this.setMarkers(newMonths)
                 this.setData({
-                    months,
+                    months: newMonths,
                     monthsTranslate: [monthsTranslate[1], monthsTranslate[2], nextMonthTranslate],
                 })
 
                 if (typeof this.fns.onMonthAdd === 'function') {
                     this.fns.onMonthAdd.call(this, months[months.length - 1])
                 }
+            } else {
+                this.setMarkers(this.data.months, true)
             }
 
             this.onMonthChangeStart('next')
@@ -468,16 +477,18 @@ Component({
                 const translate = -(this.monthsTranslate) * 100
                 const prevMonthHTML = this.monthHTML(prevDateTime, 'prev')
                 const prevMonthTranslate = getTransform(translate, this.isH)
-                const months = [prevMonthHTML, this.data.months[0], this.data.months[1]]
-                this.setMarkers(months)
+                const newMonths = [prevMonthHTML, this.data.months[0], this.data.months[1]]
+                this.setMarkers(newMonths)
                 this.setData({
-                    months,
+                    months: newMonths,
                     monthsTranslate: [prevMonthTranslate, monthsTranslate[0], monthsTranslate[1]],
                 })
 
                 if (typeof this.fns.onMonthAdd === 'function') {
                     this.fns.onMonthAdd.call(this, months[0])
                 }
+            } else {
+                this.setMarkers(this.data.months, true)
             }
 
             this.onMonthChangeStart('prev')

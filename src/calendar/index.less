@@ -142,16 +142,9 @@
 			color: #cccccc;
 		}
 		// 节气
-		&--term:not(&--next):not(&--prev) {
+		&--term:not(&--next):not(&--prev):not(&--weekend) {
 			.i-calendar__lunar {
 				color: @error-color;
-			}
-		}
-		&--disabled {
-			color: #d4d4d4;
-			cursor: auto;
-			.i-calendar__lunar {
-				color: #d4d4d4!important;
 			}
 		}
 	}
@@ -187,8 +180,15 @@
 	&__day--weekend {
 		.i-calendar__day-inner {
 			.i-calendar__text, .i-calendar__lunar {
-				color: #B6B7B9!important;
+				color: #B6B7B9;
 			}
+		}
+	}
+
+	&__day--disabled {
+		cursor: auto;
+		.i-calendar__text, .i-calendar__lunar {
+			color: #d4d4d4!important;
 		}
 	}
 

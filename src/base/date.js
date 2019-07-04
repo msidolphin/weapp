@@ -64,6 +64,8 @@ export function convertToDate (date) {
             let tmp = date
             if (isString(date)) {
                 date = date.replace(/-/g, '/')
+                let len = date.split('/').length
+                if (len < 3) date += '/01'
                 date = Date.parse(date)
             }
             if (isNumber(date)) {

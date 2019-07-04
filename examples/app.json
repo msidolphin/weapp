@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/calendar/index",
     "pages/index/index",
+    "pages/calendar/index",
     "pages/infinite-calendar/index",
     "pages/keyboard/index",
     "pages/picker/index",
