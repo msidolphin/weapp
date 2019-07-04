@@ -1,0 +1,23 @@
+<!-- 顶部固定区域 -->
+<view class='hd'>
+  <view class="hdb" style="top:{{top}}px;"></view>
+</view>
+<!-- 内容区域 -->
+<view class='bd'>
+  <view class='charts' style="{{cStyle}}">
+    <view style="{{chStyle}}">
+      <view class='c'></view>
+      <view class='b' bindtap="back2Top">查看趋势图</view>
+    </view>
+  </view>
+  <view class="block" style="{{bs}}"></view>
+  <view class='tabs' style="{{tabStyle}}">
+    <view class='tab'>tab1</view>
+    <view class='tab'>tab2</view>
+    <view class='tab'>tab3</view>
+    <view class='tab'>tab4</view>
+  </view>
+  <view class='list'>
+    <view class='list-item' wx:for="{{100}}" wx:key="{{index}}">item {{index + 1}}</view>
+  </view>
+</view>

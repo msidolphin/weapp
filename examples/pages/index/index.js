@@ -252,6 +252,10 @@ Page({
           {
             label: 'Sticky 吸顶demo',
             url: '/pages/demo/sticky/index'
+          },
+          {
+            label: 'Sticky 多元素吸顶demo',
+            url: '/pages/demo/sticky-tab/index'
           }
         ]
       }

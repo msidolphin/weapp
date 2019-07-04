@@ -1,0 +1,58 @@
+.hd {
+    position: relative;
+    z-index: 100;
+    height: 120px;
+  }
+  .block {
+    display: none;
+    height: 48px;
+  }
+  .hdb {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 120px;
+    background: blue;
+  }
+  .bd .charts {
+    height: 200px;
+    overflow: hidden;
+  }
+  .charts .c {
+    height: 200px;
+    background: red;
+  }
+  .b {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: green;
+  }
+  .tabs {
+    display: flex;
+    align-items: center;
+  }
+  .tabs.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    font-size: 14px;
+    color: #333;
+    background: #fff;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    background: #fff;
+  }

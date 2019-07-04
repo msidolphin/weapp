@@ -47,7 +47,8 @@
     "pages/divider/index",
     "pages/sticky/index",
     "pages/load-more/index",
-    "pages/demo/sticky/index"
+    "pages/demo/sticky/index",
+    "pages/demo/sticky-tab/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FAFAFA",
