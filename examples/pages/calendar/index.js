@@ -11,7 +11,8 @@ Page({
         month: 7, // 当前月份
         days: [1, 2, 3, 4, 5, 6, 31] // 当月已记工日期   
       }
-    ]
+    ],
+    maxDate: new Date().toLocaleDateString()
   },
 
   /**

@@ -15,8 +15,6 @@ const defaults = {
     weekendDays: [0, 6], // Sunday and Saturday
     multiple: false,
     dateFormat: 'yyyy-mm-dd',
-    minDate: null,
-    maxDate: null,
     touchMove: true,
     animate: true,
     closeOnSelect: true,
@@ -75,6 +73,14 @@ Component({
             observer () {
                 this.setMarkers(this.data.months)
             }
+        },
+        minDate: {
+            type: [String, Number, Object],
+            value: null
+        },
+        maxDate: {
+            type: [String, Number, Object],
+            value: null
         }
     },
     data: {

@@ -146,15 +146,15 @@
 .i-calendar__day--next {
   color: #cccccc;
 }
+.i-calendar__day--term:not(.i-calendar__day--next):not(.i-calendar__day--prev) .i-calendar__lunar {
+  color: #FC5528;
+}
 .i-calendar__day--disabled {
   color: #d4d4d4;
   cursor: auto;
 }
-.i-calendar__day--term:not(.i-calendar__day--next):not(.i-calendar__day--prev) .i-calendar__lunar {
-  color: #FC5528;
-}
-.i-calendar__day:active {
-  background: #fff!important;
+.i-calendar__day--disabled .i-calendar__lunar {
+  color: #d4d4d4!important;
 }
 .i-calendar__marker {
   position: absolute;

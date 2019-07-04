@@ -141,20 +141,18 @@
 		&--next {
 			color: #cccccc;
 		}
-
-		&--disabled {
-			color: #d4d4d4;
-			cursor: auto;
-		}
-
 		// 节气
 		&--term:not(&--next):not(&--prev) {
 			.i-calendar__lunar {
 				color: @error-color;
 			}
 		}
-		&:active {
-			background: #fff!important;
+		&--disabled {
+			color: #d4d4d4;
+			cursor: auto;
+			.i-calendar__lunar {
+				color: #d4d4d4!important;
+			}
 		}
 	}
 
