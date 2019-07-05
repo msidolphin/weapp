@@ -368,7 +368,7 @@ Component({
                 const newMonths = [months[1], months[2], newMonthHTML]
                 this.setMarkers(newMonths)
                 this.setData({
-                    months,
+                    months: newMonths,
                     monthsTranslate: [monthsTranslate[1], monthsTranslate[2], nextMonthTranslate],
                 })
             } else {
@@ -379,7 +379,7 @@ Component({
                 const newMonths = [newMonthHTML, months[0], months[1]]
                 this.setMarkers(newMonths)
                 this.setData({
-                    months,
+                    months: newMonths,
                     monthsTranslate: [prevMonthTranslate, monthsTranslate[0], monthsTranslate[1]],
                 })
             }
@@ -418,7 +418,6 @@ Component({
             const nextYear = parseInt(months[months.length - 1].year, 10)
             const nextDate = new Date(nextYear, nextMonth)
             const nextDateTime = nextDate.getTime()
-
             // 判断是否存在最大日期
             if (maxDate && nextDateTime > new Date(maxDate).getTime()) {
                 return this.resetMonth()
