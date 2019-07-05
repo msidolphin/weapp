@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/demo/sticky-tab/index",
     "pages/index/index",
+    "pages/demo/sticky-tab/index",
     "pages/picker/index",
     "pages/calendar/index",
     "pages/infinite-calendar/index",

@@ -8,6 +8,7 @@ Page({
     visible6: false,
     visible7: false,
     visible8: false,
+    visible9: false,
     text1: [],
     text2: [],
     value1: [2, 21, 212],
@@ -17,7 +18,10 @@ Page({
     date3: '',
     date4: '',
     date5: '',
-    date6: ''
+    date6: '',
+    date7: '',
+    minDate: new Date('2019/07/01').toGMTString(),
+    maxDate: new Date().toGMTString()
   },
   onLoad () {
     wx.showLoading({
@@ -164,6 +168,11 @@ Page({
       visible8: true
     })
   },
+  onTap9 () {
+    this.setData({
+      visible9: true
+    })
+  },
   onChange1 (e) {
     this.setData({
       value1: e.detail.value,
@@ -206,6 +215,11 @@ Page({
       date6: e.detail.text
     })
   },
+  onChange9(e) {
+    this.setData({
+      date7: e.detail.text
+    })
+  },
   onClose1 () {
     this.setData({
       visible1: false
@@ -245,5 +259,10 @@ Page({
     this.setData({
       visible8: false
     })
+  },
+  onClose9() {
+    this.setData({
+      visible9: false
+    })
   }
-});
+})

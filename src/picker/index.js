@@ -225,15 +225,13 @@ Component({
             }
             years = getYearsByStartDateAndEndDate(this.$start, this.$end)
         }
-        if (hasYear(this.data.fields) && !this.data.data[0]) {
+        if (hasYear(this.data.fields)) {
             data.push(years.map(year => {
                 return {
                     id: year,
                     label: `${year}年`
                 }
             }))
-        } else if (hasYear(this.data.fields)) {
-            data[0] = this.data.data[0]
         }
         if (hasMonth(this.data.fields)) {
             data.push(months.map(month => {
@@ -321,9 +319,9 @@ Component({
             if (currentDate < this.$start) currentDate = this.$start
             else if (currentDate > this.$end) currentDate = this.$end
             this.currentDate = currentDate
-            let {months, days, hours, minutes, seconds} = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
+            let {years, months, days, hours, minutes, seconds} = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
             let currentValues = [
-                {value: year, values: this.years},
+                {value: year, values: years},
                 {value: month, values: months},
                 {value: day, values: days},
                 {value: hour, values: hours},
@@ -337,7 +335,7 @@ Component({
                 let index = valueSet.findIndex(v => value === Number(v))
                 if (index !== -1) values[i] = index
             }
-            data = this.getDateData(this.years, months, days, hours, minutes, seconds)
+            data = this.getDateData(years, months, days, hours, minutes, seconds)
         }
         this.setData({
             data,
@@ -534,11 +532,10 @@ Component({
         else if (!isDate(value)) value = this.$start
         else value = currentDate
         values = genValues(value, this.data.fields)
-        // let [year, month, day, hour, minute] = values
         let res = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
         if (!res) return
-        let {months, days, hours, minutes, seconds} = res
-        let data = this.getDateData(this.years, months, days, hours, minutes, seconds)
+        let {years, months, days, hours, minutes, seconds} = res
+        let data = this.getDateData(years, months, days, hours, minutes, seconds)
         values = this.getIndexByValue(data, values)
         this.isChanging = true
         this.setData({
@@ -568,14 +565,11 @@ Component({
         let value = this.data.value
         let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
         this.currentDate = currentDate
-        let years = getYearsByStartDateAndEndDate(this.$start, this.$end)
-        this.years = years
     },
     // 日期相关
     initDate () {
         this.initStartAndEnd()
         let data = []
-        this.years = getYearsByStartDateAndEndDate(this.$start, this.$end)
         // 如果没有绑定value，今日存在那么选择今日，否则选择第一年
         let value = this.data.value
         let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
