@@ -330,9 +330,9 @@ Component({
         }
     },
     handleChange (e) {
+        if (this.isChanging) return // 如果是因为外部因素改变，不需要执行回调
         let values = e.detail.value
         let changeIndex = this.getChangeIndex(values, this.data.values)
-        // debugger
         if (this.data.mode !== DATE) {
             // 归零
             for (let i = changeIndex + 1; i < this.data.level; ++i) {
@@ -579,11 +579,14 @@ Component({
         let {months, days, hours, minutes, seconds} = res
         let data = this.getDateData(this.years, months, days, hours, minutes, seconds)
         values = this.getIndexByValue(data, values)
+        this.isChanging = true
         this.setData({
             data
         }, () => {
             this.setData({
                 values
+            }, () => {
+                this.isChanging = false
             })
         })
     },
