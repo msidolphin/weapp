@@ -9,7 +9,8 @@ import { getYearsByStartDateAndEndDate,
     getMinutes,
     getSeconds,
     getDaysRange,
-    getMonthsRange
+    getMonthsRange,
+    getRangeByStartAndEnd
 } from '../base/date'
 import { isDate } from '../base/utils'
 let region = JSON.parse(JSON.stringify(area))
@@ -69,6 +70,7 @@ function hasSecond (fields) {
 
 function genValues (date, fields) {
     let values = []
+    if (!date) return values
     if (hasYear(fields)) {
         values.push(String(date.getFullYear()))
     }
@@ -177,11 +179,17 @@ Component({
         // date相关
         start: {
             type: String,
-            value: `${new Date().getFullYear() - 70}/02/01 00:00:00`
+            value: `${new Date().getFullYear() - 70}/02/01 00:00:00`,
+            observer () {
+                this.initDate()
+            }
         },
         end: {
             type: String,
-            value: `${new Date().getFullYear() + 20}/11/30 23:59:59`
+            value: `${new Date().getFullYear() + 20}/11/30 23:59:59`,
+            observer () {
+                this.initDate()
+            }
         },
         fields: { // 对于date有效
             type: String,
@@ -211,6 +219,12 @@ Component({
     },
     getDateData (years, months, days, hours, minutes, seconds) {
         let data = []
+        if (!years) {
+            if (!this.$start || !this.$end) {
+                this.initStartAndEnd()
+            }
+            years = getYearsByStartDateAndEndDate(this.$start, this.$end)
+        }
         if (hasYear(this.data.fields) && !this.data.data[0]) {
             data.push(years.map(year => {
                 return {
@@ -263,72 +277,6 @@ Component({
         }
         return data
     },
-    getDateColumns (year, month, day, hour, minute) {
-        let months = []
-        let days = []
-        let hours = []
-        let minutes = []
-        let seconds = []
-        if (!this.$start || !this.$end) return
-        // 获取月份
-        if (year !== undefined) {
-            if (year === this.$start.getFullYear()) {
-                months = getMonthsByDate(this.$start, true)
-            } else if (year === this.$end.getFullYear()) {
-                months = getMonthsByDate(this.$end, false)
-            } else {
-                months = getMonthsRange()
-            }
-        }
-        if (year !== undefined && month !== undefined) {
-            // 获取日
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1) {
-                days = getDaysByDate(this.$start, true)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1) {
-                days = getDaysByDate(this.$end, false)
-            } else {
-                days = getDaysRange(this.currentDate)
-            }
-        }
-        if (year !== undefined && month !== undefined && day !== undefined) {
-            // 获取小时
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate()) {
-                hours = getHours(this.$start)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate()) {
-                hours = getHours(this.$end)
-            } else {
-                hours = getHours()
-            }
-        }
-        if (year !== undefined && month !== undefined && day !== undefined && hour !== undefined) {
-            // 获取分钟
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours()) {
-                minutes = getMinutes(this.$start)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours()) {
-                minutes = getMinutes(this.$end)
-            } else {
-                minutes = getMinutes()
-            }
-        }
-        if (year !== undefined && month !== undefined && day !== undefined && hour !== undefined && minute !== undefined) {
-            // 获取秒
-            if (year === this.$start.getFullYear() && month === this.$start.getMonth() + 1 && day === this.$start.getDate() && hour === this.$start.getHours() && minute === this.$start.getMinutes()) {
-                seconds = getSeconds(this.$start)
-            } else if (year === this.$end.getFullYear() && month === this.$end.getMonth() + 1 && day === this.$end.getDate() && hour === this.$end.getHours() && minute === this.$end.getMinutes()) {
-                seconds = getSeconds(this.$end)
-            } else {
-                seconds = getSeconds()
-            }
-        }
-        
-        return {
-            months,
-            days,
-            hours,
-            minutes,
-            seconds
-        }
-    },
     handleChange (e) {
         if (this.isChanging) return // 如果是因为外部因素改变，不需要执行回调
         let values = e.detail.value
@@ -373,7 +321,7 @@ Component({
             if (currentDate < this.$start) currentDate = this.$start
             else if (currentDate > this.$end) currentDate = this.$end
             this.currentDate = currentDate
-            let {months, days, hours, minutes, seconds} = this.getDateColumns(year, month, day, hour, minute)
+            let {months, days, hours, minutes, seconds} = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
             let currentValues = [
                 {value: year, values: this.years},
                 {value: month, values: months},
@@ -433,13 +381,25 @@ Component({
             let index = indexs[i]
             values.push(data[i][index])
         }
-        return {
+        let ret = {
             value: values.map(v => v.id),
             model: values,
-            text: values.map(v => v.label),
-            date: this.currentDate,
-            dateStr: this.formatDate(this.currentDate)
+            text: values.map(v => v.label)
         }
+        if (this.data.mode === DATE && this.currentDate) {
+            ret.date = this.currentDate
+            ret.dateStr = this.formatDate(this.currentDate)
+            ret.localeDateString = this.currentDate.toLocaleDateString()
+            ret.formatDate = this.formatDate(this.currentDate)
+            ret.datetime = this.currentDate.getTime()
+            ret.year = this.currentDate.getFullYear()
+            ret.month = this.currentDate.getMonth() + 1
+            ret.day = this.currentDate.getDate()
+            ret.hour = this.currentDate.getHours()
+            ret.monute = this.currentDate.getMinutes()
+            ret.second = this.currentDate.getSeconds()
+        }
+        return ret
     },
     formatDate (date) {
         date = new Date(date)
@@ -565,6 +525,7 @@ Component({
      * @description 日期改变 - 外部原因导致
      */
     onDateChange () {
+        this.initStartAndEnd()
         let values
         let value = this.data.value
         let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
@@ -573,8 +534,8 @@ Component({
         else if (!isDate(value)) value = this.$start
         else value = currentDate
         values = genValues(value, this.data.fields)
-        let [year, month, day, hour, minute] = values
-        let res = this.getDateColumns(Number(year), Number(month), Number(day), Number(hour), Number(minute))
+        // let [year, month, day, hour, minute] = values
+        let res = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
         if (!res) return
         let {months, days, hours, minutes, seconds} = res
         let data = this.getDateData(this.years, months, days, hours, minutes, seconds)
@@ -583,6 +544,10 @@ Component({
         this.setData({
             data
         }, () => {
+            if (!values) {
+                this.isChanging = false
+                return
+            }
             this.setData({
                 values
             }, () => {
@@ -590,8 +555,7 @@ Component({
             })
         })
     },
-    // 日期相关
-    initDate () {
+    initStartAndEnd () {
         let start = convertToDate(this.data.start)
         let end = convertToDate(this.data.end)
         if (start.getTime() > end.getTime()) {
@@ -601,45 +565,27 @@ Component({
             this.$start = start
             this.$end = end
         }
-        let data = []
+        let value = this.data.value
+        let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
+        this.currentDate = currentDate
         let years = getYearsByStartDateAndEndDate(this.$start, this.$end)
         this.years = years
-        let months = []
-        let days = []
-        let hours = []
-        let minutes = []
-        let seconds = []
+    },
+    // 日期相关
+    initDate () {
+        this.initStartAndEnd()
+        let data = []
+        this.years = getYearsByStartDateAndEndDate(this.$start, this.$end)
         // 如果没有绑定value，今日存在那么选择今日，否则选择第一年
         let value = this.data.value
         let currentDate = !!value && typeof value === 'string' ? convertToDate(value) : isDate(value) ? value :  this.$start
         this.currentDate = currentDate
-        // 构造当前值 yyyy-MM-dd HH:mm:ss
         let values
         if (!!value && typeof value === 'string') value = currentDate
         else if (!isDate(value)) value = this.$start
         else value = currentDate
         values = genValues(value, this.data.fields)
-        let year = currentDate.getFullYear()
-        // 判断当前日期是否为开始时间或截止时间
-        if (year === this.$start.getFullYear()) {
-            months = getMonthsByDate(this.$start, true)
-            days = getDaysByDate(this.$start, true)
-            hours = getHours(this.$start)
-            minutes = getMinutes(this.$start)
-            seconds = getSeconds(this.$start)
-        } else if (year === this.$end.getFullYear()) {
-            months = getMonthsByDate(this.$end, false)
-            days = getDaysByDate(this.$end, false)
-            hours = getHours(this.$end)
-            minutes = getMinutes(this.$end)
-            seconds = getSeconds(this.$end)
-        } else {
-            months = getMonthsRange()
-            days = getDaysRange(currentDate)
-            hours = getHours()
-            minutes = getMinutes()
-            seconds = getSeconds()
-        }
+        let {years, days, months, hours, minutes, seconds} = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
         data = this.getDateData(years, months, days, hours, minutes, seconds)
         this.setData({
             data,
@@ -655,7 +601,8 @@ Component({
         }, () => {
             this.init(this.data.refactedRange)
         })
-    } else if (this.data.mode === DATE) {
+    }
+    if (this.data.mode === DATE) {
         this.initDate()
     }
   }

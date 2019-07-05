@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/demo/sticky-tab/index",
     "pages/index/index",
     "pages/picker/index",
     "pages/calendar/index",
@@ -47,8 +48,7 @@
     "pages/divider/index",
     "pages/sticky/index",
     "pages/load-more/index",
-    "pages/demo/sticky/index",
-    "pages/demo/sticky-tab/index"
+    "pages/demo/sticky/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FAFAFA",

@@ -183,7 +183,6 @@ export function getMonthsRange () {
 
 /**
  * @description 获取小时数组
- * 如果传入了日期，那么获取
  */
 export function getHours (date) {
     let maxHour = 23
@@ -225,4 +224,147 @@ export function getSeconds (date) {
         seconds.push(String(i))
     }
     return seconds
+}
+
+function getRange (begin, end) {
+    let range = []
+    for (let i = begin; i <= end; ++i) {
+        let v = i
+        if (v < 10) v = `0${v}`
+        else v = String(v)
+        range.push(v)
+    }
+    return range
+}
+
+/**
+ * @description 根据开始时间和结束时间获取时间范围
+ */
+export function getRangeByStartAndEnd (start, end, current) {
+    start = convertToDate(start)
+    end = convertToDate(end)
+    if (!current) current = start
+    else current = convertToDate(current)
+    let sYear = start.getFullYear()
+    let sMonth = start.getMonth() + 1
+    let sDay = start.getDate()
+    let sHour = start.getHours()
+    let sMinute = start.getMinutes()
+    let sSecond = start.getSeconds()
+    let eYear = end.getFullYear()
+    let eMonth = end.getMonth() + 1
+    let eDay = end.getDate()
+    let eHour = end.getHours()
+    let eMinute = end.getMinutes()
+    let eSecond = end.getSeconds()
+
+    let year = current.getFullYear()
+    let month = current.getMonth() + 1
+    let day = current.getDate()
+    let hour = current.getHours()
+    let minute = current.getMinutes()
+
+    let years = getRange(sYear, eYear)
+    let months = []
+    let days = []
+    let hours = []
+    let minutes = []
+    let seconds = []
+    if (current.getTime() === start.getTime()) {
+        if (sYear === eYear) {
+            months = getRange(sMonth, eMonth)
+        } else {
+            months = getRange(sMonth, 12) // 12 个月
+        }
+        if (sYear === eYear && sMonth === eMonth) {
+            days = getRange(sDay, eDay)
+        } else {
+            days = getRange(sDay, new Date(sYear, sMonth - 1, 0).getDate())
+        }
+        if (sYear === eYear && sMonth === eMonth && sDay === eDay) {
+            hours = getRange(sHour, eHour)
+        } else {
+            hours = getHours(start)
+        }
+        if (sYear === eYear && sMonth === eMonth && sDay === eDay && sHour === eHour) {
+            minutes = getRange(sMinute, eMinute)
+        } else {
+            minutes = getMinutes(start)
+        }
+        if (sYear === eYear && sMonth === eMonth && sDay === eDay && sHour === eHour && sMinute === eMinute) {
+            seconds = getRange(sSecond, eSecond)
+        } else {
+            seconds = getSeconds(start)
+        }
+    } else {
+
+        if (sYear === eYear && year === eYear) {
+            months = getRange(sMonth, eMonth)
+        } else {
+            if (year === eYear) {
+                months = getMonthsByDate(end, false)
+            } else if (year === sYear) {
+                months = getMonthsByDate(start, true)
+            } else {
+                months = getMonthsRange()
+            }
+        }
+
+        if ((sYear === eYear && sMonth === eMonth) &&  year === eYear && month === eMonth) {
+            days = getRange(sDay, eDay)
+        } else {
+            if (year === eYear && month === eMonth) {
+                days = getDaysByDate(end, false)
+            } else if (year === sYear && month === sMonth) {
+                days = getDaysByDate(start, true)
+            } else {
+                days = getDaysRange(current)
+            }
+        }
+
+        if ((sYear === eYear && sMonth === eMonth && sDay === eDay) &&  year === eYear && month === eMonth && day === eDay) {
+            hours = getRange(sHour, eHour)
+        } else {
+            if (year === eYear && month === eMonth && day === eDay) {
+                hours = getHours(end)
+            } else if (year === sYear && month === sMonth && day === sDay) {
+                hours = getHours(start)
+            } else {
+                hours = getHours()
+            }
+        }
+
+        if ((sYear === eYear && sMonth === eMonth && sDay === eDay && sHour === eHour) &&  year === eYear && month === eMonth && day === eDay && hour === eHour) {
+            minutes = getRange(sMinute, eMinute)
+        } else {
+            if (year === eYear && month === eMonth && day === eDay && hour === eHour) {
+                minutes = getMinutes(end)
+            } else if (year === sYear && month === sMonth && day === sDay && hour === sHour) {
+                minutes = getMinutes(start)
+            } else {
+                minutes = getMinutes()
+            }
+        }
+
+        if ((sYear === eYear && sMonth === eMonth && sDay === eDay && sHour === eHour && sMinute === eMinute) &&  year === eYear && month === eMonth && day === eDay && hour === eHour && minute === eMinute) {
+            seconds = getRange(sMinute, eMinute)
+        } else {
+            if (year === eYear && month === eMonth && day === eDay && hour === eHour && minute === eMinute) {
+                seconds = getSeconds(end)
+            } else if (year === sYear && month === sMonth && day === sDay && hour === sHour && minute === sMinute) {
+                seconds = getSeconds(start)
+            } else {
+                seconds = getSeconds()
+            }
+        }
+
+    }
+    return  {
+        years,
+        months,
+        days,
+        hours,
+        minutes,
+        seconds
+    }
 }

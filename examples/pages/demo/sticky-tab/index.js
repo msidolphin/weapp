@@ -25,19 +25,22 @@ Page({
   },
   onPageScroll (e) {
     if (e.scrollTop > this.tabThreshold) {
-      if (e.scrollTop - this.tabThreshold < this.data.cb) { // 查看趋势图未完全收起
+      if (e.scrollTop - this.tabThreshold < 12) { // 查看趋势图未完全收起
         // 改变图表容器的top值
         let top = this.top - e.scrollTop + this.tabThreshold
         this.setData({
-          cStyle: `position:fixed; width:100%; top:${top}px;left:0;`,
+          // cStyle: `position:fixed; width:100%; top:${top}px;left:0;`,
           tabStyle: '', // 此时tab未固定
-          bs: `display:block;height:${this.data.ch}px` // 占位元素维持原高度
+          bs: this.isFixed ?  `display:block;height:${this.data.ch}px` : ''// 占位元素维持原高度
         })
+        console.log(this.isFixed)
       } else {
         // 固定tab
         this.setData({
-          tabStyle: `position:fixed; width:100%; top:${120 + this.data.top}px;left:0;`,
-          bs: `display:block;height:${this.data.ch + this.tabHeight}px`
+          chStyle: `transform:translateY(-${this.data.cb}px)`,
+          cStyle: `position:fixed; width:100%; top:${this.top}px;left:0;`,
+          tabStyle: `position:fixed; width:100%; top:${120 + this.data.top + this.data.cb - 12}px;left:0;`,
+          bs: `display:block;height:${this.data.ch + this.tabHeight + 12}px`
         })
       }
     } else if (e.scrollTop >= this.topThreshold) {
@@ -48,6 +51,7 @@ Page({
         cStyle: y === -this.data.cb ? `position:fixed; width:100%; top:${this.top}px;left:0;` : '',
         bs: y === -this.data.cb  ? `display:block;height:${this.data.ch}px` : ''
       })
+      this.isFixed = y === -this.data.cb
     } else {
       this.setData({
         chStyle: `transform:translateY(0px)`,
@@ -55,6 +59,7 @@ Page({
         bs: '',
         tabStyle: ''
       })
+      this.isFixed = false
     }
   }
 })
