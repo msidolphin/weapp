@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/circle/index",
     "pages/calendar-picker/index",
     "pages/calendar/index",
     "pages/demo/sticky-tab/index",

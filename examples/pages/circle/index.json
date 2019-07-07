@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "Circle 进度环",
+  "usingComponents": {
+    "i-circle": "../../dist/circle/index"
+  }
+}
