@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "CalendarPicker 日历选择器",
+  "usingComponents": {
+    "i-calendar-picker": "../../dist/calendar-picker/index",
+    "i-button": "../../dist/button/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index"
+  }
+}

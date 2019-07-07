@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/calendar-picker/index",
+    "pages/calendar/index",
     "pages/demo/sticky-tab/index",
     "pages/picker/index",
-    "pages/calendar/index",
     "pages/infinite-calendar/index",
     "pages/keyboard/index",
     "pages/tabs/index",

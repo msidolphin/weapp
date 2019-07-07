@@ -1,0 +1,72 @@
+<i-popup direction="bottom" visible="{{visible}}" bind:close="handleClickMask">
+    <view catchtouchmove="noop">
+        <!-- 头部 -->
+        <view class="i-calendar-hd i-class-hd">
+            <view class="i-calendar-hd-menus">
+                <view class="i-calendar-hd-menus__menu">{{formatValue ? formatValue : placeholder}}</view>
+            </view>
+            <view class="i-calendar-hd__confirm" bindtap="onConfirm">确认</view>
+        </view>
+        <!-- 年份月份切换 -->
+        <view class="i-calendar-picker i-class-picker">
+            <view class="i-calendar-picker-item year">
+                <view class="i-calendar-picker__prev" bindtap="prevYear"></view>
+                <view class="i-calendar-picker__text">{{currentYear}}</view>
+                <view class="i-calendar-picker__next" bindtap="nextYear"></view>
+            </view>
+            <view class="i-calendar-picker-item year">
+                <view class="i-calendar-picker__prev" bindtap="prevMonth"></view>
+                <view class="i-calendar-picker__text">{{currentMonthName}}</view>
+                <view class="i-calendar-picker__next" bindtap="nextMonth"></view>
+            </view>
+        </view>
+        <view class="i-calendar-weekdays" wx:if="{{ weekHeader }}">
+            <block wx:for="{{ weeks }}" wx:key="">
+                <view class="i-calendar__weekday {{ item.weekend ? 'i-calendar__weekday--weekend' : '' }}">
+                    {{ item.dayName }}
+                </view>
+            </block>
+        </view>
+        <view class="i-class i-calendar i-calendar--{{direction}}" catchtouchmove="noop" style="height:{{currentHeight}}px;">
+            <view class="i-calendar-content">
+                <view class="i-calendar-bd">
+                    <view class="i-calendar-months">
+                        <view class="i-calendar-months-content" bindtouchstart="onTouchStart" catchtouchmove="{{ swiping ? 'noop' : '' }}" capture-bind:touchmove="onTouchMove" bindtouchend="onTouchEnd" style="{{ wrapperTranslate }}">
+                            <block wx:for="{{ months }}" wx:for-item="month" wx:key="">
+                                <view
+                                    data-year="{{ month.year }}"
+                                    data-month="{{ month.month }}"
+                                    class="i-calendar__month {{ index === 0 ?  'i-calendar__month--prev' : index === 1 ? ('i-calendar__month--current') : ('i-calendar__month--next') }}"
+                                    style="{{ monthsTranslate[index] }}"
+                                >
+                                    <block wx:for="{{ month.items }}" wx:for-item="row" wx:key="">
+                                        <view class="i-calendar-days">
+                                            <block wx:for="{{ row }}" wx:for-item="col" wx:key="">
+                                                <view
+                                                data-year="{{ col.year }}"
+                                                data-month="{{ col.month }}"
+                                                data-day="{{ col.day }}"
+                                                data-date="{{ col.date }}"
+                                                data-empty="{{ col.empty }}"
+                                                data-type="{{ col.type }}"
+                                                class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ col.type.selected ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }} {{col.lunar.Term ? 'i-calendar__day--term' : ''}}"
+                                                bindtap="onDayClick">
+                                                    <view class="i-calendar__day-inner">
+                                                        <view class="i-calendar__text">{{ col.day }}</view>
+                                                        <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
+                                                        <view class="i-calendar__marker" hidden="{{!col.marker}}"></view>
+                                                    </view>
+                                                    <view class="i-calendar__range"></view>
+                                            </view>
+                                            </block>
+                                        </view>
+                                    </block>
+                                </view>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</i-popup>

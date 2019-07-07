@@ -31,7 +31,26 @@ function Message(options) {
     ctx.handleShow(options);
 }
 
+class CalendarPicker {
+    constructor (options = {}) {
+        const { selector = '#calendar' } = options
+        const ctx = getCtx(selector)
+        this.ctx = ctx
+        ctx.initData(options)
+    }
+    open (options) {
+        if (options) {
+            this.ctx.initOptions(options) // TODO 可能部分属性需要限制
+        }
+        this.ctx.open()
+    }
+    close () {
+        this.ctx.close()
+    }
+}
+
 module.exports = {
     $Toast: Toast,
-    $Message: Message
-};
+    $Message: Message,
+    CalendarPicker
+}

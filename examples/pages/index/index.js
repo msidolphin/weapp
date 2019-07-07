@@ -179,6 +179,10 @@ Page({
           {
             label: 'Select 选择器',
             url: '/pages/select/index'
+          },
+          {
+            label: 'CalendarPicker 日历选择器',
+            url: '/pages/calendar-picker/index'
           }
         ]
       },

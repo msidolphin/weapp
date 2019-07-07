@@ -1,0 +1,6 @@
+<i-cell-group>
+  <i-cell title="一般用法" bind:click="onOpen1" value="{{text1}}" is-link/>
+</i-cell-group>
+
+
+<i-calendar-picker id="calendar"/>
