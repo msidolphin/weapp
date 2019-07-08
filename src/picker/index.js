@@ -1,15 +1,6 @@
 import area from '../data/area'
 import { getYearsByStartDateAndEndDate,
-    getMonthsByDate,
-    getDaysByDate,
     convertToDate,
-    MONTHS,
-    getLastDay,
-    getHours,
-    getMinutes,
-    getSeconds,
-    getDaysRange,
-    getMonthsRange,
     getRangeByStartAndEnd
 } from '../base/date'
 import { isDate } from '../base/utils'
@@ -17,7 +8,6 @@ let region = JSON.parse(JSON.stringify(area))
 const CN = '86'
 const REGION = 'region'
 const DATE = 'date'
-const DATETIME = 'datetime'
 
 // 处理地区
 let province = region[CN]
@@ -171,10 +161,6 @@ Component({
         changeOnSelect: {
             type: Boolean,
             value: false
-        },
-        immediate: {
-            type: Boolean,
-            value: true
         },
         // date相关
         start: {
@@ -377,7 +363,9 @@ Component({
         let level = this.data.mode !== DATE ? this.data.level : DATE_INDEX_MAP[this.data.fields] + 1
         for (let i = 0; i < level; ++i) {
             let index = indexs[i]
-            values.push(data[i][index])
+            if (indexs[i] !== undefined && data[i][index] !== undefined) {
+                values.push(data[i][index])
+            }
         }
         let ret = {
             value: values.map(v => v.id),
@@ -449,11 +437,10 @@ Component({
             this.createDataByValueAndRange(this.data.refactedRange, this.data.value).then((data) => {
                 setTimeout(() => {
                     let valueIndex = this.getIndexByValue(this.data.data, this.data.value)
+                    this.oldValues = valueIndex
                     this.setData({
                         values: valueIndex,
                         lock: false
-                    }, () => {
-                        if (this.data.immediate) this.emitChange(valueIndex)
                     })
                 }, 0)
             })
@@ -517,7 +504,11 @@ Component({
     },
     emitChange (indexs) {
         if (this.data.lock) return
-        this.triggerEvent('change', this.getValueByIndex(this.data.data, indexs))
+        let ret =  this.getValueByIndex(this.data.data, indexs)
+        this.triggerEvent('confirm', ret)
+        if (this.oldValues === indexs) return
+        this.oldValues = indexs
+        this.triggerEvent('change', ret)
     },
     /**
      * @description 日期改变 - 外部原因导致
@@ -545,6 +536,7 @@ Component({
                 this.isChanging = false
                 return
             }
+            this.oldValues = values
             this.setData({
                 values
             }, () => {
@@ -581,9 +573,11 @@ Component({
         values = genValues(value, this.data.fields)
         let {years, days, months, hours, minutes, seconds} = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
         data = this.getDateData(years, months, days, hours, minutes, seconds)
+        let vs = this.getIndexByValue(data, values)
+        this.oldValues = vs
         this.setData({
             data,
-            values: this.getIndexByValue(data, values)
+            values: vs
         })
     },
     noop () {}

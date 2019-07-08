@@ -180,9 +180,6 @@ export default Behavior({
             }
             this.move = getTouchPosition(e)
             this.touchesDiff = this.isH ? this.move.x - this.start.x : this.move.y - this.start.y
-            // if (!this.isH && Math.abs(this.move.x - this.start.x) >= 10) {
-            //     return
-            // }
             this.setData({ swiping: true })
             if (!this.data.isIos) {
                 this.move = getTouchPosition(e)
@@ -234,6 +231,10 @@ export default Behavior({
          * @param {Object} e 事件对象
          */
         onDayClick(e) {
+            if (this.data.range) {
+                this.onDayClick4Range(e)
+                return
+            }
             if (e.currentTarget.dataset.empty) return
             if (this.allowItemClick) {
                 const dataset = e.currentTarget.dataset
@@ -257,6 +258,51 @@ export default Behavior({
                     this.close()
                 }
             }
+        },
+        onDayClick4Range (e) {
+            if (e.currentTarget.dataset.empty) return
+            const dataset = e.currentTarget.dataset
+            const datetime = dataset.datetime
+            const type = dataset.type
+            if (type.disabled) return
+            let startDate = this.data.startDate
+            let endDate = this.data.endDate
+            let d = datetime
+            if (startDate && !endDate && startDate.datetime === datetime) {
+                startDate = null
+            } else if (endDate && !startDate && endDate.datetime === datetime) {
+                endDate = null
+            } else if (!startDate) {
+                startDate = d
+            } else if (startDate && !endDate) {
+                endDate = d
+            } else if (startDate && endDate && (startDate.datetime === datetime || endDate.datetime === datetime)) {
+                // 若选中的时间等于起始时间或结束时间，那么结束时间置空，并设置起始时间
+                if (startDate.datetime === datetime) {
+                    startDate = endDate
+                    endDate = null
+                } else {
+                    endDate = null
+                }
+                
+            } else {
+                // 如果起始时间和结束时间都选择，那么情况当前时间并设置为起始时间
+                startDate = d
+                endDate = null
+            }      
+            // 若结束时间小于起始时间，进行交换
+            if (startDate && endDate && endDate < startDate) {
+                let t = endDate
+                endDate = startDate
+                startDate = t
+            }
+            let formatStart = startDate ? this.formatDate(startDate) : ''
+            let formatEnd = endDate ? this.formatDate(endDate) : ''
+            this.setData({
+                startDate,
+                endDate,
+                formatValue: `${formatStart && formatEnd ? formatStart + ' - ' : formatStart}${formatEnd}`
+            })
         },
         /**
          * 重置月份的位置信息
@@ -607,6 +653,10 @@ export default Behavior({
                             dayDate = new Date(year, month, dayNumber).getTime()
                         }
                     }
+                    if (dayNumber === 1 && !this.data.fill) type.first = true
+                    if (col === 1) type.first = true
+                    if (dayNumber === daysInMonth && !this.data.fill) type.last = true
+                    if (col === 7) type.last = true
 
                     if (!type.empty) {
                         // Today
@@ -638,6 +688,7 @@ export default Behavior({
                             lunar,
                             empty: false,
                             month: dayMonth,
+                            datetime: dayDate.getTime(),
                             day: dayNumber,
                             date: `${dayYear}-${dayMonth + 1}-${dayNumber}`,
                         })
@@ -649,6 +700,7 @@ export default Behavior({
                             day: '',
                             year: '',
                             month: '',
+                            datetime: '',
                             lunar: {}
                         })
                     }
@@ -796,7 +848,7 @@ export default Behavior({
                 this.fns.onChange.call(this, this.data.value, this.data.value.map((n) => this.formatDate(n)))
             }
         },
-        noop() {},
+        noop() {}
     },
     created () {
         this.fns = {}

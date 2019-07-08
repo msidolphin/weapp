@@ -3,7 +3,7 @@
         <!-- 头部 -->
         <view class="i-calendar-hd i-class-hd">
             <view class="i-calendar-hd-menus">
-                <view class="i-calendar-hd-menus__menu">{{formatValue ? formatValue : placeholder}}</view>
+                <view class="i-calendar-hd-menus__menu">{{formatValue && formatValue.length ? formatValue : placeholder}}</view>
             </view>
             <view class="i-calendar-hd__confirm" bindtap="onConfirm">确认</view>
         </view>
@@ -27,7 +27,7 @@
                 </view>
             </block>
         </view>
-        <view class="i-class i-calendar i-calendar--{{direction}}" catchtouchmove="noop" style="height:{{currentHeight}}px;">
+        <view class="i-class i-calendar i-calendar--{{direction}} {{range ? 'is-range' : ''}}" catchtouchmove="noop" style="height:{{currentHeight}}px;">
             <view class="i-calendar-content">
                 <view class="i-calendar-bd">
                     <view class="i-calendar-months">
@@ -49,14 +49,15 @@
                                                 data-date="{{ col.date }}"
                                                 data-empty="{{ col.empty }}"
                                                 data-type="{{ col.type }}"
-                                                class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ col.type.selected ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }} {{col.lunar.Term ? 'i-calendar__day--term' : ''}}"
+                                                data-datetime="{{ col.datetime }}"
+                                                class="i-calendar__day {{ col.type.prev ? 'i-calendar__day--prev' : '' }} {{ col.type.next ? 'i-calendar__day--next' : '' }} {{ col.type.today ? 'i-calendar__day--today' : '' }} {{ col.type.selected || (range && (startDate && startDate === col.datetime || endDate && endDate === col.datetime)) ? 'i-calendar__day--selected' : '' }} {{ col.type.weekend ? 'i-calendar__day--weekend' : '' }} {{ col.type.disabled ? 'i-calendar__day--disabled' : '' }} {{col.lunar.Term ? 'i-calendar__day--term' : ''}}  {{col.type.first ? 'i-calendar__day--first' : ''}} {{col.type.last ? 'i-calendar__day--last' : ''}} {{startDate && endDate && col.datetime >= startDate && col.datetime < endDate ? 'i-calendar__day--in-range' : ''}}"
                                                 bindtap="onDayClick">
                                                     <view class="i-calendar__day-inner">
                                                         <view class="i-calendar__text">{{ col.day }}</view>
                                                         <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
                                                         <view class="i-calendar__marker" hidden="{{!col.marker}}"></view>
                                                     </view>
-                                                    <view class="i-calendar__range"></view>
+                                                    <view class="i-calendar__range" hidden="{{!(range && startDate && endDate && col.datetime >= startDate && col.datetime < endDate)}}"></view>
                                             </view>
                                             </block>
                                         </view>
