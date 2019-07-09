@@ -5,4 +5,3 @@
     </view>
 </view>
 <view catchtouchmove="true" wx-if="{{mask}}" class="i-mask {{show ? 'is-show' : ''}}" style="z-index: {{_zIndex}};" catchtap="close"></view>
-<!-- <i-mask show="{{show}}" zIndex="{{_zIndex}}" bind:close="close"/> -->

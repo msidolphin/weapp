@@ -7,9 +7,9 @@
     "example": "example"
   },
   "scripts": {
-    "dev": "gulp --gulpfile build/build-dev.js",
-    "build": "gulp --gulpfile build/build-prod.js",
-    "clean": "gulp clean --gulpfile build/build-dev.js",
+    "dev": "cross-env NODE_ENV=development gulp --gulpfile build/build.js",
+    "build": "cross-env NODE_ENV=production gulp --gulpfile build/build.js",
+    "clean": "cross-env NODE_ENV=production gulp clean --gulpfile build/build.js",
     "prepare": "npm run build"
   },
   "repository": {
@@ -26,6 +26,7 @@
   ],
   "homepage": "https://github.com/msidolphin/weapp",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "del": "^4.1.0",
     "eslint": "^3.19.0",
     "gulp": "^3.9.1",
