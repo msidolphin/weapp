@@ -13,15 +13,15 @@ Page({
     text2: ['广东省', '珠海市', '斗门区'],
     value1: [2, 21, 212],
     value2: ['440000', '440400', '440403'],
-    date1: '',
-    date2: '',
-    date3: '',
-    date4: '',
-    date5: '',
-    date6: '',
+    date1: '2019年',
+    date2: '2019年6月',
+    date3: '2019年6月',
+    date4: '2019年6月28日13时',
+    date5: '2019年6月28日13时14分',
+    date6: '2019年6月28日13时14分55秒',
     date7: '',
-    minDate: new Date('2019/07/01').toGMTString(),
-    maxDate: new Date().toGMTString()
+    minDate: new Date('2019/07/01').getTime(),
+    maxDate: new Date().getTime()
   },
   onLoad () {
     wx.showLoading({
@@ -187,6 +187,7 @@ Page({
     })
   },
   onChange3 (e) {
+    console.log(e)
     this.setData({
       date1: e.detail.text
     })

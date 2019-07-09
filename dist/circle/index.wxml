@@ -1,0 +1,12 @@
+<view class="i-circle" style="width:{{size}};height:{{size}};">
+    <view class="i-circle-left" style="background:{{strokeColor}}">
+      <view class="i-circle-left-content" style="{{leftStyle}};background:{{trailColor}}"></view>
+    </view>
+    <view class="i-circle-right" style="background:{{strokeColor}}">
+      <view class="i-circle-right-content" style="{{rightStyle}};background:{{trailColor}}"></view>
+    </view>
+    <view class="i-circle-percent">
+      <view class="percent" style="color:{{strokeColor}};">{{percent}}%</view>
+      <slot></slot>
+    </view>
+</view>

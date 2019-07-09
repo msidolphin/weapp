@@ -164,14 +164,14 @@ Component({
         },
         // date相关
         start: {
-            type: String,
+            type: [String, Number],
             value: `${new Date().getFullYear() - 70}/02/01 00:00:00`,
             observer () {
                 this.initDate()
             }
         },
         end: {
-            type: String,
+            type: [String, Number],
             value: `${new Date().getFullYear() + 20}/11/30 23:59:59`,
             observer () {
                 this.initDate()
@@ -437,7 +437,7 @@ Component({
             this.createDataByValueAndRange(this.data.refactedRange, this.data.value).then((data) => {
                 setTimeout(() => {
                     let valueIndex = this.getIndexByValue(this.data.data, this.data.value)
-                    this.oldValues = valueIndex
+                    if (!this.data.value || !this.data.values) this.oldValues = valueIndex
                     this.setData({
                         values: valueIndex,
                         lock: false
@@ -574,7 +574,7 @@ Component({
         let {years, days, months, hours, minutes, seconds} = getRangeByStartAndEnd(this.$start, this.$end, this.currentDate)
         data = this.getDateData(years, months, days, hours, minutes, seconds)
         let vs = this.getIndexByValue(data, values)
-        this.oldValues = vs
+        this.oldValues = this.data.value && this.data.value.length ? vs : ''
         this.setData({
             data,
             values: vs
