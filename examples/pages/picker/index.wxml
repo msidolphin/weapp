@@ -12,10 +12,10 @@
 
 <i-picker wx:if="{{data && data.length}}"  visible="{{visible1}}" value="{{value1}}"  range="{{data}}" bind:change="onChange1" bind:close="onClose1"></i-picker>
 <i-picker title="选择地区" visible="{{visible2}}" value="{{value2}}" mode="region" range="{{data}}" bind:change="onChange2" bind:close="onClose2"></i-picker>
-<i-picker title="选择年" visible="{{visible3}}" mode="date" fields="year" bind:change="onChange3" value="2019-06-28 13:14:55" bind:close="onClose3"></i-picker>
-<i-picker title="选择年月" visible="{{visible4}}" mode="date" fields="month" bind:change="onChange4" value="2019-06-28 13:14:55"bind:close="onClose4"></i-picker>
-<i-picker title="选择年月日" visible="{{visible5}}" mode="date" fields="day" bind:change="onChange5" value="2019-06-28 13:14:55"bind:close="onClose5"></i-picker>
-<i-picker title="选择年月日时" visible="{{visible6}}" mode="date" fields="hour" bind:change="onChange6" value="2019-06-28 13:14:55"bind:close="onClose6"></i-picker>
-<i-picker title="选择年月日时分" visible="{{visible7}}" mode="date" fields="minute" bind:change="onChange7" value="2019-06-28 13:14:55"bind:close="onClose7"></i-picker>
-<i-picker title="选择年月日时分秒" visible="{{visible8}}" mode="date" fields="second" bind:change="onChange8" value="2019-06-28 13:14:55"bind:close="onClose8"></i-picker>
-<i-picker title="最大值和最小值" visible="{{visible9}}" start="{{minDate}}" end="{{maxDate}}" mode="date" fields="second" bind:change="onChange9" bind:close="onClose9"></i-picker>
+<i-picker title="选择年" visible="{{visible3}}" mode="date" fields="year" bind:confirm="onChange3" value="2019-06-28 13:14:55" bind:close="onClose3"></i-picker>
+<i-picker title="选择年月" visible="{{visible4}}" mode="date" fields="month" bind:confirm="onChange4" value="2019-06-28 13:14:55"bind:close="onClose4"></i-picker>
+<i-picker title="选择年月日" visible="{{visible5}}" mode="date" fields="day" bind:confirm="onChange5" value="2019-06-28 13:14:55"bind:close="onClose5"></i-picker>
+<i-picker title="选择年月日时" visible="{{visible6}}" mode="date" fields="hour" bind:confirm="onChange6" value="2019-06-28 13:14:55"bind:close="onClose6"></i-picker>
+<i-picker title="选择年月日时分" visible="{{visible7}}" mode="date" fields="minute" bind:confirm="onChange7" value="2019-06-28 13:14:55"bind:close="onClose7"></i-picker>
+<i-picker title="选择年月日时分秒" visible="{{visible8}}" mode="date" fields="second" bind:confirm="onChange8" value="2019-06-28 13:14:55"bind:close="onClose8"></i-picker>
+<i-picker title="最大值和最小值" visible="{{visible9}}" start="{{minDate}}" end="{{maxDate}}" mode="date" fields="second" bind:confirm="onChange9" bind:close="onClose9"></i-picker>

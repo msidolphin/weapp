@@ -245,6 +245,10 @@ Page({
           {
             label: 'Keyboard 键盘',
             url: '/pages/keyboard/index'
+          },
+          {
+            label: 'Circle 进度环',
+            url: '/pages/circle/index'
           }
         ]
       },

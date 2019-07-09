@@ -1,4 +1,5 @@
 import CalendarMixins from '../mixins/calendar'
+import { convertToDate } from '../base/date'
 
 const defaults = {
     prefixCls: 'i-calendar',
@@ -15,7 +16,8 @@ const defaults = {
     closeOnSelect: false,
     weekHeader: true,
     toolbar: true,
-    value: [new Date().getTime()],
+    value: [],
+    range: false,
     direction: 'vertical', // or 'horizontal',
     fill: true, // 是否在本月填充上一个月或下一个月的日期,
     lunar: true, // 是否显示农历,
@@ -37,7 +39,9 @@ Component({
     behaviors: [CalendarMixins],
     data: {
         ...defaults,
-        visible: false
+        visible: false,
+        startDate: '',
+        endDate: ''
     },
     methods: {
         initOptions (opts = {}) {
@@ -45,7 +49,10 @@ Component({
             this.isH = this.data.direction === 'horizontal'
             if (options.value && !Array.isArray(options.value)) options.value = [options.value]
             this.setData({ ...options })
-            if (options.value) {
+            if (options.range) {
+                this.initRange()
+            }
+            if (!options.range && options.value) {
                 // 允许open时设置默认值
                 this.setValue(options.value)
             }
@@ -53,11 +60,42 @@ Component({
         initData (options = {}) {
             this.monthsTranslate = 0
             this.initOptions(options)
+            // TODO 如果是范围选择，那么初始化的年月应该未开始时间的年月
             this.init()
         },
+        /**
+         * @description 初始化范围
+         */
+        initRange () {
+            let value = this.data.value
+            if (value) {
+                let [startDate, endDate] = value
+                if (startDate && endDate) {
+                    let startDate = convertToDate(startDate)
+                    let endDate = convertToDate(endDate)
+                    // TODO 是否可以相等
+                    if (startDate > endDate) {
+                        let t = endDate
+                        endDate = startDate
+                        startDate = t
+                    }
+                    let formatStart = startDate ? this.formatDate(startDate) : ''
+                    let formatEnd = endDate ? this.formatDate(endDate) : ''
+                    this.setData({
+                        startDate: startDate.getTime(),
+                        endDate: endDate.getTime(),
+                        formatValue: `${formatStart && formatEnd ? formatStart + ' - ' : formatStart}${formatEnd}`
+                    })
+                }
+            }
+        },
         onConfirm () {
+            // 范围选择必须选择开始和结束
+            if (this.data.range && (!this.data.startDate || !this.data.endDate)) return
             if (typeof this.fns.onChange === 'function') {
-                this.fns.onChange.call(this, this.multiple ? this.data.currentValues : this.data.currentValues[0], this.data.multiple ? this.data.formatValue : this.data.formatValue[0])
+                let values = this.multiple ? this.data.currentValues : this.data.currentValues[0]
+                if (this.data.range) values = [this.formatDate(this.data.startDate), this.formatDate(this.data.endDate)]
+                this.fns.onChange.call(this, values, this.data.multiple || this.data.range ? this.data.formatValue : this.data.formatValue[0])
             }
             this.close()
         },

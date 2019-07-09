@@ -9,8 +9,8 @@ Page({
     visible7: false,
     visible8: false,
     visible9: false,
-    text1: [],
-    text2: [],
+    text1: ['分类2', '分类21', '分类212'],
+    text2: ['广东省', '珠海市', '斗门区'],
     value1: [2, 21, 212],
     value2: ['440000', '440400', '440403'],
     date1: '',
@@ -180,6 +180,7 @@ Page({
     })
   },
   onChange2 (e) {
+    console.log(e)
     this.setData({
       value2: e.detail.value,
       text2: e.detail.text

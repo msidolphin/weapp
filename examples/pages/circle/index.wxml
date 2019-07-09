@@ -1,0 +1,6 @@
+<i-circle percent="50"></i-circle>
+<i-circle percent="83"></i-circle>
+<i-circle percent="67.77"></i-circle>
+<i-circle percent="100" size="120rpx">
+  <view style="font-size:20rpx;color:#6e6f73;line-height:1;">记工占比</view>
+</i-circle>
