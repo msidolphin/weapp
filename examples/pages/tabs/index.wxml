@@ -48,3 +48,9 @@
     <i-tab i-class="custom-tab" i-active-class="custom-tab--current"  key="tab9" title="选项9999"></i-tab>
   </i-tabs>
 </view>
+
+<i-panel title="动态页签"></i-panel>
+<i-button type="primary" bind:click="switch">切换页签</i-button>
+<i-tabs id="tabs" scroll current="{{ active }}" bindchange="handleChange2" wx:if="{{tabs && tabs.length}}">
+    <i-tab key="{{item}}" wx:for="{{tabs}}" wx:key="{{item}}" title="{{'选项' + item}}"></i-tab>
+</i-tabs>

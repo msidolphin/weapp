@@ -5,15 +5,15 @@ Component({
         '../tab/index': {
             type: 'child',
             linked (target) {
-                this.changeCurrent();
+                this.changeCurrent()
                 target.setBar(this.data.bar)
                 if (target) this.data.items.push(target)
             },
             linkChanged () {
-                this.changeCurrent();
+                this.changeCurrent()
             },
             unlinked () {
-                this.changeCurrent();
+                this.changeCurrent()
             }
         }
     },
@@ -45,28 +45,30 @@ Component({
     data: {
         items: [],
         width: 0, // tab宽度
-        overflowMap: {}, // 溢出列表
         scrollLeft: 0
     },
 
     methods: {
         changeCurrent (val = this.data.current) {
-            let items = this.getRelationNodes('../tab/index')
-            const len = items.length
-            if (len > 0) {
-                items.forEach(item => {
-                    item.changeScroll(this.data.scroll)
-                    item.changeCurrent(item.data.key === val)
-                    item.changeCurrentColor(this.data.color)
-                })
-            }
-            // debugger
-            if (this.data.scroll) {
-                this._isOverflow()
-            }
+            wx.nextTick(() => {
+                let items = this.getRelationNodes('../tab/index')
+                const len = items.length
+                if (len > 0) {
+                    items.forEach(item => {
+                        item.changeScroll(this.data.scroll)
+                        item.changeCurrent(item.data.key == val)
+                        item.changeCurrentColor(this.data.color)
+                    })
+                }
+            })
+            if (this.data.scroll) this._isOverflow()
         },
         emitEvent (key) {
             this.triggerEvent('change', { key })
+        },
+        init () {
+            // 初始化
+            if (this.data.scroll) this._initWidth()
         },
         _init () {
             // 初始化
@@ -94,10 +96,11 @@ Component({
          */
         _initOverflow () {
             let total = 0
+            this.overflowMap = {}
             this.data.items.forEach(item => {
                 total += item.data.width
                 if (total + 60 > this.data.width) {
-                    this.data.overflowMap[item.data.key] = {
+                    this.overflowMap[item.data.key] = {
                         left: total - this.data.width + 60
                     }
                 }
@@ -108,9 +111,9 @@ Component({
          */
         _isOverflow () {
             // debugger
-            if (this.data.overflowMap[this.data.current]) {
+            if (this.overflowMap && this.overflowMap[this.data.current]) {
                 this.setData({
-                    scrollLeft: this.data.overflowMap[this.data.current].left
+                    scrollLeft: this.overflowMap[this.data.current].left
                 })
             } else {
                 this.setData({
@@ -119,7 +122,6 @@ Component({
             }
         }
     },
-
     ready () {
         this._init()
     }

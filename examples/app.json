@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/tabs/index",
     "pages/calendar-picker/index",
     "pages/calendar/index",
     "pages/demo/sticky-tab/index",
     "pages/picker/index",
     "pages/infinite-calendar/index",
     "pages/keyboard/index",
-    "pages/tabs/index",
     "pages/bottom-drawer/index",
     "pages/cascader/index",
     "pages/index-list/index",
