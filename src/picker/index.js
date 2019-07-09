@@ -356,6 +356,7 @@ Component({
         let indexs = []
         let level = this.data.mode !== DATE ? this.data.level : DATE_INDEX_MAP[this.data.fields] + 1
         for (let i = 0; i < level; ++i) {
+            if (data[i] === undefined && !Array.isArray(data[i])) break
             let index = data[i].findIndex(v => v.id === values[i])
             indexs.push(index === -1 ? 0 : index)
         }
@@ -483,7 +484,7 @@ Component({
             if (res) {
                 data.push(res.target.children)
             } else {
-                data.push(data[i - 1] ? data[i - 1][0].children : data[0][0].children)
+                data.push(data[i - 1] !== undefined ? data[i - 1][0].children : data[0][0] !== undefined ? data[0][0].children : '')
             }
         }
         return new Promise(resolve => {
