@@ -179,7 +179,10 @@ Component({
         },
         fields: { // 对于date有效
             type: String,
-            value: 'day' // day year month
+            value: 'day', // day year month
+            observer () {
+                this.initDate()
+            }
         },
         dateFormat: {
             type: String,
@@ -560,6 +563,7 @@ Component({
     },
     // 日期相关
     initDate () {
+        if (!this.data.fields) return
         this.initStartAndEnd()
         let data = []
         // 如果没有绑定value，今日存在那么选择今日，否则选择第一年

@@ -34,7 +34,6 @@
                                                 <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
                                                 <view class="i-calendar__marker" hidden="{{!col.marker}}"></view>
                                             </view>
-                                            <view class="i-calendar__range"></view>
                                        </view>
                                     </block>
                                 </view>
