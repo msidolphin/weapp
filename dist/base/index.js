@@ -47,6 +47,18 @@ class CalendarPicker {
     close () {
         this.ctx.close()
     }
+    /**
+     * markers
+     * maxDate
+     * minDate
+     * value
+     * @param {*} options 
+     */
+    update (options) {
+        if (this.ctx) {
+            this.ctx.initOptions(options)
+        }
+    }
 }
 
 module.exports = {

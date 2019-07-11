@@ -28,7 +28,9 @@ Page({
     this.calendar.open()
   },
   onOpen2 () {
-    this.rangeCalendar.open()
+    this.rangeCalendar.open({
+      maxDate: new Date()
+    })
   },
   close () {
     this.calendar.close()

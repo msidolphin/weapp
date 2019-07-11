@@ -37,7 +37,7 @@ export default Behavior({
             for (const key in options) {
                 if (options.hasOwnProperty(key) && typeof options[key] === 'function') {
                     fns[key] = bind(options[key], this)
-                    delete options[key]
+                    // delete options[key]
                 }
             }
         
@@ -52,6 +52,51 @@ export default Behavior({
             if (typeof this.fns.onClose === 'function') {
                 this.fns.onClose.call(this)
             }
+        },
+        /**
+         * 更新视图
+         */
+        updateView () {
+            if (!this.data.months) return
+            this.setMarkers(this.data.months)
+            let currentValues = []
+            let minDate = this.data.minDate ? new Date(this.data.minDate).getTime() : null
+            let maxDate = this.data.maxDate ? new Date(this.data.maxDate).getTime() : null
+            let today = new Date().setHours(0, 0, 0, 0)
+            if (this.data.value && this.data.value.length) {
+                for (let i = 0; i < this.data.value.length; i++) {
+                    currentValues.push(new Date(this.data.value[i]).setHours(0, 0, 0, 0))
+                }
+            }
+            let months = this.data.months
+            months.forEach(m => {
+                if (!m.items) return
+                m.items.forEach(col => {
+                    col.forEach(e => {
+                        let type = e.type
+                        if (!type.empty) {
+                            let dayDate = new Date(e.datetime)
+                            // Today
+                            if (dayDate === today) type.today = true
+
+                            // Selected
+                            if (currentValues.indexOf(dayDate) >= 0) type.selected = true
+
+                            // Weekend
+                            if (this.data.weekendDays.indexOf(col - 1) >= 0) {
+                                type.weekend = true
+                            }
+                            // Disabled
+                            if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
+                                type.disabled = true
+                            }
+                        }
+                    })
+                })
+            })
+            this.setData({
+                months
+            })
         },
         /**
          * 初始化
@@ -81,19 +126,21 @@ export default Behavior({
                 const days = marker.days
                 months.forEach(m => {
                     if (!m.items) return
-                    const my = m.year
-                    const mm = m.month + 1
-                    if (year === my && month === mm) {
-                        m.items.forEach(col => {
-                            col.forEach(e => {
+                    m.items.forEach(col => {
+                        col.forEach(e => {
+                            let ey = e.year
+                            let em = e.month
+                            if (ey === year && em + 1 === month) {
                                 if (days.indexOf(e.day) !== -1) {
                                     e.marker = true
                                 } else {
                                     e.marker = false
                                 }
-                            })
+                            } else {
+                                e.marker = false
+                            }
                         })
-                    }
+                    })
                 })
             }
         },
@@ -118,7 +165,6 @@ export default Behavior({
          */
         updateCurrentMonthYear(dir) {
             const { months, monthNames } = this.data
-
             if (typeof dir === 'undefined') {
                 const currentMonth = parseInt(months[1].month, 10)
                 const currentYear = parseInt(months[1].year, 10)
@@ -129,6 +175,9 @@ export default Behavior({
                     currentYear,
                     currentMonthName
                 })
+                if (typeof this.fns.onMonthChange === 'function') {
+                    this.fns.onMonthChange.call(this, currentYear, currentMonth, currentMonthName)
+                }
                 return {
                     currentMonth,
                     currentYear,
@@ -146,6 +195,9 @@ export default Behavior({
                 currentYear,
                 currentMonthName
             })
+            if (typeof this.fns.onMonthChange === 'function') {
+                this.fns.onMonthChange.call(this, currentYear, currentMonth, currentMonthName)
+            }
             return {
                 currentMonth,
                 currentYear,
@@ -743,7 +795,6 @@ export default Behavior({
         setMonthsHTML() {
             const layoutDate = this.data.value && this.data.value.length ? this.data.value[0] : new Date().setHours(0, 0, 0, 0)
             const prevMonthHTML = this.monthHTML(layoutDate, `prev`)
-            // debugger
             const currentMonthHTML = this.monthHTML(layoutDate)
             const nextMonthHTML = this.monthHTML(layoutDate, `next`)
 

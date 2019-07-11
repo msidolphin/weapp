@@ -29,6 +29,7 @@ const defaults = {
     onChange() {},
     onOpen() {},
     onClose() {},
+    onMonthChange () {},
     onDayClick() {},
     onMonthYearChangeStart() {},
     onMonthYearChangeEnd() {},
@@ -45,7 +46,7 @@ Component({
     },
     methods: {
         initOptions (opts = {}) {
-            const options = this.merge(Object.assign({}, defaults, opts))
+            const options = this.merge(Object.assign({}, this.data, opts))
             this.isH = this.data.direction === 'horizontal'
             if (options.value && !Array.isArray(options.value)) options.value = [options.value]
             this.setData({ ...options })
@@ -56,6 +57,7 @@ Component({
                 // 允许open时设置默认值
                 this.setValue(options.value)
             }
+            this.updateView()
         },
         initData (options = {}) {
             this.monthsTranslate = 0
