@@ -121,8 +121,8 @@ export default Behavior({
         __setMarkers (months) {
             for (let i = 0; i < this.data.markers.length; i++) {
                 const marker = this.data.markers[i]
-                const year = marker.year
-                const month = marker.month
+                const year = Number(marker.year)
+                const month = Number(marker.month)
                 const days = marker.days
                 months.forEach(m => {
                     if (!m.items) return
@@ -131,7 +131,7 @@ export default Behavior({
                             let ey = e.year
                             let em = e.month
                             if (ey === year && em + 1 === month) {
-                                if (days.indexOf(e.day) !== -1) {
+                                if (days.findIndex(d => Number(d) === e.day) !== -1) {
                                     e.marker = true
                                 } else {
                                     e.marker = false
