@@ -183,6 +183,10 @@ Page({
           {
             label: 'CalendarPicker 日历选择器',
             url: '/pages/calendar-picker/index'
+          },
+          {
+            label: 'MutexSelect 互斥选择器',
+            url: '/pages/mutex-select/index'
           }
         ]
       },

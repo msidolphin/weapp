@@ -1,37 +1,39 @@
-function getCtx (selector) {
-    const pages = getCurrentPages();
-    const ctx = pages[pages.length - 1];
+export { MutexSelector } from "../mutex-select/functional"
 
-    const componentCtx = ctx.selectComponent(selector);
+export function getCtx (selector) {
+    const pages = getCurrentPages()
+    const ctx = pages[pages.length - 1]
+
+    const componentCtx = ctx.selectComponent(selector)
 
     if (!componentCtx) {
-        console.error('无法找到对应的组件，请按文档说明使用组件');
-        return null;
+        console.error('无法找到对应的组件，请按文档说明使用组件')
+        return null
     }
-    return componentCtx;
+    return componentCtx
 }
 
-function Toast(options) {
-    const { selector = '#toast' } = options;
-    const ctx = getCtx(selector);
+export function $Toast(options) {
+    const { selector = '#toast' } = options
+    const ctx = getCtx(selector)
 
-    ctx.handleShow(options);
+    ctx.handleShow(options)
 }
 
-Toast.hide = function (selector = '#toast') {
-    const ctx = getCtx(selector);
+$Toast.hide = function (selector = '#toast') {
+    const ctx = getCtx(selector)
 
-    ctx.handleHide();
-};
-
-function Message(options) {
-    const { selector = '#message' } = options;
-    const ctx = getCtx(selector);
-
-    ctx.handleShow(options);
+    ctx.handleHide()
 }
 
-class CalendarPicker {
+export function $Message(options) {
+    const { selector = '#message' } = options
+    const ctx = getCtx(selector)
+
+    ctx.handleShow(options)
+}
+
+export class CalendarPicker {
     constructor (options = {}) {
         const { selector = '#calendar' } = options
         const ctx = getCtx(selector)
@@ -59,10 +61,4 @@ class CalendarPicker {
             this.ctx.initOptions(options)
         }
     }
-}
-
-module.exports = {
-    $Toast: Toast,
-    $Message: Message,
-    CalendarPicker
 }

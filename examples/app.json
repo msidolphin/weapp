@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/mutex-select/index",
     "pages/tabs/index",
     "pages/calendar-picker/index",
     "pages/picker/index",

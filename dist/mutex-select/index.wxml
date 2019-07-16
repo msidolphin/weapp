@@ -1,0 +1,41 @@
+<wxs module="wsx">
+    var isSelected = function (list, item, key = 'id', value) {
+        if (list.length !== undefined ) {
+            var index = -1
+            for (var i = 0; i < list.length; ++i) {
+                var e = list[i]
+                if (e === item[key] && e !== value) {
+                    index = i
+                    break
+                }
+            }
+            return index !== -1
+        } else {
+            return item[key] === list[key] && e !== value
+        }
+    }
+    module.exports.isSelected = isSelected
+</wxs>
+
+<i-popup direction="bottom" visible="{{visible}}" bind:close="close">
+    <view class="i-select i-class" catchtouchmove="doNothing">
+        <view class="i-select-hd i-class-hd">
+            <view class="i-select-hd__action"></view>
+                <view class="i-select-hd__title">{{title}}</view>
+                <view class="i-select-hd__action primary" ></view>
+        </view>
+        <scroll-view scroll-y scroll-into-view="{{scrollView}}" class="i-select-options">
+            <view wx:for="{{options}}"
+                wx:key="{{item}}"
+                id="{{'option-' + item[fieldNames['value']]}}"
+                class="i-select-options-item {{item[fieldNames['value']] === value ? 'i-select-options-item--active' : ''}} {{item[fieldNames['disabled']] ? 'i-select-options-item--disabled' : ''}}"
+                data-item="{{item}}"
+                data-selected="{{wsx.isSelected(selectedList, item, fieldNames['value'], value)}}"
+                data-disabled="{{item[fieldNames['disabled']]}}"
+                bindtap="onItemSelected">
+                <text class="i-select-options-item__label">{{item[fieldNames['label']]}}</text>
+                <text hidden ="{{!wsx.isSelected(selectedList, item, fieldNames['value'], value)}}" class="i-select-options-item--overselected">已设定</text>
+            </view>
+        </scroll-view>
+    </view>
+</i-popup>
