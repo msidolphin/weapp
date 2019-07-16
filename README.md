@@ -1,6 +1,6 @@
 <p align="center"></p>
 
-# Fork By iView Weapp
+# Forked iView Weapp
 
 ### 一套高质量的微信小程序 UI 组件库
 
