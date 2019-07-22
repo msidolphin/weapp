@@ -1,16 +1,21 @@
+import {createIsLastFunction} from '../mixins/lastItem'
+
 Component({
     externalClasses: ['i-class'],
     relations: {
         '../checkbox/index': {
             type: 'child',
             linked() {
-                this.changeCurrent();
+                this.changeCurrent()
+                this._updateIsLast()
             },
             linkChanged() {
-                this.changeCurrent();
+                this.changeCurrent()
+                this._updateIsLast()
             },
             unlinked() {
-                this.changeCurrent();
+                this.changeCurrent()
+                this._updateIsLast()
             }
         }
     },
@@ -20,19 +25,24 @@ Component({
             value: [],
             observer: 'changeCurrent'
         },
+        bordered: {
+            type: Boolean,
+            value: true
+        }
     },
     methods: {
         changeCurrent(val = this.data.current) {
-            let items = this.getRelationNodes('../checkbox/index');
-            const len = items.length;
+            let items = this.getRelationNodes('../checkbox/index')
+            const len = items.length
             if (len > 0) {
                 items.forEach(item => {
-                    item.changeCurrent(val.indexOf(item.data.value) !== -1);
-                });
+                    item.changeCurrent(val.indexOf(item.data.value) !== -1)
+                })
             }
         },
         emitEvent(current) {
-            this.triggerEvent('change', current);
-        }
+            this.triggerEvent('change', current)
+        },
+        ...createIsLastFunction('../checkbox/index')
     }
 });

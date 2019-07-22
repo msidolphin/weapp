@@ -1,4 +1,4 @@
-<view class="i-class i-checkbox" catchtap="checkboxChange">
+<view class="i-class i-checkbox {{ isLast ? 'i-cell-last' : '' }} {{ isLink ? 'i-cell-access' : '' }}"  catchtap="checkboxChange">
     <i-cell i-class="i-checkbox-cell">
         <label>
             <radio value="{{value}}" checked="{{checked}}" color="{{checked?color:''}}" disabled="{{disabled}}" class="i-checkbox-radio {{positionCls}}" />
