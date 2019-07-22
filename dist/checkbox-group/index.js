@@ -20,6 +20,10 @@ Component({
             value: [],
             observer: 'changeCurrent'
         },
+        bordered: {
+            type: Boolean,
+            value: true
+        }
     },
     methods: {
         changeCurrent(val = this.data.current) {

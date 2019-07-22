@@ -1,9 +1,16 @@
+<i-panel title="group-水果 无边框" hide-border>
+    <i-checkbox-group current="{{current}}" bindchange="handleFruitChange" bordered="{{false}}">
+        <i-checkbox wx:for="{{fruit}}" position="{{position}}" wx:key="{{item.id}}" value="{{item.name}}">
+        </i-checkbox>
+    </i-checkbox-group>
+</i-panel>
 <i-panel title="group-水果">
     <i-checkbox-group current="{{current}}" bindchange="handleFruitChange">
         <i-checkbox wx:for="{{fruit}}" position="{{position}}" wx:key="{{item.id}}" value="{{item.name}}">
         </i-checkbox>
     </i-checkbox-group>
 </i-panel>
+
 
 <i-button bindclick="handleClick" type="ghost">切换复选框位置</i-button>
 
