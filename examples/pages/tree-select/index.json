@@ -4,6 +4,8 @@
     "i-tree-select": "../../dist/tree-select/index",
     "i-message": "../../dist/message/index",
     "i-panel": "../../dist/panel/index",
-    "i-tag": "../../dist/tag/index"
+    "i-tag": "../../dist/tag/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index"
   }
 }
