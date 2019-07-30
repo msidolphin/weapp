@@ -8,7 +8,7 @@ function swipeDirection(x1, x2, y1, y2) {
 }
 
 Component({
-    externalClasses: ['i-class'],
+    externalClasses: ['i-class', 'i-class-item'],
     properties: {
         actions: {
             value: [],
