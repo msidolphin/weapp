@@ -1,5 +1,5 @@
 <view class="i-swipeout-wrap i-class">
-    <view class="i-swipeout-item" bindtouchstart="handlerTouchstart" bindtouchmove="handlerTouchmove" bindtouchend="handlerTouchend" style="{{parse.setPosition(position)}}">
+    <view class="i-swipeout-item i-class-item" bindtouchstart="handlerTouchstart" bindtouchmove="handlerTouchmove" bindtouchend="handlerTouchend" style="{{parse.setPosition(position)}}">
         <view class="i-swipeout-content">
             <slot name="content"></slot>
         </view>
