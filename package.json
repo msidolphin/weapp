@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development gulp --gulpfile build/build.js",
+    "docs": "vuepress dev docs",
     "build": "cross-env NODE_ENV=production gulp --gulpfile build/build.js",
     "clean": "cross-env NODE_ENV=production gulp clean --gulpfile build/build.js",
     "prepare": "npm run build"
@@ -34,6 +35,8 @@
     "gulp-less": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.8",
-    "less": "^2.7.3"
+    "less": "^2.7.3",
+    "viewcode": "^0.0.27",
+    "vuepress": "^1.0.2"
   }
 }

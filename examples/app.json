@@ -1,9 +1,11 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/checkbox/index",
+    "pages/input/index",
+    "pages/calendar-picker/index",
     "pages/mutex-select/index",
     "pages/tabs/index",
-    "pages/calendar-picker/index",
     "pages/picker/index",
     "pages/circle/index",
     "pages/calendar/index",
@@ -18,7 +20,6 @@
     "pages/modal/index",
     "pages/tree-select/index",
     "pages/list/index",
-    "pages/input/index",
     "pages/image-picker/index",
     "pages/collapse/index",
     "pages/message/index",
@@ -34,7 +35,6 @@
     "pages/alert/index",
     "pages/avatar/index",
     "pages/badge/index",
-    "pages/checkbox/index",
     "pages/drawer/index",
     "pages/input-number/index",
     "pages/page/index",
@@ -60,5 +60,6 @@
     "backgroundTextStyle": "dark",
     "backgroundColor": "#f9f9f9"
   },
-  "debug": true
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
 }

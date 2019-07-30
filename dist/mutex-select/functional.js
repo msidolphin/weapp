@@ -2,7 +2,7 @@ import { getCtx } from "../base/index"
 
 export class MutexSelector {
     constructor (options = {}) {
-        const { selector = '#text-select'} = options
+        const { selector = '#mutex-select'} = options
         const ctx = getCtx(selector)
         this.ctx = ctx
         this.ctx.initData(options)
