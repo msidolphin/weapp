@@ -3,7 +3,7 @@ const defaultFieldNames = {
     value: 'id',
     children: 'children',
 }
-
+const POPUP = 'popup'
 Component({
     properties: {
         multiple: {
@@ -46,16 +46,54 @@ Component({
         props: {
             type: Object,
             value: {}
+        },
+        type: {
+            type: String,
+            value: ''
+        },
+        title: {
+            type: String,
+            value: ''
+        },
+        showNavbar: {
+            type: Boolean,
+            value: false
+        },
+        visible: {
+            type: Boolean,
+            value: false
         }
     },
     data: {
+        POPUP,
         activeNavIndex: 0, // 激活的导航栏，如果是多选，那么初始化的时候选中的是第一个存在选中项的导航栏
         select: [],
         fieldNames: {},
         children: [],
-        notExistsItems: [] // 不存在的项
+        notExistsItems: []// 不存在的项
     },
     methods: {
+        doNothing () {},
+        /**
+         * @description 删除每一项
+         */
+        onDeleteItem (e) {
+            let index = e.currentTarget.dataset.index
+            this.data.select.splice(index,1)
+            this.setData({
+                select: this.data.select
+            })
+        },
+        /**
+         * @description 确定选择项
+         */
+        onConfirm () {
+            this.emitChange(true)
+            this.onClose()
+        },
+        onClose () {
+            this.triggerEvent('close')
+        },
         /**
          * @description 获取父级项
          */
@@ -80,6 +118,11 @@ Component({
                 let children = this.data.options[i].children ? this.data.options[i].children : []
                 for (let j = 0; j < children.length; ++j) {
                     if (children[j][this.data.fieldNames['value']] === value) {
+                        let parent = this.data.options[i]
+                        children[j].parent = {
+                            [this.data.fieldNames.value]: parent[this.data.fieldNames.value],
+                            [this.data.fieldNames.label]: parent[this.data.fieldNames.label]
+                        }
                         return children[j]
                     }
                 }
@@ -109,10 +152,6 @@ Component({
                 activeIndex = this.getParentIndex(this.data.select[0])
             }
             if (activeIndex === -1) activeIndex = 0
-            // if ( !this.data.options[activeIndex].children || !this.data.options[activeIndex].children.length) {
-            //     // 动态记载
-            //     this.emitLoad()
-            // }
             this.setData({
                 activeNavIndex: activeIndex
             })
@@ -167,22 +206,24 @@ Component({
         emitLoad () {
             this.triggerEvent('load', { option: this.data.options[this.data.activeNavIndex], index: this.data.activeNavIndex, options: this.data.options })
         },
-        emitChange () {
-            let select = this.data.select
-            let options = this.data.select
-            let values = select.map(s => s[this.data.fieldNames['value']])
-            if (this.data.controlled) {
-                if (!Array.isArray(this.data.value) && !this.data.multiple) {
-                    values = values[0] !== undefined ? values[0] : {}
-                    options = options[0] !== undefined ? options[0] : {}
+        emitChange (force = false) {
+            if (force || this.data.type !== POPUP) {
+                let select = this.data.select
+                let options = this.data.select
+                let values = select.map(s => s[this.data.fieldNames['value']])
+                if (this.data.controlled) {
+                    if (!Array.isArray(this.data.value) && !this.data.multiple) {
+                        values = values[0] !== undefined ? values[0] : {}
+                        options = options[0] !== undefined ? options[0] : {}
+                    }
+                } else {
+                    if (!Array.isArray(this.data.defaultValue) && !this.data.multiple) {
+                        values = values[0] !== undefined ? values[0] : {}
+                        options = options[0] !== undefined ? options[0] : {}
+                    }
                 }
-            } else {
-                if (!Array.isArray(this.data.defaultValue) && !this.data.multiple) {
-                    values = values[0] !== undefined ? values[0] : {}
-                    options = options[0] !== undefined ? options[0] : {}
-                }
+                this.triggerEvent('change', {value: values ? values : '', options})
             }
-            this.triggerEvent('change', {value: values ? values : '', options})
         },
         onItemSelected (e) {
             let { item, selected } = e.currentTarget.dataset
@@ -220,7 +261,15 @@ Component({
             return index
         },
         getChildren () {
-            return this.data.options[this.data.activeNavIndex].children
+            let parent = this.data.options[this.data.activeNavIndex]
+            let children = parent[this.data.fieldNames.children]
+            children.forEach(item => {
+                item.parent = {
+                    [this.data.fieldNames.value]: parent[this.data.fieldNames.value],
+                    [this.data.fieldNames.label]: parent[this.data.fieldNames.label]
+                }
+            })
+            return children
         }
     },
     attached () {

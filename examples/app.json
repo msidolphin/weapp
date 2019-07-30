@@ -1,12 +1,12 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/input/index",
     "pages/tree-select/index",
     "pages/picker/index",
     "pages/color/index",
     "pages/icon/index",
-    "pages/index/index",
     "pages/checkbox/index",
-    "pages/input/index",
     "pages/calendar-picker/index",
     "pages/mutex-select/index",
     "pages/tabs/index",
