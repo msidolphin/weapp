@@ -181,7 +181,16 @@ Page({
       })
     }, 1000)
   },
-
+  closePopup () {
+    this.setData({
+      visible: false
+    })
+  },
+  closeMultiplePopup () {
+    this.setData({
+      visibleMultiple: false
+    })
+  },
   onExceed () {
     $Message({
       type: 'error',

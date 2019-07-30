@@ -1,6 +1,6 @@
 
 <i-cell-group>
-  <i-cell title="单选（弹窗）" bind:click="onTap" value="{{valueModel2.label}}" is-link/>
+  <i-cell title="单选（弹窗）" bind:click="onTap" value="{{valueModel2.label}}"  is-link/>
   <i-cell title="多选（弹窗）" bind:click="onMultipleTap" value="{{multipleValueModel2}}" is-link/>
 </i-cell-group>
 
@@ -19,7 +19,7 @@
 
 
 
-<i-tree-select title="弹窗单选" visible="{{visible}}" type="popup" controlled value="{{value2}}" bind:change="onPopupChange" options="{{options}}"></i-tree-select>
-<i-tree-select title="弹窗多选" showNavbar visible="{{visibleMultiple}}" type="popup" multiple limit="{{5}}" bind:exceed="onExceed" controlled value="{{multipleValue2}}" bind:change="onPopupMultipleChange" options="{{options}}"></i-tree-select>
+<i-tree-select title="弹窗单选" visible="{{visible}}" type="popup" bind:close="closePopup" controlled value="{{value2}}" bind:change="onPopupChange" options="{{options}}"></i-tree-select>
+<i-tree-select title="弹窗多选" showNavbar visible="{{visibleMultiple}}" bind:close="closeMultiplePopup" type="popup" multiple limit="{{5}}" bind:exceed="onExceed" controlled value="{{multipleValue2}}" bind:change="onPopupMultipleChange" options="{{options}}"></i-tree-select>
 
 <i-message id="message" />

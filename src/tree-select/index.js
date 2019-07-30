@@ -34,7 +34,6 @@ Component({
         value: {
             type: [String, Array, Number],
             observer (newVal, oldVal) {
-                debugger
                 if (this.data.controlled && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
                     this.setSelect()
                 }
@@ -93,9 +92,6 @@ Component({
             this.onClose()
         },
         onClose () {
-            this.setData({
-                visible: false
-            })
             this.triggerEvent('close')
         },
         /**
@@ -277,7 +273,6 @@ Component({
         }
     },
     attached () {
-        debugger
         const fieldNames = Object.assign({}, defaultFieldNames, this.data.props)
         this.setData({
             fieldNames
