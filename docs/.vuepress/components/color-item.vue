@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.color 
+.color
   padding 0!important
   border none !important
 .color-body 

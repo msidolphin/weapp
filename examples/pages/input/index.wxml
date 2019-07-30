@@ -1,4 +1,4 @@
-<i-panel title="基础用法">
+<i-panel title="基础用法" hide-border>
   <i-cell-group>
     <i-input required value="{{ value1 }}" title="收货人" placeholder="名字" bind:change="onChange"  />
     <i-input value="{{ value2 }}" type="number" title="联系电话" placeholder="请输入手机号" />
@@ -18,7 +18,7 @@
   </i-cell-group>
 </i-panel>
 
-<i-panel title="无标题输入框">
+<i-panel title="无标题输入框" hide-border>
   <i-cell-group >
     <i-input value="{{ value5 }}" placeholder="请输入收货人姓名">
       <view class="send-btn" slot="extra">发送验证码</view>
@@ -26,13 +26,13 @@
   </i-cell-group>
 </i-panel>
 
-<i-panel title="后置图标">
+<i-panel title="后置图标" hide-border>
   <i-cell-group >
     <i-input value="{{ value6 }}" icon-type="feedback_fill" bind:icon-tap="handleIconTap"  type="number" right title="消费总额" placeholder="询问收银员后输入" />
   </i-cell-group>
 </i-panel>
 
-<i-panel title="错误状态">
+<i-panel title="错误状态" hide-border>
   <i-cell-group >
     <i-input value="{{ value6 }}" error type="number" right title="消费总额" placeholder="询问收银员后输入" />
   </i-cell-group>
