@@ -1,14 +1,25 @@
 
+<i-cell-group>
+  <i-cell title="单选（弹窗）" bind:click="onTap" value="{{valueModel2.label}}"  is-link/>
+  <i-cell title="多选（弹窗）" bind:click="onMultipleTap" value="{{multipleValueModel2}}" is-link/>
+</i-cell-group>
+
 <i-panel title="单选">
   <view class='selected-list'>
-    <i-tag color="blue">{{valueModel.label}}</i-tag>
+    <i-tag color="blue">{{valueModel1.label}}</i-tag>
   </view>
-  <i-tree-select options="{{options}}" default-value="{{value}}" bind:change="onChange"></i-tree-select>
+  <i-tree-select value="{{value1}}" bind:change="onChange" controlled options="{{options}}"></i-tree-select>
 </i-panel>
 <i-panel title="多选">
   <view class='selected-list'>
-    <i-tag wx:for="{{multipleValueModel}}" wx:key="{{item.id}}" color="blue">{{item.label}}</i-tag>
+    <i-tag wx:for="{{multipleValueModel1}}" wx:key="{{item.id}}" color="blue">{{item.label}}</i-tag>
   </view>
-  <i-tree-select multiple limit="{{3}}" bind:exceed="onExceed" controlled value="{{multipleValue}}" bind:change="onMultipleChange" options="{{options}}"></i-tree-select>
+  <i-tree-select multiple limit="{{5}}" bind:exceed="onExceed" controlled value="{{multipleValue1}}" bind:change="onMultipleChange" options="{{options}}"></i-tree-select>
 </i-panel>
+
+
+
+<i-tree-select title="弹窗单选" visible="{{visible}}" type="popup" bind:close="closePopup" controlled value="{{value2}}" bind:change="onPopupChange" options="{{options}}"></i-tree-select>
+<i-tree-select title="弹窗多选" showNavbar visible="{{visibleMultiple}}" bind:close="closeMultiplePopup" type="popup" multiple limit="{{5}}" bind:exceed="onExceed" controlled value="{{multipleValue2}}" bind:change="onPopupMultipleChange" options="{{options}}"></i-tree-select>
+
 <i-message id="message" />

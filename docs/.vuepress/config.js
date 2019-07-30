@@ -18,6 +18,13 @@ module.exports = {
                             '/components/basic/color',
                             '/components/basic/button'
                         ]
+                    },
+                    {
+                        title: '表单',
+                        collapsable: false,
+                        children: [
+                            '/components/form/tree-select'
+                        ]
                     }
                 ]
             }

@@ -6,10 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    multipleValue: [12, 23, 34],
-    value: 34,
+    visible: false,
+    visibleMultiple: false,
+    multipleValue1: [12, 23, 34],
+    multipleValue2: [12, 23, 34],
+    value1: 34,
+    value2: 34,
     options: [],
-    multipleValueModel: [
+    multipleValueModel1: [
       {
         id: 12,
         label: '木工'
@@ -23,28 +27,56 @@ Page({
         label: '电焊工'
       }
     ],
-    valueModel: {
+    multipleValueModel2: ['木工', '消防安装', '电焊工'],
+    valueModel1: {
+      id: 34,
+      label: '电焊工'
+    },
+    valueModel2: {
       id: 34,
       label: '电焊工'
     }
   },
-
+  onTap() {
+    this.setData({
+      visible: true
+    })
+  },
+  onMultipleTap() {
+    this.setData({
+      visibleMultiple: true
+    })
+  },
   onChange (e) {
     let {value, options} = e.detail
     this.setData({
-      value,
-      valueModel: options
+      value1: value,
+      valueModel1: options
     })
   },
 
   onMultipleChange (e) {
     let { value, options } = e.detail
     this.setData({
-      multipleValue: value,
-      multipleValueModel: options
+      multipleValue1: value,
+      multipleValueModel1: options
     })
   },
-
+  onPopupChange (e) {
+    let { value, options } = e.detail
+    this.setData({
+      value2: value,
+      valueModel2: options
+    })
+  },
+  onPopupMultipleChange (e) {
+    debugger
+    let { value, options } = e.detail
+    this.setData({
+      multipleValue2: value,
+      multipleValueModel2: options.map(item => item.label)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -149,11 +181,20 @@ Page({
       })
     }, 1000)
   },
-
+  closePopup () {
+    this.setData({
+      visible: false
+    })
+  },
+  closeMultiplePopup () {
+    this.setData({
+      visibleMultiple: false
+    })
+  },
   onExceed () {
     $Message({
       type: 'error',
-      content: `最大选中数量不能超过3个`
+      content: `最大选中数量不能超过5个`
     })
   },
 
