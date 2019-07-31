@@ -1,5 +1,8 @@
-<i-cell-group>
-  <i-cell wx:for="{{list}}" title="选项-{{index + 1}}" wx:key="{{index}}" data-index="{{index}}" bindtap="onOpen" is-link value="{{item.text}}"></i-cell>
-</i-cell-group>
-
-<i-mutex-select id="text-select"></i-mutex-select>
+<view style="margin-top:12px;">
+  <i-swipeout i-class="swipeout" i-class-item="swipeout-item" wx:for="{{list}}" wx:key="id"  unclosable actions="{{actions}}" data-id="{{item.id}}" data-value="{{item.value}}" bind:change="onDelete">
+      <view slot="content">
+          <i-cell title="选项-{{item.id + 1}}" data-index="{{index}}" bindtap="onOpen" is-link value="{{item.text}}"></i-cell>
+      </view>
+  </i-swipeout>
+</view>
+<i-mutex-select id="mutex-select"></i-mutex-select>

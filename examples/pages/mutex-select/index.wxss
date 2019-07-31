@@ -1,0 +1,7 @@
+.swipeout {
+    border: none!important;
+}
+
+.swipeout-item {
+    padding: 0!important;
+}

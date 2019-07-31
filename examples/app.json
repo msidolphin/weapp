@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/button/index",
     "pages/index/index",
+    "pages/mutex-select/index",
+    "pages/button/index",
     "pages/input/index",
     "pages/tree-select/index",
     "pages/picker/index",
@@ -9,7 +10,6 @@
     "pages/icon/index",
     "pages/checkbox/index",
     "pages/calendar-picker/index",
-    "pages/mutex-select/index",
     "pages/tabs/index",
     "pages/circle/index",
     "pages/calendar/index",
