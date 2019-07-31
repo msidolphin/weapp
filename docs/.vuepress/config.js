@@ -23,7 +23,8 @@ module.exports = {
                         title: '表单',
                         collapsable: false,
                         children: [
-                            '/components/form/tree-select'
+                            '/components/form/tree-select',
+                            '/components/form/mutex-select'
                         ]
                     }
                 ]

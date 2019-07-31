@@ -2,7 +2,9 @@
     "navigationBarTitleText": "MutexSelect 互斥选择器",
     "usingComponents": {
       "i-mutex-select": "../../dist/mutex-select/index",
+      "i-swipeout": "../../dist/swipeout/index",
       "i-cell-group": "../../dist/cell-group/index",
-      "i-cell": "../../dist/cell/index"
+      "i-cell": "../../dist/cell/index",
+      "i-panel": "../../dist/panel/index"
     }
   }

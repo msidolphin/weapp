@@ -213,13 +213,13 @@ onPopupChange (e) {
 ```
 ### 弹窗用法——多选
 
-#### html
+
 
 ```html
 <i-tree-select title="弹窗多选" showNavbar visible="{{visibleMultiple}}" type="popup" multiple limit="{{5}}" bind:exceed="onExceed" controlled value="{{multipleValue2}}" bind:change="onPopupMultipleChange" options="{{options}}"></i-tree-select>
 ```
 
-#### js
+
 
 ```js
 data: {
@@ -267,7 +267,7 @@ onExceed () {
 | props | options元素对应的属性名 | Object | —— | { label: 'label',value: 'id',children: 'children'} |
 | title | 弹窗标题 | String | —— | —— |
 | showNavbar | 是否在头部栏显示选择项（仅对弹窗且多选有效） | Boolean | —— |  false |
-
+ 
 
 ## Events
 | 事件名      | 说明    | 参数   |
