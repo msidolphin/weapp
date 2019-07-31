@@ -56,6 +56,13 @@ sidebarDepth: 1
 <i-button type="primary" disabled>禁用按钮</i-button>
 ```
 
+### 开放能力
+```html
+<i-button open-type="openSetting" bind:opensetting="opensetting" type="primary">opensetting</i-button>
+<i-button open-type="feedback" type="primary">feedback</i-button>
+<i-button open-type="getUserInfo" bind:getuserinfo="getuserinfo" type="primary">getuserinfo</i-button>
+```
+
 ## Attributes
 
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
@@ -88,3 +95,5 @@ sidebarDepth: 1
 | contact | 客服消息回调，open-type="contact"时有效 | detail |
 | getphonenumber | 获取用户手机号回调，open-type=getPhoneNumber时有效 | detail |
 | error | 当使用开放能力时，发生错误的回调，open-type=launchApp时有效 | detail |
+| opensetting | 打开授权设置页,open-type="openSetting"时有效	| detail |
+| launchapp |打开 APP 成功的回调，open-type=launchApp时有效 | detail | 
