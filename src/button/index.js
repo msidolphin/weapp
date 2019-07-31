@@ -84,6 +84,12 @@ Component({
         },
         binderror({ detail = {} } = {}) {
             this.triggerEvent('error', detail)
+        },
+        bindopensetting ({ detail = {} } = {}) {
+            this.triggerEvent('opensetting', detail)
+        },
+        bindlaunchapp ({ detail = {} } = {}) {
+            this.triggerEvent('launchapp', detail)
         }
     }
 })

@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/mutex-select/index",
     "pages/index/index",
+    "pages/mutex-select/index",
+    "pages/button/index",
     "pages/input/index",
     "pages/tree-select/index",
     "pages/picker/index",
