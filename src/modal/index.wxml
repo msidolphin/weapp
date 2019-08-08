@@ -1,4 +1,4 @@
-<i-popup visible="{{visible}}" bind:close="handleClickCancel">
+<i-popup visible="{{visible}}" bind:close="onClose">
     <view class="i-class i-modal-main">
         <view class="i-modal-content">
             <view class="i-modal-title" catchtouchmove="true" wx:if="{{ title }}">{{ title }}</view>

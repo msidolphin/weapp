@@ -50,6 +50,9 @@ Component({
         handleClickCancel () {
             this.triggerEvent('cancel')
         },
+        onClose () {
+            this.triggerEvent('close')
+        },
         doNothing () {}
     }
 });
