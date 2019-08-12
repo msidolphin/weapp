@@ -27,6 +27,10 @@ Component({
         operateWidth : {
             type : Number,
             value : 160
+        },
+        disabled: {
+            type: Boolean,
+            value: false
         }
     },
     options: {
@@ -80,6 +84,7 @@ Component({
             }
         },
         handlerTouchstart(event){
+            if (this.data.disabled) return
             const touches = event.touches ? event.touches[0] : {};
             const tStart = this.data.tStart;
             if( touches ){
@@ -106,6 +111,7 @@ Component({
             })
         },
         handlerTouchmove(event){
+            if (this.data.disabled) return
             const start = this.data.tStart;
             const touches = event.touches ? event.touches[0] : {};
             if( touches ){
@@ -116,6 +122,7 @@ Component({
             }
         },
         handlerTouchend(event){
+            if (this.data.disabled) return
             const start = this.data.tStart;
             const touches = event.changedTouches ? event.changedTouches[0] : {};
             if( touches ){

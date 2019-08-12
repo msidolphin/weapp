@@ -90,6 +90,16 @@ Component({
         },
         getSelectedList () {
             return JSON.parse(JSON.stringify(this.data.selectedList))
+        },
+        removeSelected (value) {
+            if (value !== 0 && !value) return
+            let index = this.data.selectedList.findIndex(item => item === value)
+            if (index !==-1) {
+                this.data.selectedList.splice(index,1)
+            }
+            this.setData({
+                selectedList: this.data.selectedList
+            })
         }
     }
 })

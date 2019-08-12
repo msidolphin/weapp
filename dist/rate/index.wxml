@@ -1,22 +1,36 @@
 <view class="i-class i-rate" 
     bindtouchmove="handleTouchMove">
     <input type="text" :name="name" wx:value="{{value}}" class="i-rate-hide-input" />
-    <view
-        wx:for="{{count}}"
-        wx:key="{{item}}" 
-        class="i-rate-star {{ parse.getCurrent( value,index ) }}" 
-        data-index="{{index}}" 
-        bindtap="handleClick">
-        <i-icon type="collection_fill" size="{{size}}"></i-icon>
-    </view>
+    <block wx:if="{{!disabled}}">
+        <view
+            wx:for="{{count}}"
+            wx:key="{{item}}" 
+            class="i-rate-star" 
+            data-index="{{index}}" 
+            bindtap="handleClick">
+            <view class="i-icon i-icon-{{icon}}" style="font-size: {{ size }}px;color:{{parse.isActive(value, index) ? activeColor : color}}"></view>
+        </view>
+    </block>
+    <block wx:else>
+        <view
+            wx:for="{{scores}}"
+            wx:key="{{item}}"
+            class="i-rate-star"
+            data-index="{{index}}" 
+            bindtap="handleClick">
+            <view class="i-icon i-icon-{{icon}} i-rate-con" style="font-size: {{ size }}px;color:{{color}};">
+                <view class="i-icon i-icon-{{icon}} i-rate__decimal" style="font-size: {{ size }}px;width:{{item}}%;color:{{activeColor}};"></view>
+            </view>
+        </view>
+    </block>
     <view class="i-rate-text" wx:if="{{ value !== 0 }}"><slot></slot></view>
 </view>
 <wxs module="parse">
 var prefixCls = 'i-rate';
 module.exports = {
-    getCurrent : function( value,index ){
+    isActive : function( value,index ){
         if( index < value  ){
-            return prefixCls + '-current'
+            return true
         }
     }
 }

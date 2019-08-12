@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/rate/index",
     "pages/mutex-select/index",
     "pages/button/index",
     "pages/input/index",
@@ -41,7 +42,6 @@
     "pages/page/index",
     "pages/progress/index",
     "pages/radio/index",
-    "pages/rate/index",
     "pages/spin/index",
     "pages/steps/index",
     "pages/tab-bar/index",

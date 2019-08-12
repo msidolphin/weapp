@@ -17,6 +17,8 @@
     bindgetuserinfo="bindgetuserinfo"
     bindgetphonenumber="bindgetphonenumber"
     binderror="binderror"
+    bindopensetting="bindopensetting"
+    bindlaunchapp="bindlaunchapp"
     plain="true"
 ><view class="i-btn-loading-inner" wx:if="{{loading}}"></view><slot></slot><!--
 --><view wx:for="{{$ripples}}"

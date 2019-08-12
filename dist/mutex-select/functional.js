@@ -25,4 +25,7 @@ export class MutexSelector {
     getSelectedList(){
         return this.ctx.getSelectedList()
     }
+    removeSelected (value) {
+        return this.ctx.removeSelected(value)
+    }
 }
