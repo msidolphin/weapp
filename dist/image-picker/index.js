@@ -64,6 +64,10 @@ Component({
         props: {
             type: Object,
             value: {}
+        },
+        disabled: {
+            type: Boolean,
+            value: false
         }
     },
 
