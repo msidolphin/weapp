@@ -2,8 +2,8 @@
     <view class="i-image-upload-item"
         style="width:{{$span}}%;padding-bottom:{{$span}}%;"
         wx:for="{{imgList}}" wx:key="{{index}}">
-        <view class="inner" bindtap="viewImage" data-url="{{imgList[index]}}">
-            <image src='{{imgList[index]}}' mode='aspectFill'></image>
+        <view class="inner" bindtap="viewImage" data-url="{{!object ? item : item[fieldNames.url]}}">
+            <image src='{{!object ? item : item[fieldNames.url]}}' mode='aspectFill'></image>
             <view class="i-image-upload-item__del" catchtap="delImage" data-index="{{index}}">
                 <view><i-icon i-class="close-btn" type="close" size="12"></i-icon></view>
             </view>

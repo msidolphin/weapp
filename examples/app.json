@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/image-picker/index",
+    "pages/demo/sticky-tab/index",
     "pages/rate/index",
     "pages/mutex-select/index",
     "pages/button/index",
@@ -14,7 +16,6 @@
     "pages/tabs/index",
     "pages/circle/index",
     "pages/calendar/index",
-    "pages/demo/sticky-tab/index",
     "pages/infinite-calendar/index",
     "pages/keyboard/index",
     "pages/bottom-drawer/index",
@@ -23,7 +24,6 @@
     "pages/select/index",
     "pages/modal/index",
     "pages/list/index",
-    "pages/image-picker/index",
     "pages/collapse/index",
     "pages/message/index",
     "pages/action-sheet/index",

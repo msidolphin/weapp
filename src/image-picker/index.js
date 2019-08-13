@@ -1,3 +1,12 @@
+const defaultFieldNames = {
+    url: 'url',
+    value: 'id'
+}
+
+function isPlainObject(target) {
+    return Object.prototype.toString.call(target) === '[object Object]' && Object.getPrototypeOf(target) === Object.prototype
+}
+
 Component({
     externalClasses: ['i-class'],
 
@@ -5,7 +14,7 @@ Component({
         span: {
             type: [Number, String],
             value: 4,
-            observer () {
+            observer() {
                 this.setSpan()
             }
         },
@@ -36,49 +45,78 @@ Component({
         iconColor: {
             type: String,
             value: '#80848f'
+        },
+        object: {
+            type: Boolean,
+            value: false
+        },
+        defaultList: {
+            type: Array,
+            value: [],
+            observer(val) {
+                if (val) {
+                    this.setData({
+                        imgList: JSON.parse(JSON.stringify(val))
+                    })
+                }
+            }
+        },
+        props: {
+            type: Object,
+            value: {}
         }
     },
-    
+
     data: {
         imgList: [],
+        isObject: {},
         $span: '25'
     },
 
     methods: {
-        setSpan () {
+        setSpan() {
             this.setData({
                 $span: ((1 / Number(this.data.span)) * 100).toFixed(2)
             })
         },
-        viewImage (e) {
+        viewImage(e) {
             wx.previewImage({
-                urls: this.data.imgList,
+                urls: this.data.object ? this.data.imgList.map(f => f[this.data.fieldNames.url]) : this.data.imgList,
                 current: e.currentTarget.dataset.url
             })
         },
-        chooseImage () {
+        chooseImage() {
             wx.chooseImage({
                 count: this.data.limit - this.data.imgList.length, // 默认 4
                 sizeType: this.data.sizeType, //可以指定是原图还是压缩图，默认二者都有
                 sourceType: this.data.sourceType, //从相册选择
                 success: (res) => {
-                  if (this.data.imgList.length != 0) {
-                    this.setData({
-                      imgList: this.data.imgList.concat(res.tempFilePaths)
-                    }, () => {
-                        this.emitChange()
-                    })
-                  } else {
-                    this.setData({
-                      imgList: res.tempFilePaths
-                    }, () => {
-                        this.emitChange()
-                    })
-                  }
+                    let files = res.tempFilePaths
+                    if (this.data.object) {
+                        files = files.map(f => {
+                            return {
+                                [this.data.fieldNames.value]: '',
+                                [this.data.fieldNames.url]: f
+                            }
+                        })
+                    }
+                    if (this.data.imgList.length != 0) {
+                        this.setData({
+                            imgList: this.data.imgList.concat(files)
+                        }, () => {
+                            this.emitChange()
+                        })
+                    } else {
+                        this.setData({
+                            imgList: files
+                        }, () => {
+                            this.emitChange()
+                        })
+                    }
                 }
             })
         },
-        delImage (e) {
+        delImage(e) {
             this.data.imgList.splice(e.currentTarget.dataset.index, 1);
             this.setData({
                 imgList: this.data.imgList
@@ -86,17 +124,20 @@ Component({
                 this.emitChange()
             })
         },
-        emitChange () {
-            this.triggerEvent('change', {value: this.data.imgList})
+        emitChange() {
+            this.triggerEvent('change', { value: this.data.imgList })
         },
-        clear () {
+        clear() {
             this.setData({
                 imgList: []
             })
         }
     },
-    
-    attached () {
+
+    attached() {
+        this.setData({
+            fieldNames: Object.assign({}, defaultFieldNames, this.data.props)
+        })
         this.setSpan()
     }
 })

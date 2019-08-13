@@ -1,7 +1,12 @@
 Page({
   data: {
     value1: '',
-    imageList: []
+    imageList: [
+      {
+        id: '',
+        url: 'http://photocdn.sohu.com/20120128/Img333056814.jpg'
+      }
+    ]
   },
   onChange (e) {
     this.setData({

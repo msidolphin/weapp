@@ -1,65 +1,59 @@
-const app = getApp()
-
 Page({
   data: {
-    top: app.globalData && app.globalData.device && app.globalData.device.navbarHeight ? app.globalData.device.navbarHeight : 0,
-    ch: 200, // 图表高度
-    cb: 32, // 查看趋势图高度
-    cStyle: '', // 图表容器样式
-    chStyle: '', // 图表样式
-    cbStyle: '', // 图表底部样式
-    tabStyle: '',
-    bs: 'display:none'
+      current: 0,
+      current_scroll: 'tab7',
+      active: 1,
+      tabs: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      tabs1: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      tabs2: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   },
-  onLoad () {
-    this.scrollTop = 0
-    this.tabHeight = 40 // tabbar的高度
-    this.top = -(200 - 120 - 32) + this.data.top // 图表固定时top值
-    this.topThreshold = this.data.ch - 2 * this.data.cb // 查看趋势图展开阈值
-    this.tabThreshold = this.data.ch - this.data.cb // 收起查看趋势图阈值
-  },
-  back2Top () {
-    wx.pageScrollTo({
-      scrollTop: 0
+  onSwiperChange (e) {
+    this.setData({
+      current: e.detail.current
     })
   },
-  onPageScroll (e) {
-    if (e.scrollTop > this.tabThreshold) {
-      if (e.scrollTop - this.tabThreshold < 12) { // 查看趋势图未完全收起
-        // 改变图表容器的top值
-        let top = this.top - e.scrollTop + this.tabThreshold
-        this.setData({
-          // cStyle: `position:fixed; width:100%; top:${top}px;left:0;`,
-          tabStyle: '', // 此时tab未固定
-          bs: this.isFixed ?  `display:block;height:${this.data.ch}px` : ''// 占位元素维持原高度
-        })
-        console.log(this.isFixed)
+  onLoad () {
+      // this.setData({
+      //     tabs: this.data.tabs1,
+      //     active: this.data.tabs1[0]
+      // })
+  },
+
+  switch () {
+      if (this.data.tabs[0] === this.data.tabs1[0]) {
+          this.setData({
+              tabs: this.data.tabs2,
+              active: this.data.tabs2[0]
+          }, () => {
+              const tabs = this.selectComponent('#tabs')
+              tabs.init()
+          })
       } else {
-        // 固定tab
-        this.setData({
-          chStyle: `transform:translateY(-${this.data.cb}px)`,
-          cStyle: `position:fixed; width:100%; top:${this.top}px;left:0;`,
-          tabStyle: `position:fixed; width:100%; top:${120 + this.data.top + this.data.cb - 12}px;left:0;`,
-          bs: `display:block;height:${this.data.ch + this.tabHeight + 12}px`
-        })
+          this.setData({
+              tabs: this.data.tabs1,
+              active: this.data.tabs1[0]
+          }, () => {
+              const tabs = this.selectComponent('#tabs')
+              tabs.init()
+          })
       }
-    } else if (e.scrollTop >= this.topThreshold) {
-      let y = -(e.scrollTop - this.topThreshold)
-      if (y <= -this.data.cb) y = -this.data.cb
+  },
+
+  handleChange2 ({ detail }) {
       this.setData({
-        chStyle: `transform:translateY(${y}px)`,
-        cStyle: y === -this.data.cb ? `position:fixed; width:100%; top:${this.top}px;left:0;` : '',
-        bs: y === -this.data.cb  ? `display:block;height:${this.data.ch}px` : ''
+          active: detail.key
       })
-      this.isFixed = y === -this.data.cb
-    } else {
+  },
+
+  handleChange ({ detail }) {
       this.setData({
-        chStyle: `transform:translateY(0px)`,
-        cStyle: '',
-        bs: '',
-        tabStyle: ''
-      })
-      this.isFixed = false
-    }
+          current: detail.key
+      });
+  },
+
+  handleChangeScroll ({ detail }) {
+      this.setData({
+          current_scroll: detail.key
+      });
   }
-})
+});
