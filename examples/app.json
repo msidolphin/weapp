@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/rate/index",
     "pages/index/index",
     "pages/image-picker/index",
     "pages/demo/sticky-tab/index",
-    "pages/rate/index",
     "pages/mutex-select/index",
     "pages/button/index",
     "pages/input/index",

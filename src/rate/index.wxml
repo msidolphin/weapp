@@ -8,7 +8,7 @@
             class="i-rate-star" 
             data-index="{{index}}" 
             bindtap="handleClick">
-            <view class="i-icon i-icon-{{icon}}" style="font-size: {{ size }}px;color:{{parse.isActive(value, index) ? activeColor : color}}"></view>
+            <view class="i-icon i-icon-{{parse.getIcon(value, index, same, fill, icon)}}" style="font-size: {{ size }}px;color:{{parse.isActive(value, index) ? activeColor : color}}"></view>
         </view>
     </block>
     <block wx:else>
@@ -18,19 +18,43 @@
             class="i-rate-star"
             data-index="{{index}}" 
             bindtap="handleClick">
-            <view class="i-icon i-icon-{{icon}} i-rate-con" style="font-size: {{ size }}px;color:{{color}};">
-                <view class="i-icon i-icon-{{icon}} i-rate__decimal" style="font-size: {{ size }}px;width:{{item}}%;color:{{activeColor}};"></view>
+            <view class="i-icon i-icon-{{parse.getIcon(value, index, same, fill, icon, false)}} i-rate-con" style="font-size: {{ size }}px;color:{{color}};">
+                <view class="i-icon i-icon-{{parse.getIcon(value, index, same, fill, icon, true)}} i-rate__decimal" style="font-size: {{ size }}px;width:{{item}}%;color:{{activeColor}};"></view>
             </view>
         </view>
     </block>
     <view class="i-rate-text" wx:if="{{ value !== 0 }}"><slot></slot></view>
 </view>
 <wxs module="parse">
-var prefixCls = 'i-rate';
+function isActive ( value,index ){
+    if( index < value  ){
+        return true
+    }
+}
 module.exports = {
-    isActive : function( value,index ){
-        if( index < value  ){
-            return true
+    isActive: isActive,
+    getIcon: function(value, index, same, fill, icon, active) {
+        if (active === undefined) active = isActive(value, index)
+        if (same) {
+            if (fill) {
+                return icon + '_fill'
+            } else {
+                return icon
+            }
+        } else {
+            if (active) {
+                if (fill) {
+                    return icon + '_fill'
+                } else {
+                    return icon
+                }
+            } else {
+                if (fill) {
+                    return icon
+                } else {
+                    return icon + '_fill'
+                }
+            }
         }
     }
 }
