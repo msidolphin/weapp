@@ -13,6 +13,7 @@ Page({
     this.setData({
       'starIndex1': index
     })
+
   },
   onChange2(e) {
     const index = e.detail.index;

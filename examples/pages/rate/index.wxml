@@ -3,7 +3,19 @@
     <i-rate bind:change="onChange1" value="{{starIndex1}}">
     </i-rate>
   </i-cell>
-  <i-cell title="最小值为0">
+  <i-cell title="基本用法——图标不相同">
+    <i-rate bind:change="onChange1" value="{{starIndex1}}"  same="{{false}}">
+    </i-rate>
+  </i-cell>
+  <i-cell title="基本用法——图标不填充">
+    <i-rate bind:change="onChange1" value="{{starIndex1}}"  fill="{{false}}">
+    </i-rate>
+  </i-cell>
+  <i-cell title="基本用法——图标不相同且不填充">
+    <i-rate bind:change="onChange1" value="{{starIndex1}}" same="{{false}}" fill="{{false}}">
+    </i-rate>
+  </i-cell>
+  <i-cell title="允许为零">
     <i-rate allow-zero bind:change="onChange4" value="{{starIndex7}} ">
     </i-rate>
   </i-cell>
@@ -12,7 +24,7 @@
     </i-rate>
   </i-cell>
   <i-cell title="自定义星星大小 ">
-    <i-rate bind:change="onChange2" value="{{starIndex2}} " size="32">
+    <i-rate bind:change="onChange2" value="{{starIndex2}} " size="{{32}}">
     </i-rate>
   </i-cell>
   <i-cell title="自定义文字说明 ">
@@ -21,7 +33,7 @@
     </i-rate>
   </i-cell>
   <i-cell title="自定义图标和颜色">
-    <i-rate bind:change="onChange3" icon="like_fill" active-color="#F56C6C" color="rgb(239, 242, 247)" value="{{starIndex3}} "></i-rate>
+    <i-rate bind:change="onChange3" icon="like" active-color="#F56C6C" color="rgb(239, 242, 247)" value="{{starIndex3}} "></i-rate>
   </i-cell>
   <i-cell title="只读 ">
     <i-rate disabled value="{{starIndex4}} ">
@@ -29,7 +41,7 @@
     </i-rate>
   </i-cell>
   <i-cell title="只读的评分支持任意分值 ">
-    <i-rate disabled value="{{starIndex6}} " size="32">
+    <i-rate disabled value="{{starIndex6}}" size="{{32}}">
       {{starIndex6}}分
     </i-rate>
   </i-cell>
