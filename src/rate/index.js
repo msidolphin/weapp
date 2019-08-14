@@ -115,7 +115,7 @@ Component({
         const className = '.i-rate'
         var query = wx.createSelectorQuery().in(this)
         query.select( className ).boundingClientRect((res)=>{
-            this.data.touchesStart.pageX = res.left || 0
+            this.data.touchesStart.pageX = res && res.left || 0
         }).exec()
         if (this.data.disabled) {
             this.generateScores()

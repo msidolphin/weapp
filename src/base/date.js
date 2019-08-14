@@ -279,7 +279,7 @@ export function getRangeByStartAndEnd (start, end, current) {
         if (sYear === eYear && sMonth === eMonth) {
             days = getRange(sDay, eDay)
         } else {
-            days = getRange(sDay, new Date(sYear, sMonth - 1, 0).getDate())
+            days = getRange(sDay, new Date(sYear, sMonth, 0).getDate())
         }
         if (sYear === eYear && sMonth === eMonth && sDay === eDay) {
             hours = getRange(sHour, eHour)
