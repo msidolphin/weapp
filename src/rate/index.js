@@ -98,13 +98,13 @@ Component({
             let scores = []
             for (let i = 0; i < count; ++i) {
                 if (i < Number(values[0])) {  
-                    scores.push(100)
+                  scores.push(100)
                 } else {
-                    scores.push(0)
+                  scores.push(0)
                 }
             }
             if (values[1] !== undefined) { // 存在半星
-                scores[scores.length - 1] = (Number(`0.${values[1]}`) * 100)
+              scores[Number(values[0])] = (Number(`0.${values[1]}`) * 100)
             }
             this.setData({
                 scores
