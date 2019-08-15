@@ -1,0 +1,8 @@
+<view style='height:100%'>
+  <i-scroll-view id="scrollView" bind:pulldownrefresh="onRefresh" bind:pullupload="onLoadMore">
+    <i-cell-group>
+      <i-cell title="{{item}}" wx:for="{{data}}" wx:key="index"/>
+    </i-cell-group>
+    <i-load-more/>
+  </i-scroll-view>
+</view>

@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/scroll-view/index",
     "pages/rate/index",
     "pages/image-picker/index",
     "pages/demo/sticky-tab/index",

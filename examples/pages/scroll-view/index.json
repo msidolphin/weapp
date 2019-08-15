@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "ScrollView 滚动容器",
+  "usingComponents": {
+    "i-scroll-view": "../../dist/scroll-view/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index",
+    "i-load-more": "../../dist/load-more/index"
+  }
+}
