@@ -33,7 +33,15 @@ Component({
         },
         icon: {
             type: String,
-            value: 'collection_fill'
+            value: 'collection'
+        },
+        fill: {
+            type : Boolean,
+            value : true 
+        },
+        same: {
+            type : Boolean,
+            value : true 
         },
         color: {
             type: String,
@@ -42,7 +50,7 @@ Component({
         activeColor: {
             type: String,
             value: '#f5a623'
-        }
+        },
     },
     data : {
         touchesStart : {
@@ -75,7 +83,7 @@ Component({
             if( space === 0 && !this.data.allowZero){
                 return
             }
-            let setIndex = Math.ceil( space/data.size )
+            let setIndex = Math.ceil(space / data.size)
             setIndex = setIndex  > data.count ? data.count : setIndex 
             this.triggerEvent('change',{
                 index : setIndex 

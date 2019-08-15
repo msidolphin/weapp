@@ -35,6 +35,10 @@ Page({
           {
             label: 'Collapse 折叠面板',
             url: '/pages/collapse/index'
+          },
+          {
+            label: 'ScrollView 滚动容器',
+            url: '/pages/scroll-view/index'
           }
         ]
       },
