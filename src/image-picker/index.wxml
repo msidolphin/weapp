@@ -2,7 +2,7 @@
     <view class="i-image-upload-item"
         style="width:{{$span}}%;padding-bottom:{{$span}}%;"
         wx:for="{{imgList}}" wx:key="{{index}}">
-        <view class="inner" bindtap="viewImage" data-url="{{!object ? item : item[fieldNames.url]}}">
+        <view class="inner" catchtap="viewImage" data-url="{{!object ? item : item[fieldNames.url]}}">
             <image src='{{!object ? item : item[fieldNames.url]}}' mode='aspectFill'></image>
             <view wx:if="{{!disabled}}" class="i-image-upload-item__del" catchtap="delImage" data-index="{{index}}">
                 <view><i-icon i-class="close-btn" type="close" size="12"></i-icon></view>
@@ -10,7 +10,7 @@
         </view>
     </view>
     <view class="i-image-upload-item  i-image-upload__btn" style="width:{{$span}}%;padding-bottom:{{$span}}%;" wx:if="{{!disabled && imgList.length < limit}}">
-        <view class="inner" bindtap="chooseImage" style="background:{{backgroundColor}}">
+        <view class="inner" catchtap="chooseImage" style="background:{{backgroundColor}}">
             <i-icon type="{{iconType}}" size="{{iconSize}}" color="{{iconColor}}"></i-icon>
         </view>
     </view>
