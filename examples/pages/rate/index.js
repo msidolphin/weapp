@@ -5,7 +5,7 @@ Page({
     starIndex3: 0,
     starIndex4: 4,
     starIndex5: 0,
-    starIndex6: 4.3,
+    starIndex6: 4.4,
     starIndex7: 0
   },
   onChange1(e) {

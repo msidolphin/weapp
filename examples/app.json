@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/scroll-view/index",
     "pages/rate/index",
+    "pages/scroll-view/index",
     "pages/image-picker/index",
     "pages/demo/sticky-tab/index",
     "pages/mutex-select/index",
