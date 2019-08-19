@@ -30,17 +30,26 @@ Component({
     reachTop: false,
   },
   methods: {
+    reachTop () {
+      this.setData({
+        reachTop: true
+      })
+    },
+    unReachTop () {
+      this.setData({
+        reachTop: false
+      })
+    },
+    isReachTop () {
+      return this.data.reachTop
+    },
     initObserver() {
       this.observer = this.createIntersectionObserver()
       this.observer.relativeToViewport().observe(".intersection-dot", (res) => {
         if (res.intersectionRatio > 0) {
-          this.setData({
-            reachTop: true,
-          })
+          this.reachTop()
         } else {
-          this.setData({
-            reachTop: false,
-          })
+          this.unReachTop()
         }
       })
     },
@@ -52,9 +61,9 @@ Component({
     },
   },
   ready() {
-    this.initObserver()
+    // this.initObserver()
   },
   detached() {
-    this.clearObserver()
+    // this.clearObserver()
   },
 })
