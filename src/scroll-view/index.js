@@ -45,19 +45,31 @@ Component({
     scroll (e) {
       this.scrollTop = e.detail.scrollTop
       if (!this.refresh) this.getRefreshRef()
-      if (this.scrollTop <= 0) {
-        if (this.refresh && !this.refresh.isReachTop()) {
-          this.refresh.reachTop()
-        }
-      } else {
-        if (this.refresh && this.refresh.isReachTop()) {
-          this.refresh.unReachTop()
-        }
+      if (this.timer) {
+        clearTimeout(this.timer)
+        this.timer = null
       }
+      this.timer = setTimeout(() => {
+        if (this.scrollTop <= 0) {
+          if (this.refresh && !this.refresh.isReachTop()) {
+            this.refresh.reachTop()
+          }
+        } else {
+          if (this.refresh && this.refresh.isReachTop()) {
+            this.refresh.unReachTop()
+          }
+        }
+      }, 20)
       this.triggerEvent('scroll', e.detail.scrollTop)
     },
     scrollToLower () {
       this.triggerEvent('pullupload')
+    },
+    scrollToUpper () {
+      if (!this.refresh) this.getRefreshRef()
+      if (this.refresh && !this.refresh.isReachTop()) {
+        this.refresh.reachTop()
+      }
     },
     onRefresh () {
       this.setData({

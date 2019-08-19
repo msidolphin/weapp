@@ -51,6 +51,7 @@ Component({
         } else {
           this.unReachTop()
         }
+        this.clearObserver()
       })
     },
     clearObserver() {
@@ -61,9 +62,9 @@ Component({
     },
   },
   ready() {
-    // this.initObserver()
+    this.initObserver()
   },
   detached() {
     // this.clearObserver()
-  },
+  }
 })
