@@ -5,8 +5,11 @@
   enable-back-to-top="{{enableBackToTop}}"
   scroll-into-view="{{scrollIntoView}}"
   catchscroll="scroll"
-  bindscrolltolower="scrollToLower">
+  throttle="{{false}}"
+  bindscrolltolower="scrollToLower"
+  bindscrolltoupper="scrollToUpper">
     <i-refresh
+      id="refresh"
       bind:refresh="onRefresh"
       refreshed="{{refreshed}}"
       top="{{top}}"

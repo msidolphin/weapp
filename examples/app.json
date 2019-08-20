@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/badge/index",
     "pages/rate/index",
     "pages/scroll-view/index",
     "pages/image-picker/index",
@@ -37,7 +38,6 @@
     "pages/layout/index",
     "pages/alert/index",
     "pages/avatar/index",
-    "pages/badge/index",
     "pages/drawer/index",
     "pages/input-number/index",
     "pages/page/index",
