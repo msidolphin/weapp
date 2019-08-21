@@ -12,6 +12,13 @@ module.exports = {
                 collapsable: false,
                 children: [
                     {
+                        title: '布局',
+                        collapsable: false,
+                        children: [
+                            '/components/layout/scroll-view'
+                        ]
+                    },
+                    {
                         title: '基础',
                         collapsable: false,
                         children: [
@@ -24,7 +31,8 @@ module.exports = {
                         collapsable: false,
                         children: [
                             '/components/form/tree-select',
-                            '/components/form/mutex-select'
+                            '/components/form/mutex-select',
+                            '/components/form/rate'
                         ]
                     }
                 ]

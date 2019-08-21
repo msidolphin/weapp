@@ -11,7 +11,10 @@
     "docs": "vuepress dev docs",
     "build": "cross-env NODE_ENV=production gulp --gulpfile build/build.js",
     "clean": "cross-env NODE_ENV=production gulp clean --gulpfile build/build.js",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0",
+    "init:commit": "commitizen init cz-conventional-changelog --save --save-exact --force",
+    "commit": "git-cz"
   },
   "repository": {
     "type": "git",
@@ -26,7 +29,16 @@
     "dist"
   ],
   "homepage": "https://github.com/msidolphin/weapp",
+  "gitHooks": {
+    "commit-msg": "node git-hooks/commit-msg.js"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
+    "commitizen": "^4.0.3",
     "cross-env": "^5.2.0",
     "del": "^4.1.0",
     "eslint": "^3.19.0",
@@ -37,6 +49,7 @@
     "gulp-util": "^3.0.8",
     "less": "^2.7.3",
     "viewcode": "^0.0.27",
-    "vuepress": "^1.0.2"
+    "vuepress": "^1.0.2",
+    "yorkie": "^2.0.0"
   }
 }
