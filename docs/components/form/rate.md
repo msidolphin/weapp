@@ -155,7 +155,7 @@ Page({
 ### 自定义文字说明
 #### wxml
 ```html
-<i-rate bind:change="onChange" value="{{value7}}">{{value6}}星</i-rate>
+<i-rate bind:change="onChange" value="{{value7}}">{{value7}}星</i-rate>
 ```
 
 #### js
@@ -204,4 +204,4 @@ Page({
 ## Events
 | 事件名      | 说明    | 参数   |
 |---------- |--------- |----------|
-| change | 选中值发生变化时触发 | {index: 选中项 } |
+| change | 选中值发生变化时触发 | {index: e.detail.index } |
