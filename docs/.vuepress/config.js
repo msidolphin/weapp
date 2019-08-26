@@ -15,6 +15,9 @@ module.exports = {
                         title: '布局',
                         collapsable: false,
                         children: [
+                            '/components/layout/layout',
+                            '/components/layout/grid',
+                            '/components/layout/list',
                             '/components/layout/collapse',
                             '/components/layout/scroll-view'
                         ]
