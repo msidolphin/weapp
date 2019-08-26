@@ -15,6 +15,7 @@ module.exports = {
                         title: '布局',
                         collapsable: false,
                         children: [
+                            '/components/layout/collapse',
                             '/components/layout/scroll-view'
                         ]
                     },
@@ -30,9 +31,18 @@ module.exports = {
                         title: '表单',
                         collapsable: false,
                         children: [
+                            '/components/form/input',
+                            '/components/form/radio',
+                            '/components/form/checkbox',
+                            '/components/form/switch',
+                            '/components/form/rate',
+                            '/components/form/input-number',
+                            '/components/form/image-picker',
+                            '/components/form/cascader',
                             '/components/form/tree-select',
-                            '/components/form/mutex-select',
-                            '/components/form/rate'
+                            '/components/form/select',
+                            '/components/form/calendar-picker',
+                            '/components/form/mutex-select'
                         ]
                     }
                 ]
