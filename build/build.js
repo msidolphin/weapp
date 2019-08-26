@@ -3,6 +3,7 @@ const gulpLess = require('gulp-less')
 const rename = require('gulp-rename')
 const cssmin = require('gulp-clean-css');
 const clean = require('del')
+const theme = require('../config/theme')
 const NODE_ENV = process.env.NODE_ENV
 
 const isDev = NODE_ENV === 'development'
@@ -21,7 +22,9 @@ const output = !isDev ? '../dist/' : '../examples/dist/'
 
 const processer = {
     compileLess (stream) {
-        return stream.pipe(gulpLess())
+        return stream.pipe(gulpLess({
+            modifyVars: theme
+        }))
         .pipe(cssmin())
         .pipe(rename((path) => {
             path.extname = '.wxss'

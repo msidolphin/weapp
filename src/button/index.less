@@ -17,8 +17,8 @@ button::after {
 }
 
 .btn-primary() {
-    .btn-color(@primary-color);
-    color: @title-color!important;
+    .btn-color(@btn-primary-bg);
+    color: @btn-primary-color!important;
 }
 
 .btn-ghost() {
@@ -80,18 +80,22 @@ button::after {
 
     &-success {
         .btn-color(@success-color);
+        color: @btn-success-color!important;
     }
 
     &-warning {
         .btn-color(@warning-color);
+        color: @btn-warning-color!important;
     }
 
     &-error {
         .btn-color(@error-color);
+        color: @btn-error-color!important;
     }
 
     &-info {
         .btn-color(@info-color);
+        color: @btn-info-color!important;
     }
 
     &-circle{
