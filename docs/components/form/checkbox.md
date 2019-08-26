@@ -38,11 +38,13 @@ Page({
 ```
 
 ### 多选组用法
+#### wxml
+```html
 <i-checkbox-group current="{{current}}" bindchange="handleFruitChange">
         <i-checkbox wx:for="{{fruit}}" wx:key="{{item.id}}" value="{{item.name}}">
         </i-checkbox>
 </i-checkbox-group>
-
+```
 #### js
 ```js
 Page({
