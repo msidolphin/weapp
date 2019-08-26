@@ -9,7 +9,7 @@ sidebarDepth: 1
 {
     "usingComponents": {
         "i-radio": "../../dist/radio/index",
-        "i-radio-group": "../../dist/radio-group/index
+        "i-radio-group": "../../dist/radio-group/index"
     }
 }
 ```
