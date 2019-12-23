@@ -7,7 +7,7 @@ const defaults = {
     dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     dayNamesShort: ['日', '一', '二', '三', '四', '五', '六'],
     weekendDays: [0, 6], // Sunday and Saturday
-    multiple: false,
+    // multiple: false,
     dateFormat: 'yyyy-mm-dd',
     touchMove: true,
     animate: true,
@@ -34,6 +34,10 @@ Component({
         fill: { // 是否在本月填充上一个月或下一个月的日期
             type: Boolean,
             value: true
+        },
+        multiple: {
+            type: Boolean,
+            value: false
         },
         lunar: { // 是否显示农历
             type: Boolean,

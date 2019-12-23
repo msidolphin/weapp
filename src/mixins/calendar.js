@@ -857,6 +857,14 @@ export default Behavior({
                 this.updateValue()
             })
         },
+        getValue () {
+            let value = Object.assign(this.data.value)
+            let valueDate = []
+            value.forEach(item => {
+                valueDate.push(this.formatDate(item))
+            })
+            return valueDate
+        },
         /**
          * 更新日历
          */

@@ -1,2 +1,2 @@
-<i-calendar markers="{{markers}}" fill="{{false}}" maxDate="{{maxDate}}"/>
+<i-calendar markers="{{markers}}" fill="{{false}}" multiple maxDate="{{maxDate}}"/>
 <i-calendar direction="vertical"/>
