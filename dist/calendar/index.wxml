@@ -32,7 +32,7 @@
                                             <view class="i-calendar__day-inner">
                                                 <view class="i-calendar__text">{{ col.day }}</view>
                                                 <view class="i-calendar__lunar">{{ col.lunar ? col.lunar.Term ? col.lunar.Term : col.lunar.IDayCn : '' }}</view>
-                                                <view class="i-calendar__marker" hidden="{{!col.marker}}"></view>
+                                                <view class="i-calendar__marker {{dot ? ' dot' : ''}}" hidden="{{!col.marker}}" style="{{col.marker}}"></view>
                                             </view>
                                        </view>
                                     </block>

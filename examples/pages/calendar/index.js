@@ -7,9 +7,9 @@ Page({
   data: {
     markers: [
       {
-        year: 2019, // 当前年份
-        month: 7, // 当前月份
-        days: [1, 2, 3, 4, 5, 6, 31] // 当月已记工日期   
+        year: new Date().getFullYear(), // 当前年份
+        month: new Date().getMonth() + 1, // 当前月份
+        days: [{value: 1, color: 'red'}, 2, 3, 4, 5, 6] // 当月已记工日期   
       }
     ],
     maxDate: new Date().toLocaleDateString()

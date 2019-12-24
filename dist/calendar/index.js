@@ -14,7 +14,6 @@ const defaults = {
     closeOnSelect: true,
     weekHeader: true,
     toolbar: true,
-    value: [],
     onMonthAdd() {},
     onChange() {},
     onOpen() {},
@@ -54,6 +53,10 @@ Component({
                 this.setMarkers(this.data.months, true)
             }
         },
+        dot: {
+            type: Boolean,
+            value: false
+        },
         minDate: {
             type: [String, Number, Object],
             value: null
@@ -64,7 +67,8 @@ Component({
         }
     },
     data: {
-        ...defaults
+        ...defaults,
+        value: [],
     },
     methods: {
         /**
@@ -79,14 +83,14 @@ Component({
 
             this.setData({ visible: true, ...options })
             this.init()
-            this.setValue(options.value)
+            if(options.value) this.setValue(options.value)
 
             if (typeof this.fns.onOpen === 'function') {
                 this.fns.onOpen.call(this)
             }
         }
     },
-    ready () {
+    attached () {
         this.open()
     }
 })

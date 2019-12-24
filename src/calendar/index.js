@@ -53,6 +53,10 @@ Component({
                 this.setMarkers(this.data.months, true)
             }
         },
+        dot: {
+            type: Boolean,
+            value: false
+        },
         minDate: {
             type: [String, Number, Object],
             value: null
@@ -86,7 +90,7 @@ Component({
             }
         }
     },
-    ready () {
+    attached () {
         this.open()
     }
 })

@@ -54,6 +54,25 @@
   <text class="caption-title">折叠面板 列表</text>
   <i-collapse>
     <i-collapse-item title="店长信息">
+      <i-cell-group bordered="{{false}}">
+        <i-cell title="店长姓名" extra="张三"/>
+        <i-cell title="联系方式" extra="18600000001"/>
+      </i-cell-group>
+    </i-collapse-item>
+    <i-collapse-item title="店长信息">
+      <i-cell-group>
+        <i-cell title="店长姓名" extra="李四"/>
+        <i-cell title="联系方式" extra="18600000002"/>
+      </i-cell-group>
+    </i-collapse-item>
+  </i-collapse>
+</view>
+
+
+<view class="caption-wrap">
+  <text class="caption-title">折叠面板 不可展开</text>
+  <i-collapse>
+    <i-collapse-item title="店长信息" collapsable="{{false}}">
       <i-cell-group>
         <i-cell title="店长姓名" extra="张三"/>
         <i-cell title="联系方式" extra="18600000001"/>

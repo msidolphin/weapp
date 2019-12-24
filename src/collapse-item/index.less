@@ -2,6 +2,55 @@
 @import "../styles/_mixins.less";
 @import '../cell/index.less';
 
+.i-cell-access .i-cell-ft::after {
+    content: " ";
+    display: none;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    border-width: 2px 2px 0 0;
+    border-color: #dddee1;
+    border-style: solid;
+    transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0);
+}
+
+.i-cell-access .i-cell-ft.collapsable::after {
+    display: inline-block;
+}
+
+
+.i-cell-access.animated .i-cell-ft::after {
+    transition: .3s all;
+}
+
+.i-cell-access.up .i-cell-ft::after {
+    transform: translateY(-50%) matrix(.71, -.71, .71, .71, 0, 0)
+}
+
+.i-cell-access.right .i-cell-ft::after {
+    transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
+}
+
+.i-cell-access.down .i-cell-ft::after {
+    transform: translateY(-50%) matrix(.71, .71, .71, -.71, 0, 0)
+}
+
+.i-cell-access.left .i-cell-ft::after {
+    transform: translateY(-50%) matrix(-.71, .71, .71, .71, 0, 0)
+}
+
+.collapse-item.with-cell-group {
+    padding:12px 15px 0;
+    &.is-collapse {
+        padding:12px 15px;
+    }
+    &.i-cell-last.is-collapse {
+        padding: 12px 15px;
+    }
+}
+
 .i-collapse-item {
     padding: 2px 8px;
     border-top: 1px solid @border-color-base;

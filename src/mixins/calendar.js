@@ -131,8 +131,19 @@ export default Behavior({
                             let ey = e.year
                             let em = e.month
                             if (ey === year && em + 1 === month) {
-                                if (days.findIndex(d => Number(d) === e.day) !== -1) {
-                                    e.marker = true
+                                let idx = days.findIndex(it => {
+                                    let d = it
+                                    if (typeof it === 'object') {
+                                        d = it.value
+                                    }
+                                    return Number(d) === e.day
+                                })
+                                if (idx !== -1) {
+                                    if (days[idx].color && this.data.dot) {
+                                        e.marker = 'background:' + days[idx].color + ';'
+                                    } else {
+                                        e.marker = true
+                                    }
                                 } else {
                                     e.marker = false
                                 }
@@ -303,6 +314,11 @@ export default Behavior({
                 if (typeof this.fns.onDayClick === 'function') {
                     this.fns.onDayClick.call(this, dateYear, dateMonth, dateDay)
                 }
+                this.triggerEvent('on-day-click', {
+                    year: dateYear,
+                    month: dateMonth + 1,
+                    day: dateDay
+                })
 
                 this.addValue(new Date(dateYear, dateMonth, dateDay).getTime())
 
@@ -646,10 +662,10 @@ export default Behavior({
                 firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay()
             if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7 // 周日
             let rows = Math.ceil((daysInMonth - 7 + firstDayOfMonthIndex) / 7) + 1
-            let height = rows * 51 // 51单行高度
+            let height = rows * 58 // 51单行高度
             if (this.data.fill) {
                 rows = 6
-                height = rows * 51
+                height = rows * 58
             }
 
             let dayDate, currentValues = [],
@@ -782,7 +798,7 @@ export default Behavior({
                         rows.push(monthHTML.items[i])
                     }
                 }
-                height = rows.length * 51
+                height = rows.length * 58
                 monthHTML.items = rows
                 monthHTML.height = height
             }

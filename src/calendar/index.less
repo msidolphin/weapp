@@ -31,6 +31,7 @@
 	background: #fff;
 	height: 255px;
 	width: 100%;
+	// padding: 6px 0;
 	overflow: hidden;
 
 	&-content {
@@ -93,12 +94,12 @@
 	}
 
 	&-days {
-		height: 51px;
+		height: 58px;
 		display: flex;
 		flex-shrink: 1;
 		width: 100%;
 		position: relative;
-
+		// padding-bottom: 4px;
 		&:last-child:after {
 			display: none;
 		}
@@ -149,6 +150,20 @@
 		border-style: solid;
 		border-width: 0 2px 2px 0;
 		transform: rotate(45deg);
+		&.dot {
+			position: absolute;
+			right: initial;
+			top: initial;
+			left: 50%;
+			bottom: -6px;
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			border-color: transparent;
+			border-width: 0;
+			transform: translateX(-50%);
+			background: @primary-color;
+		}
 	}
 
 	&__day--today {

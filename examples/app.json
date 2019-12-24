@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/calendar/index",
+    "pages/collapse/index",
     "pages/button/index",
     "pages/badge/index",
     "pages/rate/index",
@@ -17,7 +19,6 @@
     "pages/calendar-picker/index",
     "pages/tabs/index",
     "pages/circle/index",
-    "pages/calendar/index",
     "pages/infinite-calendar/index",
     "pages/keyboard/index",
     "pages/bottom-drawer/index",
@@ -26,7 +27,6 @@
     "pages/select/index",
     "pages/modal/index",
     "pages/list/index",
-    "pages/collapse/index",
     "pages/message/index",
     "pages/action-sheet/index",
     "pages/popup/index",

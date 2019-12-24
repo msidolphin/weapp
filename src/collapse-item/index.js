@@ -22,6 +22,14 @@ Component({
             type: Boolean,
             value: true,
             observer: '_collapseChange'
+        },
+        collapsable: {
+            type: Boolean,
+            value: true
+        },
+        cell: {
+            type: Boolean,
+            value: false
         }
     },
 
@@ -39,6 +47,7 @@ Component({
 
     methods: {
         trigger () {
+            if (!this.data.collapsable) return
             this.setData({
                 isCollapse: !this.data.isCollapse
             }, () => {
