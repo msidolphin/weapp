@@ -59,11 +59,17 @@ Component({
         },
         minDate: {
             type: [String, Number, Object],
-            value: null
+            value: null,
+            observer () {
+                this.updateView()
+            }
         },
         maxDate: {
             type: [String, Number, Object],
-            value: null
+            value: null,
+            observer () {
+                this.updateView()
+            }
         }
     },
     data: {
