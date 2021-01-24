@@ -2,22 +2,12 @@
 
 # Forked iView Weapp
 
-### 一套高质量的微信小程序 UI 组件库
-
-## 文档
-TODO
-
-## 体验
-使用微信扫一扫体验小程序组件示例
-
-TODO
-
 ## 快速上手
 ### 使用之前
-在开始使用 iView Weapp 之前，你需要先阅读 [微信小程序自定义组件](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/) 的相关文档。
+在开始使用 weapp 之前，你需要先阅读 [微信小程序自定义组件](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/) 的相关文档。
 
 ### 如何使用
-到 [GitHub](https://github.com/msidolphin/weapp) 下载 iView Weapp 的代码，将 `dist` 目录拷贝到自己的项目中。然后按照如下的方式使用组件，以 Button 为例，其它组件在对应的文档页查看：
+到 [GitHub](https://github.com/msidolphin/weapp) 下载 weapp 的代码，将 `dist` 目录拷贝到自己的项目中。然后按照如下的方式使用组件，以 Button 为例，其它组件在对应的文档页查看：
 
 1. 添加需要的组件。在页面的 json 中配置（路径根据自己项目位置配置）：
 ```json
