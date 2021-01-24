@@ -1,10 +1,9 @@
 {
-  "navigationBarTitleText": "iView Weapp",
+  "navigationBarTitleText": "小程序组件库",
   "usingComponents": {
     "i-panel": "../../dist/panel/index",
     "i-cell-group": "../../dist/cell-group/index",
     "i-cell": "../../dist/cell/index",
-    "i-bottom-drawer": "../../dist/bottom-drawer/index",
     "i-picker": "../../dist/picker/index",
     "i-collapse": "../../dist/collapse/index",
     "i-collapse-item": "../../dist/collapse-item/index"

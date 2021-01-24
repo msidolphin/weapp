@@ -1,7 +1,7 @@
 <view wx:for="{{100}}" wx:key="{{item}}">{{item}}</view>
-<i-bottom-drawer id="drawer">
+<i-sliding-panel id="drawer" bottom="{{50}}">
   <view slot="header" class="title">招聘岗位</view>
   <view style='padding:20px;'>
     <view wx:for="{{200}}" wx:key="{{item}}">列表项{{item + 1}}</view>
   </view>
-</i-bottom-drawer>
+</i-sliding-panel>

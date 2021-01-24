@@ -1,15 +1,21 @@
-<view class="i-class bottom-drawer"  data-y="{{y}}" style="{{styles}}" animation="{{animation}}" bindtransitionend="handleAnimationEnd" data-max-y="{{maxY}}" data-bottom="{{bottom}}" data-threshold="{{threshold}}">
-    <view class="bottom-drawer-header" data-y="{{y}}" catchtouchstart="{{movable.touchstart}}" catchtouchmove="{{movable.touchmove}}" catchtouchend="{{movable.touchend}}">
+<view class="i-class sliding-panel"  data-y="{{y}}"
+    dataStyle="{{styles}}"
+    change:dataStyle="{{movable.setStyles}}"
+    animation="{{animation}}"
+    data-max-y="{{maxY}}" data-bottom="{{bottom}}" data-threshold="{{threshold}}">
+    <view class="sliding-panel-header" data-y="{{y}}" catchtouchstart="{{movable.touchstart}}" catchtouchmove="{{movable.touchmove}}" catchtouchend="{{movable.touchend}}">
         <slot name="header"></slot>
-        <view class="bottom-drawer-header-line"></view>
+        <view class="sliding-panel-header-line"></view>
     </view>
-    <view class="bottom-drawer-body" catchtouchmove="noop" >
+    <view class="sliding-panel-body" catchtouchmove="noop" >
         <scroll-view class="scroll-view" style="{{scrollViewStyle}}" scroll-y bindscrolltolower="onScrollToBottom">
             <slot/>
         </scroll-view>
     </view>
 </view>
-<view class="bottom-drawer-mask {{showMask ? 'is-show' : ''}}" animation="{{backgroundAnimation}}" style="{{maskStyle}}" catchtouchmove="doNothing" catchtap="onMaskTap"></view>
+<view class="sliding-panel-mask {{showMask ? 'is-show' : ''}}"
+    data-color="{{maskStyle}}"
+    catchtouchmove="doNothing"></view>
 <wxs module="movable">
     var startY = 0
     var minAlpha = 0
@@ -18,6 +24,10 @@
     var endY = null
     var reachedTop = false
     var reachedBottom = true
+
+    function setStyles(styles, oldValue, ownerInstance, instance) {
+        instance.setStyle(styles)
+    }
 
     function touchstart (event) {
         var touch = event.touches[0] || event.changedTouches[0]
@@ -30,7 +40,7 @@
         var touch = event.touches[0] || event.changedTouches[0]
         var pageY = touch.pageY
         var moveY = (pageY - startY)
-        var instance = ins.selectComponent('.bottom-drawer')
+        var instance = ins.selectComponent('.sliding-panel')
         var maxY = instance.getDataset().maxY
         var bottom = instance.getDataset().bottom
         var orignY = instance.getDataset().y
@@ -46,7 +56,7 @@
             transform:  'translateY(' + endY + 'px)!important',
             transition: 'unset!important'
         })
-        ins.selectComponent('.bottom-drawer-mask').setStyle({
+        ins.selectComponent('.sliding-panel-mask').setStyle({
             background: 'rgba(0, 0, 0, ' + opacity  +')!important',
             transition: 'unset!important'
         })
@@ -57,9 +67,9 @@
 
     function touchend (event, ins) {
         if (Math.abs(totalMoveY) === 0) {
-            ins.callMethod('complete')
+            
         } else {
-            var instance = ins.selectComponent('.bottom-drawer')
+            var instance = ins.selectComponent('.sliding-panel')
             var maxY = instance.getDataset().maxY
             var bottom = instance.getDataset().bottom
             reachedTop = endY === -maxY
@@ -95,13 +105,13 @@
 
     function complete (ins) {
         if (reachedBottom) return
-        var instance = ins.selectComponent('.bottom-drawer')
+        var instance = ins.selectComponent('.sliding-panel')
         var maxY = instance.getDataset().maxY
         instance.setStyle({
             transform:  'translateY(' + -maxY + 'px)!important',
             transition: '.3s transform!important'
         })
-        ins.selectComponent('.bottom-drawer-mask').setStyle({
+        ins.selectComponent('.sliding-panel-mask').setStyle({
             background: 'rgba(0, 0, 0, ' + maxAlpha +')!important',
             transition: '.3s background!important'
         })
@@ -115,13 +125,13 @@
 
     function restart (ins) {
         if (reachedBottom) return
-        var instance = ins.selectComponent('.bottom-drawer')
+        var instance = ins.selectComponent('.sliding-panel')
         var bottom = instance.getDataset().bottom
         instance.setStyle({
             transform:  'translateY(' + -bottom + 'px)!important',
             transition: '.3s transform!important'
         })
-        ins.selectComponent('.bottom-drawer-mask').setStyle({
+        ins.selectComponent('.sliding-panel-mask').setStyle({
             background: 'rgba(0, 0, 0, 0)!important',
             transition: '.3s background!important'
         })
@@ -137,6 +147,7 @@
     module.exports = {
         touchstart: touchstart,
         touchmove: touchmove,
-        touchend: touchend
+        touchend: touchend,
+        setStyles: setStyles
     }
 </wxs> 

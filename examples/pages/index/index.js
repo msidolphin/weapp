@@ -212,8 +212,8 @@ Page({
             url: '/pages/action-sheet/index'
           },
           {
-            label: 'BottomDrawer 上拉抽屉',
-            url: '/pages/bottom-drawer/index'
+            label: 'SlidingPanel 上拉抽屉',
+            url: '/pages/sliding-panel/index'
           }
         ]
       },

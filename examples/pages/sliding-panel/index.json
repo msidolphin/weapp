@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "SlidingPanel 滑动抽屉",
+  "usingComponents": {
+    "i-sliding-panel": "../../dist/sliding-panel/index"
+  }
+}
