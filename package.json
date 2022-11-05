@@ -30,7 +30,7 @@
     "cross-env": "^5.2.0",
     "del": "^4.1.0",
     "eslint": "^3.19.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-clean-css": "^3.9.3",
     "gulp-less": "^4.0.0",
     "gulp-rename": "^1.2.2",
